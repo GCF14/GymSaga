@@ -1,0 +1,19 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+h1 {
+    margin: 0;
+    padding: 10px;
+    height: 50px;
+    background-color: #f4f4f9;
+    text-align: center;
+}
+
+#map {
+    width: 100%;
+    height: calc(100% - 50px);
+}
+
