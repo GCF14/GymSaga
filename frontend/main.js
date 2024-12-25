@@ -59,6 +59,59 @@ if ("geolocation" in navigator) {
   }
   
 
-document.getElementById('fixedButton').addEventListener('click', () => {
-    console.log('Button Clicked!');
+document.getElementById('findGymButton').addEventListener('click', () => {
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            const longitude = position.coords.longitude;
+            const latitude = position.coords.latitude;
+
+            try {
+                
+                const response = await fetch('/api/mapbox-token');
+                const data = await response.json();
+                const accessToken = data.token;
+
+               
+                const radius = 1.5; 
+                const bbox = calculateBoundingBox(longitude, latitude, radius);
+
+                
+                const url = `https://api.mapbox.com/search/searchbox/v1/category/fitness_center?access_token=${accessToken}&bbox=${bbox.join(',')}&language=en&limit=20`;
+                const gymResponse = await fetch(url);
+                const gymData = await gymResponse.json();
+
+                console.log('Gyms within 1.5 km radius:', gymData.features);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    } else {
+        console.error('Geolocation is not supported by this browser.');
+    }
 });
+
+
+
+
+// Function to calculate the bounding box (southwest and northeast corners)
+function calculateBoundingBox(lat, lon, radius) {
+    const R = 6371; // Earth's radius in kilometers
+    const toDeg = (value) => (value * 180) / Math.PI; // Convert radians to degrees
+    const toRad = (value) => (value * Math.PI) / 180; // Convert degrees to radians
+
+    const latR = toRad(lat);
+    const lonR = toRad(lon);
+    const angularDistance = radius / R; // Angular distance in radians
+
+    // Latitude bounds
+    const minLat = latR - angularDistance;
+    const maxLat = latR + angularDistance;
+
+    // Longitude bounds (adjusted by latitude)
+    const minLon = lonR - angularDistance / Math.cos(latR);
+    const maxLon = lonR + angularDistance / Math.cos(latR);
+
+    // Convert back to degrees
+    return [toDeg(minLon), toDeg(minLat), toDeg(maxLon), toDeg(maxLat)];
+}
