@@ -20,7 +20,7 @@ h1 {
 
 #findGymButton {
     position: absolute; 
-    bottom: 50px; 
+    bottom: 70px; 
     left: 50%; 
     transform: translateX(-50%); 
     z-index: 10; 
@@ -31,4 +31,43 @@ h1 {
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
+}
+
+#backToMapButton {
+
+    position: absolute; 
+    bottom: 15px;
+    left: 50%; 
+    transform: translateX(-50%); 
+    z-index: 10; 
+    background-color: #2c3e50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+
+}
+
+#findRouteButton {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #2c3e50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.findRouteContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px;
 }
