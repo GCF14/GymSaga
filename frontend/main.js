@@ -154,11 +154,11 @@ function calculateBoundingBox(longitude, latitude, radius) {
 document.getElementById('findGymButton').addEventListener('click', () => {
     const startTime = performance.now();
 
-    if (isDefaultMap) {
-        map.off();
-        map.remove();
-        isDefaultMap = false;
-    }
+    // if (isDefaultMap) {
+    //     map.off();
+    //     map.remove();
+    //     isDefaultMap = false;
+    // }
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(async (position) => {
@@ -166,17 +166,17 @@ document.getElementById('findGymButton').addEventListener('click', () => {
             const latitude = position.coords.latitude;
 
             
-            if (map) {
-                map.setCenter([longitude, latitude]);
-                map.setZoom(15.87);
-            } else {
-                map = new mapboxgl.Map({
-                    container: 'map',
-                    style: 'mapbox://styles/fruitpunchsamurai9029/cm50yh9cx00cl01sr685j7gc0',
-                    center: [longitude, latitude],
-                    zoom: 15.87,
-                });
-            }
+            // if (map) {
+            //     map.setCenter([longitude, latitude]);
+            //     map.setZoom(15.87);
+            // } else {
+            //     map = new mapboxgl.Map({
+            //         container: 'map',
+            //         style: 'mapbox://styles/fruitpunchsamurai9029/cm50yh9cx00cl01sr685j7gc0',
+            //         center: [longitude, latitude],
+            //         zoom: 15.87,
+            //     });
+            // }
 
             // Event listener to measure map load time
             map.on('load', () => {
@@ -185,13 +185,27 @@ document.getElementById('findGymButton').addEventListener('click', () => {
             });
 
             if (!userMarker) {
-                userMarker = new mapboxgl.Marker()
-                    .setLngLat([longitude, latitude])
-                    .addTo(map);
-                markers.push(userMarker);
+                originalMapStyle = 'mapbox://styles/fruitpunchsamurai9029/cm50yh9cx00cl01sr685j7gc0';
+                originalMapCenter = [longitude, latitude];
+                originalMapZoom = 15.87;
+
+                
             } 
 
             try {
+                
+                if (map) {
+                    map.off();
+                    map.remove();
+
+                    map = new mapboxgl.Map({
+                        container: 'map',
+                        style: 'mapbox://styles/fruitpunchsamurai9029/cm50yh9cx00cl01sr685j7gc0',
+                        center: [longitude, latitude],
+                        zoom: 15.87,
+                    });
+                }
+
                 const radius = 1.5; 
                 const bbox = calculateBoundingBox(longitude, latitude, radius);
 
@@ -200,6 +214,10 @@ document.getElementById('findGymButton').addEventListener('click', () => {
                 const gymResponse = await fetch(url);
                 const gymData = await gymResponse.json();
 
+                userMarker = new mapboxgl.Marker()
+                    .setLngLat([longitude, latitude])
+                    .addTo(map);
+                markers.push(userMarker);
                 
                 const markerPromises = gymData.features.map(async (element) => {
                     const marker = new mapboxgl.Marker({ color: '#ff0000' })
