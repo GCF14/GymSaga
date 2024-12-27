@@ -51,23 +51,35 @@ h1 {
 }
 
 #findRouteButton {
-    position: absolute;
-    bottom: 15px;
-    left: 50%;
-    transform: translateX(-50%);
+    position: relative; /* Removed absolute positioning to avoid overlap issues */
+    display: inline-block;
+    margin-top: 5px; /* Reduced margin to make it more compact */
     background-color: #2c3e50;
     color: white;
-    padding: 10px 20px;
+    padding: 8px 16px; /* Reduced padding for a smaller button */
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
+    white-space: nowrap; /* Prevent the text from wrapping */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-align: center;
 }
 
 .findRouteContainer {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center; /* Center aligns the button in the container */
     align-items: center;
-    padding: 20px;
+    padding: 10px; /* Reduced padding for a tighter container */
+    min-width: 150px; /* Ensures enough space for the button */
+    max-width: 250px; /* Adjusted max width to make it slightly narrower */
+    box-sizing: border-box; /* Ensures padding is included in dimensions */
+}
+
+.mapboxgl-popup-content {
+    overflow: visible; /* Ensures the content inside the popup isn't clipped */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Ensures content is centered */
 }

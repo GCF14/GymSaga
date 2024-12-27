@@ -152,122 +152,74 @@ function calculateBoundingBox(longitude, latitude, radius) {
 
 
 document.getElementById('findGymButton').addEventListener('click', () => {
+    const startTime = performance.now();
 
     if (isDefaultMap) {
         map.off();
         map.remove();
-        isDefaultMap = false; 
+        isDefaultMap = false;
     }
-
-    
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(async (position) => {
             const longitude = position.coords.longitude;
             const latitude = position.coords.latitude;
 
+            
             if (map) {
-                map.off();
-                map.remove();
-                map = null;
-
+                map.setCenter([longitude, latitude]);
+                map.setZoom(15.87);
+            } else {
+                map = new mapboxgl.Map({
+                    container: 'map',
+                    style: 'mapbox://styles/fruitpunchsamurai9029/cm50yh9cx00cl01sr685j7gc0',
+                    center: [longitude, latitude],
+                    zoom: 15.87,
+                });
             }
 
-            
-
-        
-            map = new mapboxgl.Map({
-                container: 'map',
-                style: 'mapbox://styles/fruitpunchsamurai9029/cm50yh9cx00cl01sr685j7gc0',
-                center: [longitude, latitude],
-                zoom: 15.87,
-            });
-
-            
-
+            // Event listener to measure map load time
             map.on('load', () => {
-                originalMapStyle = map.getStyle();
-                originalMapCenter = map.getCenter();
-                originalMapZoom = map.getZoom();
+                const mapLoadTime = performance.now(); // Measure time after map load
+                console.log(`Map load time: ${mapLoadTime - startTime} ms`);
             });
 
-            userMarker = new mapboxgl.Marker()
-                .setLngLat([longitude, latitude])
-                .addTo(map);
-
-            markers.push(userMarker);
-
+            if (!userMarker) {
+                userMarker = new mapboxgl.Marker()
+                    .setLngLat([longitude, latitude])
+                    .addTo(map);
+                markers.push(userMarker);
+            } 
 
             try {
-                const radius = 1.5;
+                const radius = 1.5; 
                 const bbox = calculateBoundingBox(longitude, latitude, radius);
 
                 const url = `https://api.mapbox.com/search/searchbox/v1/category/fitness_center?access_token=${mapboxAccessToken}&bbox=${bbox.join(',')}&language=en&limit=24`;
 
                 const gymResponse = await fetch(url);
                 const gymData = await gymResponse.json();
-                let nearbyGyms = [];
 
-                gymData.features.forEach(element => {
-                    nearbyGyms.push({
-                        name: element.properties.name,
-                        address: element.properties.full_address,
-                        coordinates: element.geometry.coordinates,
-                        metadata: {
-                            open_hours: element.properties.metadata?.open_hours ?? 'Not available',
-                            phone: element.properties.metadata?.phone ?? 'Not available',
-                            website: element.properties.metadata?.website ?? 'Not available',
-                        },
-                    });
-                });
-
-
-                const colorOption = {
-                    color: '#ff0000', 
-                };
-
-                nearbyGyms.forEach(element => {
-                    const marker = new mapboxgl.Marker(colorOption)
-                        .setLngLat(element.coordinates)
+                
+                const markerPromises = gymData.features.map(async (element) => {
+                    const marker = new mapboxgl.Marker({ color: '#ff0000' })
+                        .setLngLat(element.geometry.coordinates)
                         .addTo(map);
 
-
-                    let openingHoursHTML;
-
-                    if (element.metadata.open_hours === 'Not available') {
-                        openingHoursHTML = '<p>Not available</p>';
-                    } else {
-                        const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-                        openingHoursHTML = element.metadata.open_hours.periods.map((period) => {
-                            const day = days[period.open.day];
-                            const openTime = `${period.open.time.slice(0, 2)}:${period.open.time.slice(2)}`;
-                            const closeTime = `${period.close.time.slice(0, 2)}:${period.close.time.slice(2)}`;
-                            return `<p>${day}: ${openTime} - ${closeTime}</p>`;
-                        }).join('');
-                    }
-                
-                    const popupHTML = `
-                        <h1>Gym Information</h1>
-                        <p>Name: ${element.name}</p>
-                        <p>Full Address: ${element.address}</p>
-                        <p>Additional Information</p>
-                        <p>Phone Number: ${element.metadata.phone}</p>
-                        <p>Opening Hours:</p>
-                        ${openingHoursHTML}
-                        <p>Website: ${element.metadata.website}</p>
-                        
-                    `;
-                    
-                    const popup = new mapboxgl.Popup({ closeOnClick: false, maxWidth: "300px" })
+                    const popupHTML = generatePopupHTML(element); 
+                    const popup = new mapboxgl.Popup({closeOnClick: false, maxWidth: '300px'})
                         .setHTML(popupHTML);
 
+                    marker.setPopup(popup);
+                    markers.push(marker); 
+
+                    
                     const container = document.createElement('div');
                     container.className = "findRouteContainer";
                     
                     const button = document.createElement('button');
                     button.textContent = "Detailed Route";
-                    button.id = "findRouteButton";
-
+                    button.id = 'findRouteButton'
                     container.appendChild(button);
                     popup._content.appendChild(container);
 
@@ -276,85 +228,84 @@ document.getElementById('findGymButton').addEventListener('click', () => {
                             map.off();
                             map.remove();
                             map = null;
-                        
                         }
 
                         setTimeout(() => {
                             map = new mapboxgl.Map({
-                              container: 'map',
-                              style: 'mapbox://styles/fruitpunchsamurai9029/cm55mdtxw004j01rg29w7aawx',
-                              center: [longitude, latitude],
-                              pitch: 65,
-                              zoom: 20,
+                                container: 'map',
+                                style: 'mapbox://styles/fruitpunchsamurai9029/cm55mdtxw004j01rg29w7aawx',
+                                center: [longitude, latitude],
+                                pitch: 65,
+                                zoom: 20,
                             });
-                        
-                            // ... rest of your code ...
-                          }, 500); // delay for 500ms
 
-                          const longitude = position.coords.longitude;
-                          const latitude = position.coords.latitude;
+                            const backButtonId = 'backToMapButton';
+                            let backButton = document.getElementById(backButtonId);
 
-                          map = new mapboxgl.Map({
-                              container: 'map',
-                              style: 'mapbox://styles/fruitpunchsamurai9029/cm55mdtxw004j01rg29w7aawx',
-                              center: [longitude, latitude],
-                              pitch: 65,
-                              zoom: 20,
-                          });
+                            if (!backButton) {
+                                backButton = document.createElement('button');
+                                backButton.textContent = 'Back';
+                                backButton.id = backButtonId;
+                                document.body.appendChild(backButton);
+                            }
 
-                          const backButtonId = 'backToMapButton';
-                          let backButton = document.getElementById(backButtonId);
+                            
+                            backButton.addEventListener('click', () => {
+                                map.setStyle(originalMapStyle);
+                                map.setCenter(originalMapCenter);
+                                map.setZoom(originalMapZoom);
+                                map.setPitch(0); 
 
-                          if (!backButton) {
-                              backButton = document.createElement('button');
-                              backButton.textContent = 'Back';
-                              backButton.id = backButtonId;
-                              document.body.appendChild(backButton);
-                          }
+                                
+                                markers.forEach((marker) => {
+                                    marker.addTo(map);
+                                });
 
-                          // Add event listener to the back button
-                          backButton.addEventListener('click', () => {
-                              map.setStyle(originalMapStyle);
-                              map.setCenter(originalMapCenter);
-                              map.setZoom(originalMapZoom);
-                              map.setPitch(0); 
-
-                              // Re-add markers
-                              markers.forEach((marker) => {
-                                  marker.addTo(map);
-                              });
-
-                              // Remove the back button
-                              backButton.remove();
-                              
-                          });
+                                
+                                backButton.remove();
+                            });
+                        }, 500); 
                     });
-
-                    
-
-                    
-                    marker.setPopup(popup);
-                    markers.push(marker);
-
-                    
-                        
                 });
 
-                //For deubbuging
+                await Promise.all(markerPromises); 
+
+                // Used for debugging by keeping track of results
                 console.log('Gyms within 1.5 km radius:', gymData.features);
+
+                const endTime = performance.now(); // End measuring time
+                console.log(`Total execution time: ${endTime - startTime} ms`);
             } catch (error) {
                 console.error('Error:', error);
             }
         });
-
-
-        
     }
-
-
-
 });
 
+function generatePopupHTML(element) {
+    let openingHoursHTML = '';
 
+    
+    if (element.properties.metadata?.open_hours && element.properties.metadata.open_hours !== 'Not available') {
+        const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        openingHoursHTML = element.properties.metadata.open_hours.periods?.map((period) => {
+            const day = days[period.open.day];
+            const openTime = `${period.open.time.slice(0, 2)}:${period.open.time.slice(2)}`;
+            const closeTime = `${period.close.time.slice(0, 2)}:${period.close.time.slice(2)}`;
+            return `<p>${day}: ${openTime} - ${closeTime}</p>`;
+        }).join('') || '<p>Opening hours not available.</p>';
+    } else {
+        openingHoursHTML = '<p>Opening hours not available.</p>';
+    }
 
-
+    return `
+        <h1>Gym Information</h1>
+        <p>Name: ${element.properties.name}</p>
+        <p>Full Address: ${element.properties.full_address}</p>
+        <p>Additional Information</p>
+        <p>Phone Number: ${element.properties.metadata?.phone ?? 'Not available'}</p>
+        <p>Opening Hours:</p>
+        ${openingHoursHTML}
+        <p>Website: ${element.properties.metadata?.website ?? 'Not available'}</p>
+    `;
+}
