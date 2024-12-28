@@ -11,6 +11,8 @@ app.use((req, res, next) => {
     next();
 });
 
+
+
 // Serve static files from the frontend folder
 app.use(express.static(path.join(__dirname, '../frontend')));
 

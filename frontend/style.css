@@ -121,4 +121,7 @@ header {
     display: flex;
     flex-direction: column;
     overflow: visible;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
+

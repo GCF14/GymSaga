@@ -7,7 +7,7 @@ let longitude;
 let latitude;
 let destinationLongitude;
 let destinationLatitude;
-
+let tb; 
 
 
 fetch('/api/mapbox-token')
@@ -250,8 +250,15 @@ document.getElementById('findGymButton').addEventListener('click', async () => {
                       container: 'map',
                       style: 'mapbox://styles/fruitpunchsamurai9029/cm55mdtxw004j01rg29w7aawx',
                       center: [longitude, latitude],
-                      pitch: 65,
-                      zoom: 20,
+    
+                    });
+
+                    map.on('load', () => {
+                        map.flyTo({
+                          center: [longitude, latitude],
+                          zoom: 20,
+                          pitch: 65,
+                        });
                     });
                   
                     map.addControl(new mapboxgl.NavigationControl());
@@ -263,7 +270,12 @@ document.getElementById('findGymButton').addEventListener('click', async () => {
 
                     directions.setOrigin([longitude, latitude]);
                     directions.setDestination([destinationLongitude, destinationLatitude]);
+
+                    // const destinationIcon = document.querySelector('.mapbox-directions-destination .mapboxgl-marker');
+                    // destinationIcon.innerHTML = '<img src="./assets/Location_pin.png" />';
+
                     map.addControl(directions, 'top-left');
+
                     
 
                     
@@ -333,7 +345,7 @@ function generatePopupHTML(element) {
     }
 
     return `
-        <h1>Gym Information</h1>
+        <h1 style="margin-bottom: 20px;">Gym Information</h1>
         <p>Name: ${element.properties.name}</p>
         <p>Full Address: ${element.properties.full_address}</p>
         <p>Additional Information</p>
