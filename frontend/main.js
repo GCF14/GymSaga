@@ -3,6 +3,8 @@ let mapboxAccessToken;
 let userMarker;
 let isDefaultMap = false;
 let markers = [];
+let longitude;
+let latitude;
 
 
 fetch('/api/mapbox-token')
@@ -14,62 +16,67 @@ fetch('/api/mapbox-token')
     .catch((error) => console.error('Error fetching Mapbox token:', error));
 
 
-if ("geolocation" in navigator) {
-    navigator.geolocation.watchPosition(
-        async function (position) {
-            const longitude = position.coords.longitude;
-            const latitude = position.coords.latitude;
-
-            if (!map) {
-                map = new mapboxgl.Map({
-                    container: 'map',
-                    style: 'mapbox://styles/fruitpunchsamurai9029/cm50yh9cx00cl01sr685j7gc0',
-                    center: [longitude, latitude],
-                    zoom: 15.87,
-                });
-
-                map.on('load', () => {
-                    originalMapStyle = map.getStyle();
-                    originalMapCenter = map.getCenter();
-                    originalMapZoom = map.getZoom();
-            
-                    userMarker = new mapboxgl.Marker()
-                        .setLngLat([longitude, latitude])
-                        .addTo(map);
-                    
-                    markers.push(userMarker);
-                });
-                
-            } else {
-                map.setCenter([longitude, latitude]);
-                if (userMarker) {
-                    userMarker.setLngLat([longitude, latitude]);
-                } else {
+function initMap() {
+    if ("geolocation" in navigator) {
+        navigator.geolocation.watchPosition(
+            async function (position) {
+                longitude = position.coords.longitude;
+                latitude = position.coords.latitude;
+    
+                if (!map) {
+                    map = new mapboxgl.Map({
+                        container: 'map',
+                        style: 'mapbox://styles/fruitpunchsamurai9029/cm50yh9cx00cl01sr685j7gc0',
+                        center: [longitude, latitude],
+                        zoom: 15.87,
+                    });
+    
                     map.on('load', () => {
+                        originalMapStyle = map.getStyle();
+                        originalMapCenter = map.getCenter();
+                        originalMapZoom = map.getZoom();
+                
                         userMarker = new mapboxgl.Marker()
                             .setLngLat([longitude, latitude])
                             .addTo(map);
+                        
+                        markers.push(userMarker);
                     });
+                    
+                } else {
+                    map.setCenter([longitude, latitude]);
+                    if (userMarker) {
+                        userMarker.setLngLat([longitude, latitude]);
+                    } else {
+                        map.on('load', () => {
+                            userMarker = new mapboxgl.Marker()
+                                .setLngLat([longitude, latitude])
+                                .addTo(map);
+                        });
+                    }
                 }
-            }
-        },
+            },
+    
+            function (error) {
+                console.error('Geolocation error:', error.message);
+    
+                if (error.code === error.PERMISSION_DENIED ||error.code === error.POSITION_UNAVAILABLE ||error.code === error.TIMEOUT ||
+                    error.code === error.UNKNOWN_ERROR) {
+    
+                        defaultMap();
+                }
+    
+            },
+    
+            { enableHighAccuracy: true }
+        );
+    } else {
+        console.error('Geolocation is not supported by this browser.');
+    }
 
-        function (error) {
-            console.error('Geolocation error:', error.message);
-
-            if (error.code === error.PERMISSION_DENIED ||error.code === error.POSITION_UNAVAILABLE ||error.code === error.TIMEOUT ||
-                error.code === error.UNKNOWN_ERROR) {
-
-                    defaultMap();
-            }
-
-        },
-
-        { enableHighAccuracy: true }
-    );
-} else {
-    console.error('Geolocation is not supported by this browser.');
 }
+
+initMap();
 
 
 function defaultMap() {
@@ -84,6 +91,15 @@ function defaultMap() {
         center: [30, 15],
     });
 
+    const geoLocate = new mapboxgl.GeolocateControl({
+        positionOptions: {
+            enableHighAccuracy: true
+        },
+
+        trackUserLocation: true,
+        showUserLocation: true
+    });
+    map.addControl(geoLocate);
     map.addControl(new mapboxgl.NavigationControl());
 
     map.on('style.load', () => {
@@ -151,154 +167,119 @@ function calculateBoundingBox(longitude, latitude, radius) {
 }
 
 
-document.getElementById('findGymButton').addEventListener('click', () => {
+document.getElementById('findGymButton').addEventListener('click', async () => {
     const startTime = performance.now();
 
-    // if (isDefaultMap) {
-    //     map.off();
-    //     map.remove();
-    //     isDefaultMap = false;
-    // }
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(async (position) => {
-            const longitude = position.coords.longitude;
-            const latitude = position.coords.latitude;
+    map.on('load', () => {
+        const mapLoadTime = performance.now(); // Measure time after map load
+        console.log(`Map load time: ${mapLoadTime - startTime} ms`);
+    });
+
+    if (!userMarker) {
+        originalMapStyle = 'mapbox://styles/fruitpunchsamurai9029/cm50yh9cx00cl01sr685j7gc0';
+        originalMapCenter = [longitude, latitude];
+        originalMapZoom = 15.87;
+
+        
+    } 
+
+    try {
+        
+
+        const radius = 1.5; 
+        const bbox = calculateBoundingBox(longitude, latitude, radius);
+
+        const url = `https://api.mapbox.com/search/searchbox/v1/category/fitness_center?access_token=${mapboxAccessToken}&bbox=${bbox.join(',')}&language=en&limit=24`;
+
+        const gymResponse = await fetch(url);
+        const gymData = await gymResponse.json();
+
+        userMarker = new mapboxgl.Marker()
+            .setLngLat([longitude, latitude])
+            .addTo(map);
+        markers.push(userMarker);
+        
+        const markerPromises = gymData.features.map(async (element) => {
+            const marker = new mapboxgl.Marker({ color: '#ff0000' })
+                .setLngLat(element.geometry.coordinates)
+                .addTo(map);
+
+            const popupHTML = generatePopupHTML(element); 
+            const popup = new mapboxgl.Popup({closeOnClick: false, maxWidth: '300px'})
+                .setHTML(popupHTML);
+
+            marker.setPopup(popup);
+            markers.push(marker); 
 
             
-            // if (map) {
-            //     map.setCenter([longitude, latitude]);
-            //     map.setZoom(15.87);
-            // } else {
-            //     map = new mapboxgl.Map({
-            //         container: 'map',
-            //         style: 'mapbox://styles/fruitpunchsamurai9029/cm50yh9cx00cl01sr685j7gc0',
-            //         center: [longitude, latitude],
-            //         zoom: 15.87,
-            //     });
-            // }
+            const container = document.createElement('div');
+            container.className = "findRouteContainer";
+            
+            const button = document.createElement('button');
+            button.textContent = "Detailed Route";
+            button.id = 'findRouteButton'
+            container.appendChild(button);
+            popup._content.appendChild(container);
 
-            // Event listener to measure map load time
-            map.on('load', () => {
-                const mapLoadTime = performance.now(); // Measure time after map load
-                console.log(`Map load time: ${mapLoadTime - startTime} ms`);
-            });
-
-            if (!userMarker) {
-                originalMapStyle = 'mapbox://styles/fruitpunchsamurai9029/cm50yh9cx00cl01sr685j7gc0';
-                originalMapCenter = [longitude, latitude];
-                originalMapZoom = 15.87;
-
-                
-            } 
-
-            try {
-                
+            button.addEventListener('click', () => {
                 if (map) {
                     map.off();
                     map.remove();
-
-                    map = new mapboxgl.Map({
-                        container: 'map',
-                        style: 'mapbox://styles/fruitpunchsamurai9029/cm50yh9cx00cl01sr685j7gc0',
-                        center: [longitude, latitude],
-                        zoom: 15.87,
-                    });
+                    map = null;
                 }
 
-                const radius = 1.5; 
-                const bbox = calculateBoundingBox(longitude, latitude, radius);
-
-                const url = `https://api.mapbox.com/search/searchbox/v1/category/fitness_center?access_token=${mapboxAccessToken}&bbox=${bbox.join(',')}&language=en&limit=24`;
-
-                const gymResponse = await fetch(url);
-                const gymData = await gymResponse.json();
-
-                userMarker = new mapboxgl.Marker()
-                    .setLngLat([longitude, latitude])
-                    .addTo(map);
-                markers.push(userMarker);
-                
-                const markerPromises = gymData.features.map(async (element) => {
-                    const marker = new mapboxgl.Marker({ color: '#ff0000' })
-                        .setLngLat(element.geometry.coordinates)
-                        .addTo(map);
-
-                    const popupHTML = generatePopupHTML(element); 
-                    const popup = new mapboxgl.Popup({closeOnClick: false, maxWidth: '300px'})
-                        .setHTML(popupHTML);
-
-                    marker.setPopup(popup);
-                    markers.push(marker); 
-
-                    
-                    const container = document.createElement('div');
-                    container.className = "findRouteContainer";
-                    
-                    const button = document.createElement('button');
-                    button.textContent = "Detailed Route";
-                    button.id = 'findRouteButton'
-                    container.appendChild(button);
-                    popup._content.appendChild(container);
-
-                    button.addEventListener('click', () => {
-                        if (map) {
-                            map.off();
-                            map.remove();
-                            map = null;
-                        }
-
-                        setTimeout(() => {
-                            map = new mapboxgl.Map({
-                                container: 'map',
-                                style: 'mapbox://styles/fruitpunchsamurai9029/cm55mdtxw004j01rg29w7aawx',
-                                center: [longitude, latitude],
-                                pitch: 65,
-                                zoom: 20,
-                            });
-
-                            const backButtonId = 'backToMapButton';
-                            let backButton = document.getElementById(backButtonId);
-
-                            if (!backButton) {
-                                backButton = document.createElement('button');
-                                backButton.textContent = 'Back';
-                                backButton.id = backButtonId;
-                                document.body.appendChild(backButton);
-                            }
-
-                            
-                            backButton.addEventListener('click', () => {
-                                map.setStyle(originalMapStyle);
-                                map.setCenter(originalMapCenter);
-                                map.setZoom(originalMapZoom);
-                                map.setPitch(0); 
-
-                                
-                                markers.forEach((marker) => {
-                                    marker.addTo(map);
-                                });
-
-                                
-                                backButton.remove();
-                            });
-                        }, 500); 
+                setTimeout(() => {
+                    map = new mapboxgl.Map({
+                        container: 'map',
+                        style: 'mapbox://styles/fruitpunchsamurai9029/cm55mdtxw004j01rg29w7aawx',
+                        center: [longitude, latitude],
+                        pitch: 65,
+                        zoom: 20,
                     });
-                });
 
-                await Promise.all(markerPromises); 
+                    const backButtonId = 'backToMapButton';
+                    let backButton = document.getElementById(backButtonId);
 
-                // Used for debugging by keeping track of results
-                console.log('Gyms within 1.5 km radius:', gymData.features);
+                    if (!backButton) {
+                        backButton = document.createElement('button');
+                        backButton.textContent = 'Back';
+                        backButton.id = backButtonId;
+                        document.body.appendChild(backButton);
+                    }
 
-                const endTime = performance.now(); // End measuring time
-                console.log(`Total execution time: ${endTime - startTime} ms`);
-            } catch (error) {
-                console.error('Error:', error);
-            }
+                    
+                    backButton.addEventListener('click', () => {
+                        map.setStyle(originalMapStyle);
+                        map.setCenter(originalMapCenter);
+                        map.setZoom(originalMapZoom);
+                        map.setPitch(0); 
+
+                        
+                        markers.forEach((marker) => {
+                            marker.addTo(map);
+                        });
+
+                        
+                        backButton.remove();
+                    });
+                }, 500); 
+            });
         });
+
+        await Promise.all(markerPromises); 
+
+        // Used for debugging by keeping track of results
+        console.log('Gyms within 1.5 km radius:', gymData.features);
+
+        const endTime = performance.now(); // End measuring time
+        console.log(`Total execution time: ${endTime - startTime} ms`);
+    } catch (error) {
+        console.error('Error:', error);
     }
-});
+  
+    
+  });
 
 function generatePopupHTML(element) {
     let openingHoursHTML = '';
