@@ -6,6 +6,7 @@
     <title>Gym Map</title>
 
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.9.1/mapbox-gl.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.3.1/mapbox-gl-directions.css" type="text/css">
     
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.9.1/mapbox-gl.js"></script>
     <link rel="stylesheet" href="style.css">
@@ -13,7 +14,18 @@
 </head>
 <body>
 
-    <h1>Fit Mates</h1>
+    <header>
+        <img class="logo" src="./assets/Logo.png" alt="logo">
+        <ul class="nav_links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Find Gym</a></li>
+        </ul>
+
+        <a class="headerButton" href="#">Log out</a>
+
+    </header>
+    
 
     <div id="map"></div>
 
@@ -21,6 +33,8 @@
     
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
+    <script src='https://unpkg.com/@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.js'></script>
     <script src="main.js"></script>
 </body>
 </html>

@@ -5,6 +5,9 @@ let isDefaultMap = false;
 let markers = [];
 let longitude;
 let latitude;
+let destinationLongitude;
+let destinationLatitude;
+
 
 
 fetch('/api/mapbox-token')
@@ -15,6 +18,19 @@ fetch('/api/mapbox-token')
     })
     .catch((error) => console.error('Error fetching Mapbox token:', error));
 
+const geoLocate = new mapboxgl.GeolocateControl({
+    positionOptions: {
+        enableHighAccuracy: true
+    },
+    trackUserLocation: true,
+    showUserLocation: true
+});
+
+geoLocate.on('geolocate', (e) => {
+    const coordinates = e.coords;
+    longitude = coordinates.longitude;
+    latitude = coordinates.latitude;
+});
 
 function initMap() {
     if ("geolocation" in navigator) {
@@ -41,6 +57,7 @@ function initMap() {
                             .addTo(map);
                         
                         markers.push(userMarker);
+                        map.addControl(new mapboxgl.NavigationControl());
                     });
                     
                 } else {
@@ -75,6 +92,7 @@ function initMap() {
     }
 
 }
+    
 
 initMap();
 
@@ -91,14 +109,6 @@ function defaultMap() {
         center: [30, 15],
     });
 
-    const geoLocate = new mapboxgl.GeolocateControl({
-        positionOptions: {
-            enableHighAccuracy: true
-        },
-
-        trackUserLocation: true,
-        showUserLocation: true
-    });
     map.addControl(geoLocate);
     map.addControl(new mapboxgl.NavigationControl());
 
@@ -167,119 +177,144 @@ function calculateBoundingBox(longitude, latitude, radius) {
 }
 
 
+
 document.getElementById('findGymButton').addEventListener('click', async () => {
     const startTime = performance.now();
 
 
-    map.on('load', () => {
-        const mapLoadTime = performance.now(); // Measure time after map load
-        console.log(`Map load time: ${mapLoadTime - startTime} ms`);
-    });
+    if(isNaN(longitude) && isNaN(latitude)) {
+        alert("Please enable geolocation to discover nearby gyms.");
+    } else {
 
-    if (!userMarker) {
-        originalMapStyle = 'mapbox://styles/fruitpunchsamurai9029/cm50yh9cx00cl01sr685j7gc0';
-        originalMapCenter = [longitude, latitude];
-        originalMapZoom = 15.87;
-
-        
-    } 
-
-    try {
-        
-
-        const radius = 1.5; 
-        const bbox = calculateBoundingBox(longitude, latitude, radius);
-
-        const url = `https://api.mapbox.com/search/searchbox/v1/category/fitness_center?access_token=${mapboxAccessToken}&bbox=${bbox.join(',')}&language=en&limit=24`;
-
-        const gymResponse = await fetch(url);
-        const gymData = await gymResponse.json();
-
-        userMarker = new mapboxgl.Marker()
-            .setLngLat([longitude, latitude])
-            .addTo(map);
-        markers.push(userMarker);
-        
-        const markerPromises = gymData.features.map(async (element) => {
-            const marker = new mapboxgl.Marker({ color: '#ff0000' })
-                .setLngLat(element.geometry.coordinates)
+        map.on('load', () => {
+            const mapLoadTime = performance.now(); // Measure time after map load
+            console.log(`Map load time: ${mapLoadTime - startTime} ms`);
+        });
+    
+        if (!userMarker) {
+            originalMapStyle = 'mapbox://styles/fruitpunchsamurai9029/cm50yh9cx00cl01sr685j7gc0';
+            originalMapCenter = [longitude, latitude];
+            originalMapZoom = 15.87;
+    
+            userMarker = new mapboxgl.Marker()
+                .setLngLat([longitude, latitude])
                 .addTo(map);
-
-            const popupHTML = generatePopupHTML(element); 
-            const popup = new mapboxgl.Popup({closeOnClick: false, maxWidth: '300px'})
-                .setHTML(popupHTML);
-
-            marker.setPopup(popup);
-            markers.push(marker); 
-
+            markers.push(userMarker);
             
-            const container = document.createElement('div');
-            container.className = "findRouteContainer";
+        } 
+    
+        try {
             
-            const button = document.createElement('button');
-            button.textContent = "Detailed Route";
-            button.id = 'findRouteButton'
-            container.appendChild(button);
-            popup._content.appendChild(container);
-
-            button.addEventListener('click', () => {
-                if (map) {
-                    map.off();
-                    map.remove();
-                    map = null;
-                }
-
-                setTimeout(() => {
+    
+            const radius = 1.5; 
+            const bbox = calculateBoundingBox(longitude, latitude, radius);
+    
+            const url = `https://api.mapbox.com/search/searchbox/v1/category/fitness_center?access_token=${mapboxAccessToken}&bbox=${bbox.join(',')}&language=en&limit=24`;
+    
+            const gymResponse = await fetch(url);
+            const gymData = await gymResponse.json();
+            
+            const markerPromises = gymData.features.map(async (element) => {
+                const marker = new mapboxgl.Marker({ color: '#ff0000' })
+                    .setLngLat(element.geometry.coordinates)
+                    .addTo(map);
+    
+                const popupHTML = generatePopupHTML(element); 
+                const popup = new mapboxgl.Popup({closeOnClick: false, maxWidth: '300px'})
+                    .setHTML(popupHTML);
+    
+                marker.setPopup(popup);
+                markers.push(marker); 
+    
+                
+                const container = document.createElement('div');
+                container.className = "findRouteContainer";
+                
+                const button = document.createElement('button');
+                button.textContent = "Detailed Route";
+                button.id = 'findRouteButton'
+                container.appendChild(button);
+                popup._content.appendChild(container);
+    
+                button.addEventListener('click', () => {
+                    destinationLongitude = element.geometry.coordinates[0];
+                    destinationLatitude = element.geometry.coordinates[1];
+                    
+                    if (map) {
+                      map.off();
+                      map.remove();
+                      map = null;
+                    }
+                  
                     map = new mapboxgl.Map({
-                        container: 'map',
-                        style: 'mapbox://styles/fruitpunchsamurai9029/cm55mdtxw004j01rg29w7aawx',
-                        center: [longitude, latitude],
-                        pitch: 65,
-                        zoom: 20,
+                      container: 'map',
+                      style: 'mapbox://styles/fruitpunchsamurai9029/cm55mdtxw004j01rg29w7aawx',
+                      center: [longitude, latitude],
+                      pitch: 65,
+                      zoom: 20,
+                    });
+                  
+                    map.addControl(new mapboxgl.NavigationControl());
+                    
+                    const directions = new MapboxDirections({
+                        accessToken: mapboxgl.accessToken,
+                        interactive: false 
                     });
 
-                    const backButtonId = 'backToMapButton';
-                    let backButton = document.getElementById(backButtonId);
-
-                    if (!backButton) {
-                        backButton = document.createElement('button');
-                        backButton.textContent = 'Back';
-                        backButton.id = backButtonId;
-                        document.body.appendChild(backButton);
-                    }
+                    directions.setOrigin([longitude, latitude]);
+                    directions.setDestination([destinationLongitude, destinationLatitude]);
+                    map.addControl(directions, 'top-left');
+                    
 
                     
+                  
+                    const backButtonId = 'backToMapButton';
+                    let backButton = document.getElementById(backButtonId);
+                  
+                    if (!backButton) {
+                      backButton = document.createElement('button');
+                      backButton.textContent = 'Back';
+                      backButton.id = backButtonId;
+                      document.body.appendChild(backButton);
+                    }
+                  
                     backButton.addEventListener('click', () => {
+                        map.removeControl(directions);
+                    
                         map.setStyle(originalMapStyle);
                         map.setCenter(originalMapCenter);
                         map.setZoom(originalMapZoom);
-                        map.setPitch(0); 
-
-                        
+                        map.setPitch(0);
+                    
                         markers.forEach((marker) => {
                             marker.addTo(map);
                         });
-
+                    
                         
+                    
                         backButton.remove();
                     });
-                }, 500); 
+                  });
             });
-        });
-
-        await Promise.all(markerPromises); 
-
-        // Used for debugging by keeping track of results
-        console.log('Gyms within 1.5 km radius:', gymData.features);
-
-        const endTime = performance.now(); // End measuring time
-        console.log(`Total execution time: ${endTime - startTime} ms`);
-    } catch (error) {
-        console.error('Error:', error);
-    }
-  
     
-  });
+            await Promise.all(markerPromises); 
+    
+            // Used for debugging by keeping track of results
+            console.log('Gyms within 1.5 km radius:', gymData.features);
+    
+            const endTime = performance.now(); // End measuring time
+            console.log(`Total execution time: ${endTime - startTime} ms`);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+
+    }
+    
+  
+});
+    
+  
+  
 
 function generatePopupHTML(element) {
     let openingHoursHTML = '';
