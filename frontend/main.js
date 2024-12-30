@@ -7,7 +7,7 @@ let longitude;
 let latitude;
 let destinationLongitude;
 let destinationLatitude;
-let tb; 
+
 
 
 fetch('/api/mapbox-token')
@@ -248,7 +248,7 @@ document.getElementById('findGymButton').addEventListener('click', async () => {
                   
                     map = new mapboxgl.Map({
                       container: 'map',
-                      style: 'mapbox://styles/fruitpunchsamurai9029/cm55mdtxw004j01rg29w7aawx',
+                      style: 'mapbox://styles/mapbox/standard',
                       center: [longitude, latitude],
     
                     });
@@ -271,8 +271,6 @@ document.getElementById('findGymButton').addEventListener('click', async () => {
                     directions.setOrigin([longitude, latitude]);
                     directions.setDestination([destinationLongitude, destinationLatitude]);
 
-                    // const destinationIcon = document.querySelector('.mapbox-directions-destination .mapboxgl-marker');
-                    // destinationIcon.innerHTML = '<img src="./assets/Location_pin.png" />';
 
                     map.addControl(directions, 'top-left');
 
