@@ -27,11 +27,11 @@ export default function Home() {
           <Navbar />
         </div>
         <div className="flex items-center mr-4 flex-1 justify-end">
+        <Link href="/settings">
           <Button variant="outline" size="icon" className="mr-4">
-            <Link href="/settings">
               <Settings className="h-[1.2rem] w-[1.2rem}" />
-            </Link>
           </Button>
+        </Link>
           <ModeToggle />
         </div>
       </header>
