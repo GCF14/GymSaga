@@ -1,0 +1,37 @@
+
+
+#map {
+    height: 660px;
+    position: relative;
+    width: 100%;
+  }
+  
+  #findGymButton {
+    background-color: #2c3e50;
+    border: none;
+    border-radius: 5px;
+    bottom: 70px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    left: 50%;
+    padding: 10px 20px;
+    position: absolute;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
+
+  
+  .mapboxgl-popup-content {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: white; /* Ensures the background is white */
+    border: 1px solid #ccc; /* Adds a light border to the popup */
+    border-radius: 8px; /* Rounded corners for the popup */
+    color:black
+  }
+  

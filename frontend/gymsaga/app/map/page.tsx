@@ -7,8 +7,10 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { Settings } from "lucide-react";
 import Link from "next/link";
+import Map from '../../components/Map/map';
+import './style.css';
 
-export default function Map() {
+export default function MapPage() {
   const { resolvedTheme } = useTheme();
 
   return (
@@ -44,7 +46,11 @@ export default function Map() {
             <ModeToggle />
           </div>
         </header>
-        <div className="mt-16 w-full h-[calc(100vh-8rem)] bg-white overflow-hidden rounded">
+        
+        <div className="mt-16 w-full h-[calc(100vh-8rem)] bg-white overflow-hidden rounded border">
+          <div id="map" className="w-full h-full rounded">
+            <Map />
+          </div>
         </div>
       </div>
     </>
