@@ -2,8 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
+  overflow: auto;
 }
 
 @layer utilities {
