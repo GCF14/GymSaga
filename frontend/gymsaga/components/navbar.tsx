@@ -21,7 +21,7 @@ export default function Navbar() {
                 </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-                <Link href="/login" passHref> 
+                <Link href="/" passHref> 
                     <NavigationMenuLink className={navigationMenuTriggerStyle()}>Home</NavigationMenuLink>
                 </Link>
             </NavigationMenuItem>
