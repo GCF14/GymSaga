@@ -11,7 +11,6 @@ export default function Home() {
         height={200}
         alt="GymSaga Logo"/>
       <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl mb-8">Welcome to GymSaga</h1>
-      <LoginForm />
     </div>
   );
 }

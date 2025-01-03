@@ -16,7 +16,11 @@ import { Input, TextField } from "@/components/ui/textfield"
 export const description =
   "A login form with email and password. There's an option to login with Google and a link to sign up if you don't have an account."
 
-export function LoginForm() {
+interface LoginFormProps {
+  onSwitch: () => void;
+}
+
+export function LoginForm({ onSwitch }: LoginFormProps) {
   return (
     <Card className="mx-auto max-w-sm">
       <CardHeader>
@@ -54,9 +58,9 @@ export function LoginForm() {
         </div>
         <div className="mt-4 text-center text-sm">
           Don&apos;t have an account?{" "}
-          <Link href="#" className="underline">
+          <button onClick={onSwitch} className="underline">
             Sign up
-          </Link>
+          </button>
         </div>
       </CardContent>
     </Card>
