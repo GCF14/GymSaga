@@ -1,9 +1,4 @@
-type Workout = {
-    title: string;
-    load: number;
-    reps: number;
-    createdAt: string;
-};
+import { Workout } from "@/types/workout"; 
 
 const WorkoutDetails = ({ workout }: { workout: Workout }) => {
     return (

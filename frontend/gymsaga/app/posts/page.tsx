@@ -2,17 +2,11 @@
 import { useEffect, useState } from 'react'
 import NavigationBar from "@/components/navigation-bar";
 import WorkoutDetails from "@/components/testingBackend/WorkoutDetails";
+import { Workout } from "@/types/workout"; 
 import './style.css';
 
 const port = process.env.NEXT_PUBLIC_PORT;
 
-type Workout = {
-  _id: string;
-  title: string;
-  load: number;
-  reps: number;
-  createdAt: string;
-};
 
 export default function Posts() {
 
