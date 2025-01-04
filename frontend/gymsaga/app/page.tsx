@@ -47,7 +47,7 @@ export default function Home() {
         </header>
         <div className="mt-16">
           <h1 className="text-9xl font-bold text-center text-primary">
-            Welcome to GymSaga Welcome to GymSaga Welcome to GymSaga Welcome to GymSaga Welcome to GymSaga Welcome to GymSaga
+            Home Page Home Page Home Page Home Page Home Page Home Page Home Page Home Page Home Page Home Page Home Page Home Page Home Page Home Page Home Page Home Page Home Page Home Page Home Page 
           </h1>
         </div>
       </div>

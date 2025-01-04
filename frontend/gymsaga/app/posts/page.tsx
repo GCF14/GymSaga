@@ -7,13 +7,13 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-export default function Profile() {
+export default function Posts() {
   const { resolvedTheme } = useTheme();
 
   return (
     <>
       <head>
-        <title>GymSaga - Profile</title>
+        <title>GymSaga - Posts Testing Page</title>
         <meta name="description" content="GymSaga Profile" />
       </head>
       <div className="w-full h-full items-center flex flex-col bg-background p-8 scrollbar-hide">
@@ -46,9 +46,6 @@ export default function Profile() {
           </div>
         </header>
         <div className="mt-16">
-          <h1 className="text-9xl font-bold text-center text-primary">
-            Profile Page Profile Page Profile Page Profile Page Profile Page Profile Page Profile Page Profile Page Profile Page Profile Page Profile Page Profile Page Profile Page Profile Page 
-          </h1>
         </div>
       </div>
     </>
