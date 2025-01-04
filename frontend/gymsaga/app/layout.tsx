@@ -32,7 +32,19 @@ export default function RootLayout({
           href="https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css"
           rel="stylesheet"
         />
-        {/* Other global meta tags */}
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+        <style>
+          {`
+            .material-symbols-rounded {
+              font-variation-settings:
+              'FILL' 0,
+              'wght' 300,
+              'GRAD' 0,
+              'opsz' 24;
+              font-size: 20px;
+            }
+          `}
+        </style>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

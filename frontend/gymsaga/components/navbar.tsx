@@ -31,7 +31,7 @@ export default function Navbar() {
                 </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-                <Link href="/login" passHref> 
+                <Link href="/profile" passHref> 
                     <NavigationMenuLink className={navigationMenuTriggerStyle()}>Profile</NavigationMenuLink>
                 </Link>
             </NavigationMenuItem>

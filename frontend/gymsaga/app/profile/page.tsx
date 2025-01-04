@@ -7,14 +7,14 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-export default function Home() {
+export default function Profile() {
   const { resolvedTheme } = useTheme();
 
   return (
     <>
       <head>
-        <title>GymSaga - Home</title>
-        <meta name="description" content="GymSaga Home" />
+        <title>GymSaga - Profile</title>
+        <meta name="description" content="GymSaga Profile" />
       </head>
       <div className="w-full h-full items-center flex flex-col bg-background p-8 scrollbar-hide">
         <header className="fixed top-0 z-50 flex items-center justify-between w-full h-16 bg-transparent backdrop-blur-md shadow-md border-solid border-b">
