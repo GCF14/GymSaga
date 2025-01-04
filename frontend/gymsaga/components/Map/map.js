@@ -6,61 +6,100 @@ const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
 const MapboxExample = () => {
   const mapContainerRef = useRef();
-  const userMarkerRef = useRef(null); 
-  const [map, setMap] = useState(null); 
-  const [geolocationEnabled, setGeolocationEnabled] = useState(false); 
+  const mapInstanceRef = useRef(null);
+  const userMarkerRef = useRef(null);
+  const [geolocationEnabled, setGeolocationEnabled] = useState(false);
   const [userLongitude, setUserLongitude] = useState(null);
   const [userLatitude, setUserLatitude] = useState(null);
   const [markers, setMarkers] = useState([]);
+  const [isDefaultMap, setIsDefaultMap] = useState(true);
 
   useEffect(() => {
     mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
 
-    
-    if ("geolocation" in navigator) {
+    if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setUserLongitude(position.coords.longitude);
-          setUserLatitude(position.coords.latitude);
+          const { longitude, latitude } = position.coords;
+          setUserLongitude(longitude);
+          setUserLatitude(latitude);
+          console.log(userLongitude);
+          console.log(userLatitude)
           setGeolocationEnabled(true);
-          initializeMapWithUserLocation(position.coords.latitude, position.coords.longitude);
+          initializeMapWithUserLocation(latitude, longitude, 15.87);
         },
         (error) => {
-          
           console.error('Geolocation error:', error.message);
-          initializeDefaultMap(); 
+          initializeDefaultMap();
         },
         { enableHighAccuracy: true }
       );
     } else {
       console.error('Geolocation is not supported by this browser.');
-      initializeDefaultMap(); 
+      initializeDefaultMap();
     }
-  }, []); 
+  }, []); // Run only on component mount
 
-  const initializeMapWithUserLocation = (latitude, longitude) => {
-    const mapInstance = new mapboxgl.Map({
-      container: mapContainerRef.current,
-      style: 'mapbox://styles/mapbox/streets-v9',
-      center: [longitude, latitude],
-      zoom: 15.87,
-    });
-
-    setMap(mapInstance);
-
-    // Add a marker at the user's location
-    userMarkerRef.current = new mapboxgl.Marker()
-      .setLngLat([longitude, latitude])
-      .addTo(mapInstance);
-
-    
-    mapInstance.addControl(new mapboxgl.NavigationControl());
-    mapInstance.on('style.load', () => {
-      mapInstance.setFog({});
-    });
+  const initializeMapWithUserLocation = (latitude, longitude, zoom = 15.87, isDefaultMap) => {
+    if (isDefaultMap) {
+      // Add a delay if it's the default map
+      setTimeout(() => {
+        if (mapInstanceRef.current) {
+          mapInstanceRef.current.remove();
+        }
+  
+        const mapInstance = new mapboxgl.Map({
+          container: mapContainerRef.current,
+          style: 'mapbox://styles/mapbox/streets-v9',
+          center: [longitude, latitude],
+          zoom,
+        });
+  
+        mapInstanceRef.current = mapInstance;
+        setIsDefaultMap(false);
+  
+        userMarkerRef.current = new mapboxgl.Marker()
+          .setLngLat([longitude, latitude])
+          .addTo(mapInstance);
+  
+        mapInstance.addControl(new mapboxgl.NavigationControl());
+        mapInstance.on('style.load', () => {
+          mapInstance.setFog({});
+        });
+      }, 6000); // Delay in milliseconds (1 second per 1000)
+    } else {
+      // Initialize the map immediately if it's not the default map
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+      }
+  
+      const mapInstance = new mapboxgl.Map({
+        container: mapContainerRef.current,
+        style: 'mapbox://styles/mapbox/streets-v9',
+        center: [longitude, latitude],
+        zoom,
+      });
+  
+      mapInstanceRef.current = mapInstance;
+      setIsDefaultMap(false);
+  
+      userMarkerRef.current = new mapboxgl.Marker()
+        .setLngLat([longitude, latitude])
+        .addTo(mapInstance);
+  
+      mapInstance.addControl(new mapboxgl.NavigationControl());
+      mapInstance.on('style.load', () => {
+        mapInstance.setFog({});
+      });
+    }
   };
+  
 
   const initializeDefaultMap = () => {
+    if (mapInstanceRef.current) {
+      mapInstanceRef.current.remove();
+    }
+
     const mapInstance = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v9',
@@ -69,31 +108,37 @@ const MapboxExample = () => {
       center: [30, 15],
     });
 
-    setMap(mapInstance);
+    mapInstanceRef.current = mapInstance;
+    setIsDefaultMap(true);
 
     const geoLocate = new mapboxgl.GeolocateControl({
-      positionOptions: {
-        enableHighAccuracy: true,
-      },
+      positionOptions: { enableHighAccuracy: true },
       trackUserLocation: true,
+    });
+
+    mapInstance.addControl(geoLocate);
+    mapInstance.addControl(new mapboxgl.NavigationControl());
+    mapInstance.on('style.load', () => {
+      mapInstance.setFog({});
     });
 
     geoLocate.on('geolocate', (event) => {
       const { longitude, latitude } = event.coords;
       setUserLongitude(longitude);
       setUserLatitude(latitude);
-
-      
-      
-
-    });
-
-    mapInstance.addControl(geoLocate);
-    mapInstance.addControl(new mapboxgl.NavigationControl());
-
-    mapInstance.on('style.load', () => {
-      mapInstance.setFog({});
-      
+      setGeolocationEnabled(true);
+    
+      if (isDefaultMap) {
+        mapInstanceRef.current.flyTo({
+          center: [longitude, latitude],
+          zoom: 15.87,
+          essential: true,
+        });
+        initializeMapWithUserLocation(latitude, longitude, 15.87, isDefaultMap);
+        setIsDefaultMap(false);
+      } else {
+        initializeMapWithUserLocation(latitude, longitude, 15.87);
+      }
     });
 
     const secondsPerRevolution = 240;
@@ -133,58 +178,40 @@ const MapboxExample = () => {
   };
 
   const handleFindGymButtonClick = async () => {
-    const startTime = performance.now();
+    if (isDefaultMap) {
+      alert('Please enable geolocation to discover nearby gyms.');
+      return;
+    }
 
-    const radius = 1.5; 
+    const radius = 1.5; // km
     const bbox = calculateBoundingBox(userLongitude, userLatitude, radius);
     const url = `https://api.mapbox.com/search/searchbox/v1/category/fitness_center?access_token=${MAPBOX_ACCESS_TOKEN}&bbox=${bbox.join(',')}&language=en&limit=24`;
-    const gymResponse = await fetch(url);
-    const gymData = await gymResponse.json();
 
-    console.log(userLongitude);
-    console.log(userLatitude);
-    console.log('Gyms within 1.5 km radius:', gymData.features);
+    try {
+      const gymResponse = await fetch(url);
+      const gymData = await gymResponse.json();
 
+      markers.forEach((marker) => marker.remove());
+      setMarkers([]);
 
-    if (isNaN(userLongitude) && isNaN(userLatitude)) {
-        alert("Please enable geolocation to discover nearby gyms.");
-      } else {
-        const radius = 1.5; 
-        const bbox = calculateBoundingBox(userLongitude, userLatitude, radius);
-        const url = `https://api.mapbox.com/search/searchbox/v1/category/fitness_center?access_token=${MAPBOX_ACCESS_TOKEN}&bbox=${bbox.join(',')}&language=en&limit=24`;
-    
-        try {
-            
-            const gymResponse = await fetch(url);
-            const gymData = await gymResponse.json();
-    
-          markers.forEach((marker) => {
-            marker.remove();
-          });
-          setMarkers([]);
-    
-          const markerPromises = gymData.features.map(async (element) => {
-            const marker = new mapboxgl.Marker({ color: '#ff0000' })
-              .setLngLat(element.geometry.coordinates)
-              .addTo(map);
-    
-            const popupHTML = generatePopupHTML(element); 
-            const popup = new mapboxgl.Popup({closeOnClick: true, maxWidth: '300px'})
-              .setHTML(popupHTML);
-            marker.setPopup(popup);
-            setMarkers((prevMarkers) => [...prevMarkers, marker]);
+      const markerPromises = gymData.features.map((element) => {
+        const marker = new mapboxgl.Marker({ color: '#ff0000' })
+          .setLngLat(element.geometry.coordinates)
+          .addTo(mapInstanceRef.current);
 
-          });
-    
-          await Promise.all(markerPromises);
-    
-          console.log('Gyms within 1.5 km radius:', gymData.features);
-        } catch (error) {
-          console.error('Error:', error);
-        }
-      }
+        const popupHTML = generatePopupHTML(element);
+        const popup = new mapboxgl.Popup({ closeOnClick: true, maxWidth: '300px' })
+          .setHTML(popupHTML);
+        marker.setPopup(popup);
+        setMarkers((prevMarkers) => [...prevMarkers, marker]);
+      });
 
-    
+      await Promise.all(markerPromises);
+
+      console.log('Gyms within 1.5 km radius:', gymData.features);
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   function toRad(degrees) {
@@ -211,33 +238,29 @@ const MapboxExample = () => {
   }
 
   function generatePopupHTML(element) {
-
     let openingHoursHTML = '';
 
-    
     if (element.properties.metadata?.open_hours && element.properties.metadata.open_hours !== 'Not available') {
-        const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-        openingHoursHTML = element.properties.metadata.open_hours.periods?.map((period) => {
-            const day = days[period.open.day];
-            const openTime = `${period.open.time.slice(0, 2)}:${period.open.time.slice(2)}`;
-            const closeTime = `${period.close.time.slice(0, 2)}:${period.close.time.slice(2)}`;
-            return `<p>${day}: ${openTime} - ${closeTime}</p>`;
-        }).join('') || '<p>Opening hours not available.</p>';
+      const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+      openingHoursHTML = element.properties.metadata.open_hours.periods?.map((period) => {
+        const day = days[period.open.day];
+        const openTime = `${period.open.time.slice(0, 2)}:${period.open.time.slice(2)}`;
+        const closeTime = `${period.close.time.slice(0, 2)}:${period.close.time.slice(2)}`;
+        return `<p>${day}: ${openTime} - ${closeTime}</p>`;
+      }).join('') || '<p>Opening hours not available.</p>';
     } else {
-        openingHoursHTML = '<p>Opening hours not available.</p>';
+      openingHoursHTML = '<p>Opening hours not available.</p>';
     }
 
     return `
-        <h1 style="margin-bottom: 20px;">Gym Information</h1>
-        <p>Name: ${element.properties.name}</p>
-        <p>Full Address: ${element.properties.full_address}</p>
-        <p>Additional Information</p>
-        <p>Phone Number: ${element.properties.metadata?.phone ?? 'Not available'}</p>
-        <p>Opening Hours:</p>
-        ${openingHoursHTML}
-        <p>Website: ${element.properties.metadata?.website ?? 'Not available'}</p>
+      <h1 style="margin-bottom: 20px;">Gym Information</h1>
+      <p>Name: ${element.properties.name}</p>
+      <p>Full Address: ${element.properties.full_address}</p>
+      <p>Phone Number: ${element.properties.metadata?.phone ?? 'Not available'}</p>
+      <p>Opening Hours:</p>
+      ${openingHoursHTML}
+      <p>Website: ${element.properties.metadata?.website ?? 'Not available'}</p>
     `;
-
   }
 
   useEffect(() => {
@@ -247,7 +270,6 @@ const MapboxExample = () => {
     }
 
     return () => {
-      const findGymButton = document.getElementById('findGymButton');
       if (findGymButton) {
         findGymButton.removeEventListener('click', handleFindGymButtonClick);
       }
