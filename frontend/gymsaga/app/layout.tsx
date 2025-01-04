@@ -43,6 +43,9 @@ export default function RootLayout({
               'opsz' 24;
               font-size: 20px;
             }
+            .material-symbols-rounded.large {
+              font-size: 100px;
+            }
           `}
         </style>
       </head>
