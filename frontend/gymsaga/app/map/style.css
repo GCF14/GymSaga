@@ -29,9 +29,9 @@
     overflow: visible;
     margin-top: 20px;
     margin-bottom: 20px;
-    background-color: white; /* Ensures the background is white */
-    border: 1px solid #ccc; /* Adds a light border to the popup */
-    border-radius: 8px; /* Rounded corners for the popup */
+    background-color: white; 
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
     color:black
   }
   

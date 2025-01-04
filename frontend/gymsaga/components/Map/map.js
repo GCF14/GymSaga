@@ -1,83 +1,66 @@
-// components/Map.js
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
-const Map = () => {
-    const mapContainerRef = useRef(null);
-    const [map, setMap] = useState(null);
-    const [userMarker, setUserMarker] = useState(null);
-    const [userLongitude, setUserLongitude] = useState(null);
-    const [userLatitude, setUserLatitude] = useState(null);
-    const [markers, setMarkers] = useState([]);
-    
+const MapboxExample = () => {
+  const mapContainerRef = useRef();
+  const userMarkerRef = useRef(null); 
+  const [map, setMap] = useState(null); 
+  const [geolocationEnabled, setGeolocationEnabled] = useState(false); 
+  const [userLongitude, setUserLongitude] = useState(null);
+  const [userLatitude, setUserLatitude] = useState(null);
+  const [markers, setMarkers] = useState([]);
 
   useEffect(() => {
     mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
-    initMap();
-  }, []);
-  
 
-  const initMap = () => {
+    
     if ("geolocation" in navigator) {
-      navigator.geolocation.watchPosition(
-        async function (position) {
-          const longitude = position.coords.longitude;
-          const latitude = position.coords.latitude;
-
-          setUserLongitude(longitude);
-          setUserLatitude(latitude);
-
-          if (!map) {
-            const mapInstance = new mapboxgl.Map({
-              container: mapContainerRef.current,
-              style: 'mapbox://styles/mapbox/streets-v9',
-              center: [longitude, latitude],
-              zoom: 15.87,
-            });
-
-            setMap(mapInstance);
-
-            mapInstance.on('load', () => {
-              const userMarkerInstance = new mapboxgl.Marker()
-                .setLngLat([longitude, latitude])
-                .addTo(mapInstance);
-
-              setUserMarker(userMarkerInstance);
-              mapInstance.addControl(new mapboxgl.NavigationControl());
-            });
-          } else {
-            map.setCenter([longitude, latitude]);
-            if (userMarker) {
-              userMarker.setLngLat([longitude, latitude]);
-            }
-          }
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLongitude(position.coords.longitude);
+          setUserLatitude(position.coords.latitude);
+          setGeolocationEnabled(true);
+          initializeMapWithUserLocation(position.coords.latitude, position.coords.longitude);
         },
-
-        function (error) {
+        (error) => {
+          
           console.error('Geolocation error:', error.message);
-
-          if (error.code === error.PERMISSION_DENIED || error.code === error.POSITION_UNAVAILABLE || error.code === error.TIMEOUT ||
-            error.code === error.UNKNOWN_ERROR) {
-
-            defaultMap();
-          }
+          initializeDefaultMap(); 
         },
-
         { enableHighAccuracy: true }
       );
     } else {
       console.error('Geolocation is not supported by this browser.');
-      defaultMap();
+      initializeDefaultMap(); 
     }
+  }, []); 
+
+  const initializeMapWithUserLocation = (latitude, longitude) => {
+    const mapInstance = new mapboxgl.Map({
+      container: mapContainerRef.current,
+      style: 'mapbox://styles/mapbox/streets-v9',
+      center: [longitude, latitude],
+      zoom: 15.87,
+    });
+
+    setMap(mapInstance);
+
+    // Add a marker at the user's location
+    userMarkerRef.current = new mapboxgl.Marker()
+      .setLngLat([longitude, latitude])
+      .addTo(mapInstance);
+
+    
+    mapInstance.addControl(new mapboxgl.NavigationControl());
+    mapInstance.on('style.load', () => {
+      mapInstance.setFog({});
+    });
   };
 
-  const defaultMap = () => {
-    if (map) {
-      map.remove();
-    }
-
+  const initializeDefaultMap = () => {
     const mapInstance = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v9',
@@ -95,11 +78,22 @@ const Map = () => {
       trackUserLocation: true,
     });
 
+    geoLocate.on('geolocate', (event) => {
+      const { longitude, latitude } = event.coords;
+      setUserLongitude(longitude);
+      setUserLatitude(latitude);
+
+      
+      
+
+    });
+
     mapInstance.addControl(geoLocate);
     mapInstance.addControl(new mapboxgl.NavigationControl());
 
     mapInstance.on('style.load', () => {
       mapInstance.setFog({});
+      
     });
 
     const secondsPerRevolution = 240;
@@ -259,16 +253,17 @@ const Map = () => {
       }
     };
   }, [handleFindGymButtonClick]);
-  
 
   return (
     <div>
       <button id="findGymButton">Find Gyms</button>
-      <div ref={mapContainerRef} id="map" className="h-screen w-full" />
+      <div
+        style={{ width: '100%', height: '100vh' }}
+        ref={mapContainerRef}
+        className="map-container"
+      />
     </div>
   );
-
-
 };
 
-export default Map;
+export default MapboxExample;

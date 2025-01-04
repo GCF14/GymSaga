@@ -48,10 +48,8 @@ export default function MapPage() {
           </div>
         </header>
         
-        <div className="mt-16 w-full h-[calc(100vh-8rem)] bg-white overflow-hidden rounded-md border">
-          <div id="map" className="w-full h-full rounded">
-            <Map />
-          </div>
+        <div className="mt-16 w-full h-[calc(100vh-8rem)] bg-white overflow-hidden rounded border">
+          <Map />
         </div>
       </div>
     </>
