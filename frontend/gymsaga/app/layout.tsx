@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { WorkoutsContextProvider } from '@/context/WorkoutsContext';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -57,7 +58,10 @@ export default function RootLayout({
         defaultTheme="system"
         enableSystem
         disableTransitionOnChange>
-          {children}
+          <WorkoutsContextProvider>
+            {children}
+
+          </WorkoutsContextProvider>
         </ThemeProvider>
       </body>
     </html>
