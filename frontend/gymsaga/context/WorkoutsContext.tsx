@@ -18,6 +18,10 @@ const workoutsReducer = (state: WorkoutsState, action: WorkoutsAction): Workouts
       return {
         workouts: state.workouts ? [action.payload, ...state.workouts] : [action.payload], // Handle case where workouts might be null
       };
+    case 'DELETE_WORKOUT':
+      return {
+        workouts: state.workouts ? state.workouts.filter((w) => w._id !== action.payload._id) : null,
+      };
     default:
       return state;
   }
