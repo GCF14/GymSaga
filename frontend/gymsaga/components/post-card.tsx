@@ -15,19 +15,34 @@ import React from "react";
 import { Toggle } from "@/components/ui/toggle"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
+import CommentCard from "@/components/comments-card"
 
 interface PostCardProps {
     username: string;
-    date: string;
     content: React.ReactNode;
 }
 
-export default function PostCard({ username, date, content }: PostCardProps) {
+export default function PostCard({ username, content }: PostCardProps) {
     const [isLiked, setIsLiked] = React.useState(false);
+    const [showCommentCard, setShowCommentCard] = React.useState(false);
+
+    const handleComment = () => {
+        setShowCommentCard(true);
+    }
+
+    const handleCloseCommentCard = () => {
+        setShowCommentCard(false);
+    };
 
     const handleLike = () => {
         setIsLiked(!isLiked);
     }
+
+    const date = new Date().toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    });
 
     return (
         <Card className="w-full">
@@ -51,11 +66,11 @@ export default function PostCard({ username, date, content }: PostCardProps) {
             <CardFooter>
                 <div className="flex items-center">
                     <Toggle onClick={handleLike}>
-                    <span className={`material-symbols-rounded ${isLiked ? 'favorite-filled' : ''}`}>
+                    <span className={`material-symbols-rounded ${isLiked ? 'material-symbols-rounded filled' : ''}`}>
                             favorite
                         </span>
                     </Toggle>
-                    <Button variant="ghost" className="hover-button px-2">
+                    <Button variant="ghost" className="hover-button px-2" onClick={handleComment}>
                         <span className="material-symbols-rounded">
                             mode_comment
                         </span>
@@ -78,9 +93,10 @@ export default function PostCard({ username, date, content }: PostCardProps) {
                     </Button>
                 </div>
             </CardFooter>
+            {showCommentCard && <CommentCard onClose={handleCloseCommentCard} />}
             <style>{`
                 .favorite-filled {
-                    color: red; /* Change this to your desired fill color */
+                    color: red;
                 }
                 .hover-button:hover {
                 color: #a3a3a3;
