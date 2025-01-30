@@ -52,10 +52,21 @@ export default function RootLayout({
               'wght' 300,
               'GRAD' 0,
               'opsz' 24;
-              color: red;
+              color: #ef4444;
+            }
+            .material-symbols-rounded.medium {
+              font-size: 3rem;
             }
             .material-symbols-rounded.large {
-              font-size: 100px;
+              font-size: 7rem;
+            }
+            .hover-button:hover {
+                color: hs(var(--muted-foreground));
+                background-color: hsl(var(--secondary));
+            }
+            .dark .hover-button:hover {
+                color: hsl(var(--muted-foreground));
+                background-color: hsl(var(--secondary));
             }
           `}
         </style>

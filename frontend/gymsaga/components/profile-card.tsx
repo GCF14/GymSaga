@@ -20,6 +20,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { Button } from "./ui/button";
   
 
 interface ProfileCardProps {
@@ -52,11 +53,18 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className }) => {
                 <CardTitle>Username</CardTitle>
                 <CardDescription>Bio</CardDescription>
             </CardHeader>
-            <CardContent>
-                <p>Card Content</p>
+            <CardContent className="flex-grow overflow-hidden">
+                <h2 className="text-3xl font-extrabold tracking-tight">
+                    Card Content
+                </h2>
             </CardContent>
             <CardFooter>
-                <p>Card Footer</p>
+                <div className="flex justify-center items-center w-full">
+                    <div className="flex justify-between items-center w-3/4">
+                        <Button>Edit</Button>
+                        <Button disabled>Save</Button>
+                    </div>
+                </div>
             </CardFooter>
         </Card>
     );

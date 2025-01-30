@@ -51,7 +51,7 @@ export default function PostCard({ username, content }: PostCardProps) {
             <       Avatar className="w-10 h-10 mr-4">
                         <AvatarImage src="/Logo.png" alt="Avatar" />
                         <AvatarFallback>
-                            <span className="material-symbols-rounded large">
+                            <span className="material-symbols-rounded medium">
                                 account_circle
                             </span>
                         </AvatarFallback>
@@ -98,15 +98,6 @@ export default function PostCard({ username, content }: PostCardProps) {
                 </div>
             </CardFooter>
             {showCommentCard && <CommentCard onClose={handleCloseCommentCard} />}
-            <style>{`
-                .favorite-filled {
-                    color: red;
-                }
-                .hover-button:hover {
-                color: #a3a3a3;
-                background-color: #262626;
-                }
-            `}</style>
         </Card>
     )
 }

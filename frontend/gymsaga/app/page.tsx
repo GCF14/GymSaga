@@ -14,7 +14,7 @@ export default function Home() {
         <NavigationBar />
         <div className="flex-col w-1/2 mt-16 space-y-4">
           <PostCard username={"MatthewRiley05"} content={"This is the post template of our app!"}/>
-          <PostCard username={"ChristianFelipe"} content={"Testing if works"}/>
+          <PostCard username={"GerardChristian05"} content={"Testing if works"}/>
         </div>
       </div>
     </>
