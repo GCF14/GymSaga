@@ -13,8 +13,8 @@ export default function Home() {
       <div className="w-full h-full items-center flex flex-col bg-background p-8 scrollbar-hide">
         <NavigationBar />
         <div className="flex-col w-1/2 mt-16 space-y-4">
-          <PostCard username={"MatthewRiley05"} date={"June 16, 2005"} content={"This is the post template of our app!"}/>
-          <PostCard username={"ChristianFelipe"} date={"June 14, 2005"} content={"Testing if works"}/>
+          <PostCard username={"Matthew Raymundo"} content={"This is the post template of our app!"}/>
+          <PostCard username={"Gerard Christian"} content={"Testing if works"}/>
         </div>
       </div>
     </>

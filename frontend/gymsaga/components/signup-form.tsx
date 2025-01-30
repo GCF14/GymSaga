@@ -39,6 +39,15 @@ export function SignupForm({ onSwitch }: LoginFormProps, {
                 <Input id="last-name" type="text" placeholder="Smith" required />
               </div>
               <div className="grid gap-2">
+                <Label htmlFor="username">Username</Label>
+                <Input
+                  id="username"
+                  type="text"
+                  placeholder="MatthewSmith05"
+                  required
+                />
+              </div>
+              <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
@@ -54,7 +63,7 @@ export function SignupForm({ onSwitch }: LoginFormProps, {
                 <Input id="password" type="password" required />
               </div>
               <Button type="submit" className="w-full">
-                Login
+                Sign Up
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
