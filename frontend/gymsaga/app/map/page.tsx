@@ -1,6 +1,6 @@
 "use client"
 
-import Map from '../../components/map/map';
+import Map from '@/components/Map/map.js';
 import './style.css';
 import NavigationBar from "@/components/navigation-bar";
 

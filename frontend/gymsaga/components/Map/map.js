@@ -204,7 +204,7 @@ const MapboxExample = () => {
           .setHTML(popupHTML);
         marker.setPopup(popup);
         setMarkers((prevMarkers) => [...prevMarkers, marker]);
-      });
+       });
 
       await Promise.all(markerPromises);
 
@@ -238,29 +238,40 @@ const MapboxExample = () => {
   }
 
   function generatePopupHTML(element) {
-    let openingHoursHTML = '';
+      let openingHoursHTML = '';
 
-    if (element.properties.metadata?.open_hours && element.properties.metadata.open_hours !== 'Not available') {
-      const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-      openingHoursHTML = element.properties.metadata.open_hours.periods?.map((period) => {
-        const day = days[period.open.day];
-        const openTime = `${period.open.time.slice(0, 2)}:${period.open.time.slice(2)}`;
-        const closeTime = `${period.close.time.slice(0, 2)}:${period.close.time.slice(2)}`;
-        return `<p>${day}: ${openTime} - ${closeTime}</p>`;
-      }).join('') || '<p>Opening hours not available.</p>';
-    } else {
-      openingHoursHTML = '<p>Opening hours not available.</p>';
-    }
+     
+      if (element.properties.metadata?.open_hours && element.properties.metadata.open_hours !== 'Not available') {
+          const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-    return `
-      <h1 style="margin-bottom: 20px;">Gym Information</h1>
-      <p>Name: ${element.properties.name}</p>
-      <p>Full Address: ${element.properties.full_address}</p>
-      <p>Phone Number: ${element.properties.metadata?.phone ?? 'Not available'}</p>
-      <p>Opening Hours:</p>
-      ${openingHoursHTML}
-      <p>Website: ${element.properties.metadata?.website ?? 'Not available'}</p>
-    `;
+         
+          if (Array.isArray(element.properties.metadata.open_hours.periods)) {
+              openingHoursHTML = element.properties.metadata.open_hours.periods.map((period) => {
+                  
+                  if (period.open && period.open.time && period.close && period.close.time) {
+                      const day = days[period.open.day] ?? 'Unknown';
+                      const openTime = `${period.open.time.slice(0, 2)}:${period.open.time.slice(2)}`;
+                      const closeTime = `${period.close.time.slice(0, 2)}:${period.close.time.slice(2)}`;
+                      return `<p>${day}: ${openTime} - ${closeTime}</p>`;
+                  }
+                  return '<p>Not available</p>';
+              }).join('');
+          } else {
+              openingHoursHTML = '<p>Not available</p>';
+          }
+      } else {
+          openingHoursHTML = '<p>Not available</p>';
+      }
+
+      return `
+        <h1 style="margin-bottom: 20px;">Gym Information</h1>
+        <p>Name: ${element.properties.name}</p>
+        <p>Full Address: ${element.properties.full_address}</p>
+        <p>Phone Number: ${element.properties.metadata?.phone ?? 'Not available'}</p>
+        <p>Opening Hours:</p>
+        ${openingHoursHTML}
+        <p>Website: ${element.properties.metadata?.website ?? 'Not available'}</p>
+      `;
   }
 
   useEffect(() => {

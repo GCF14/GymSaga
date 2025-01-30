@@ -1,6 +1,6 @@
 # GymSaga
 
-<img src="https://github.com/user-attachments/assets/a6b522c5-b7fd-42bf-93c6-407a9eb8bc8c" width="250">
+<img src="https://github.com/user-attachments/assets/d59159a1-7f35-45e0-916f-07f5e665682a" width="250">
 
 ## (Unreleased)
 
