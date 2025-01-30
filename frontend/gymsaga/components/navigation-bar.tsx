@@ -4,6 +4,7 @@ import { ModeToggle } from "@/components/modetoggle";
 import { useTheme } from "next-themes";
 import SettingsButton from "@/components/settings-button";
 import Link from "next/link";
+import PostButton from "@/components/post-button";
 
 export default function NavigationBar() {
     const { resolvedTheme } = useTheme();
@@ -27,6 +28,7 @@ export default function NavigationBar() {
                 <Navbar />
             </div>
             <div className="flex items-center mr-4 flex-1 justify-end">
+                <PostButton />
                 <SettingsButton />
                 <ModeToggle />
             </div>
