@@ -16,16 +16,22 @@ export default function Login() {
         <title>GymSaga - Login</title>
         <meta name="description" content="GymSaga Login" />
       </head>
-      <div className="w-screen h-screen items-center flex flex-col bg-background">
-        <Image
-          src={resolvedTheme === "light" ? "/GymSagaDark.svg" : "/GymSagaLight.svg"}
-          width={150}
-          height={150}
-          alt="GymSaga Logo"
-          className="mt-8"/>
-        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl m-4">Welcome to GymSaga</h1>
+      <div className="w-full h-screen flex flex-col justify-center items-center bg-background">
+        <div className="flex items-center">
+          <Image
+            src={resolvedTheme === "light" ? "/GymSagaDark.svg" : "/GymSagaLight.svg"}
+            width={30}
+            height={30}
+            alt="GymSaga Logo"
+            className=""
+          />
+          <h2 className="text-xl font-bold tracking-tight ml-2">GymSaga</h2>
+        </div>
         <div className="m-4">
-          {isLogin ? <LoginForm onSwitch={() => setIsLogin(false)} /> : <SignupForm onSwitch={() => setIsLogin(true)}/>}
+          {isLogin ? <LoginForm onSwitch={() => setIsLogin(false)} /> : <SignupForm onSwitch={() => setIsLogin(true)} />}
+        </div>
+        <div className="text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-primary">
+          By clicking continue, you agree to our <br /> <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
         </div>
       </div>
     </>

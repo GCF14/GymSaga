@@ -14,12 +14,12 @@ export default function NavigationBar() {
                 <Link href="/" className="inline-flex">
                     <Image
                         src={resolvedTheme === "light" ? "/GymSagaDark.svg" : "/GymSagaLight.svg"}
-                        width={50}
-                        height={50}
+                        width={40}
+                        height={40}
                         alt="GymSaga Logo"
                     />
                     </Link>
-                <Link href="/" className="inline-flex m-4">
+                <Link href="/" className="inline-flex ml-2">
                     <h2 className="text-xl font-extrabold tracking-tight">GymSaga</h2>
                 </Link>
             </div>
