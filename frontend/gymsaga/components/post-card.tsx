@@ -11,6 +11,11 @@ import {
     AvatarFallback,
     AvatarImage,
 } from "@/components/ui/avatar";
+import {
+    HoverCard,
+    HoverCardContent,
+    HoverCardTrigger,
+  } from "@/components/ui/hover-card"
 import React from "react";
 import { Toggle } from "@/components/ui/toggle"
 import { Button } from "@/components/ui/button"
@@ -56,7 +61,34 @@ export default function PostCard({ username, content }: PostCardProps) {
                             </span>
                         </AvatarFallback>
                     </Avatar>
-                <CardTitle>{username}</CardTitle>
+                <CardTitle>
+                    <HoverCard>
+                        <HoverCardTrigger className="hover-underline">{username}</HoverCardTrigger>
+                            <HoverCardContent className="w-80">
+                                <div className="flex justify-between space-x-4">
+                                <Avatar>
+                                    <AvatarImage src="/Logo.png" />
+                                    <AvatarFallback>
+                                        <span className="material-symbols-rounded medium">
+                                            account_circle
+                                        </span>
+                                    </AvatarFallback>
+                                </Avatar>
+                                <div className="space-y-1">
+                                    <h4 className="text-sm font-semibold">@matthewriley05</h4>
+                                    <p className="text-sm">
+                                    The GymSaga CEO and Co-Founder. Working on making fitness fun and accessible for everyone. 🏋️‍♂️💪
+                                    </p>
+                                    <div className="flex items-center pt-2">
+                                    <span className="text-xs text-muted-foreground">
+                                        Joined June 2005
+                                    </span>
+                                    </div>
+                                </div>
+                                </div>
+                            </HoverCardContent>
+                    </HoverCard>
+                </CardTitle>
                 </div>
                 <CardDescription>{date}</CardDescription>
             </CardHeader>
