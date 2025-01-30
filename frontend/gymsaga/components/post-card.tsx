@@ -78,15 +78,19 @@ export default function PostCard({ username, content }: PostCardProps) {
                     <Button
                     variant="ghost"
                     className="hover-button px-2"
-                    onClick={() => 
-                        toast("Link Copied! 🎉", {
-                            description: "Share it with your friends and let them join the fun!",
-                            action: {
-                                label: "Close",
-                                onClick: () => toast.dismiss(),
-                            },
-                        })
-                    }>
+                    onClick={() => {
+                        navigator.clipboard.writeText(window.location.href).then(() => {
+                            toast("Link Copied! 🎉", {
+                                description: "Share it with your friends and let them join the fun!",
+                                action: {
+                                    label: "Close",
+                                    onClick: () => toast.dismiss(),
+                                },
+                            });
+                        }).catch(err => {
+                            console.error('Failed to copy: ', err);
+                        });
+                    }}>
                         <span className="material-symbols-rounded">
                             share
                         </span>
