@@ -27,7 +27,7 @@ export default function DefaultDropZone() {
     <Dropzone
       accept={{
         "image/*": [".jpg", ".png"],
-        "application/pdf": [".pdf"],
+        "video/*": [".mp4", ".mov"],
       }}
       onDropAccepted={setFiles}
     >
@@ -40,7 +40,7 @@ export default function DefaultDropZone() {
               <DropzoneTitle>Drop files here or click to upload</DropzoneTitle>
               <DropzoneDescription>
                 You can upload files up to 10MB in size. Supported formats: JPG,
-                PNG, PDF.
+                PNG, MP4, MOV.
               </DropzoneDescription>
             </DropzoneGroup>
           </DropzoneGroup>

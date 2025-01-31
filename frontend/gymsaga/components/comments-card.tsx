@@ -15,6 +15,8 @@ import React from "react";
 import { Toggle } from "@/components/ui/toggle"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
+import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { Separator } from "@/components/ui/separator"
 
 interface CommentCardProps {
     onClose: () => void;
@@ -31,17 +33,25 @@ export default function CommentCard({ onClose }: CommentCardProps) {
                     </h3>
                 </CardHeader>
                 <CardContent>
-                    <div className="flex items-center h-full w-full">
-                        <Avatar className="w-10 h-10 mr-4">
-                            <AvatarImage src="/Logo.png" alt="Avatar" />
-                            <AvatarFallback>
-                                <span className="material-symbols-rounded large">
-                                    account_circle
-                                </span>
-                            </AvatarFallback>
-                        </Avatar>
-                        <CardTitle>Username</CardTitle>
-                    </div>
+                    <ScrollArea className="flex flex-col h-full w-full">
+                        <div className="flex flex-col gap-2">
+                            <div className="flex items-center">
+                                <Avatar className="w-10 h-10 mr-2">
+                                    <AvatarImage src="/Logo.png" alt="Avatar" />
+                                    <AvatarFallback>
+                                        <span className="material-symbols-rounded large">
+                                            account_circle
+                                        </span>
+                                    </AvatarFallback>
+                                </Avatar>
+                                <CardTitle>GerardChristian05</CardTitle>
+                            </div>
+                                <p className="ml-12 mb-4">
+                                    That's crazy, it actually works!
+                                </p>
+                            <Separator />
+                        </div>
+                    </ScrollArea>
                 </CardContent>
             </Card>
         </div>

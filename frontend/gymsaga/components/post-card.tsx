@@ -21,6 +21,14 @@ import { Toggle } from "@/components/ui/toggle"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 import CommentCard from "@/components/comments-card"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+  } from "@/components/ui/dropdown-menu"  
 
 interface PostCardProps {
     username: string;
@@ -52,43 +60,67 @@ export default function PostCard({ username, content }: PostCardProps) {
     return (
         <Card className="w-full">
             <CardHeader>
-                <div className="flex items-center h-full w-full">
-            <       Avatar className="w-10 h-10 mr-4">
-                        <AvatarImage src="/Logo.png" alt="Avatar" />
-                        <AvatarFallback>
-                            <span className="material-symbols-rounded medium">
-                                account_circle
-                            </span>
-                        </AvatarFallback>
-                    </Avatar>
-                <CardTitle>
-                    <HoverCard>
-                        <HoverCardTrigger className="hover-underline">{username}</HoverCardTrigger>
-                            <HoverCardContent className="w-80">
-                                <div className="flex justify-between space-x-4">
-                                <Avatar>
-                                    <AvatarImage src="/Logo.png" />
-                                    <AvatarFallback>
-                                        <span className="material-symbols-rounded medium">
-                                            account_circle
+                <div className="flex justify-between">
+                    <div className="flex items-center h-full w-full">
+                        <Avatar className="w-10 h-10 mr-4">
+                            <AvatarImage src="/Logo.png" alt="Avatar" />
+                            <AvatarFallback>
+                                <span className="material-symbols-rounded medium">
+                                    account_circle
+                                </span>
+                            </AvatarFallback>
+                        </Avatar>
+                    <CardTitle>
+                        <HoverCard>
+                            <HoverCardTrigger className="hover-underline">{username}</HoverCardTrigger>
+                                <HoverCardContent className="w-80">
+                                    <div className="flex justify-between space-x-4">
+                                    <Avatar>
+                                        <AvatarImage src="/Logo.png" />
+                                        <AvatarFallback>
+                                            <span className="material-symbols-rounded medium">
+                                                account_circle
+                                            </span>
+                                        </AvatarFallback>
+                                    </Avatar>
+                                    <div className="space-y-1">
+                                        <h4 className="text-sm font-semibold">@matthewriley05</h4>
+                                        <p className="text-sm">
+                                        The GymSaga CEO and Co-Founder. Working on making fitness fun and accessible for everyone. 🏋️‍♂️💪
+                                        </p>
+                                        <div className="flex items-center pt-2">
+                                        <span className="text-xs text-muted-foreground">
+                                            Joined June 2005
                                         </span>
-                                    </AvatarFallback>
-                                </Avatar>
-                                <div className="space-y-1">
-                                    <h4 className="text-sm font-semibold">@matthewriley05</h4>
-                                    <p className="text-sm">
-                                    The GymSaga CEO and Co-Founder. Working on making fitness fun and accessible for everyone. 🏋️‍♂️💪
-                                    </p>
-                                    <div className="flex items-center pt-2">
-                                    <span className="text-xs text-muted-foreground">
-                                        Joined June 2005
-                                    </span>
+                                        </div>
                                     </div>
-                                </div>
-                                </div>
-                            </HoverCardContent>
-                    </HoverCard>
-                </CardTitle>
+                                    </div>
+                                </HoverCardContent>
+                        </HoverCard>
+                    </CardTitle>
+                    </div>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="icon" className="hover-button">
+                                <span className="material-symbols-rounded">
+                                    more_vert
+                                </span>
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuItem onClick={() => {}}>
+                                Edit
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => {}}>
+                                Delete
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem onClick={() => {}}>
+                                Report
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 </div>
                 <CardDescription>{date}</CardDescription>
             </CardHeader>
