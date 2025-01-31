@@ -26,7 +26,7 @@ interface CreatePostCardProps {
 export default function CreatePostCard({ onClose }: CreatePostCardProps) {
     return createPortal(
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-            <div className="fixed inset-0 bg-black opacity-50" onClick={onClose}></div>
+            <div className="fixed inset-0 bg-black opacity-50"></div>
             <Card className="relative z-60 w-1/2">
                 <CardHeader>
                     <h3 className="border-b pb-2 scroll-m-20 text-2xl font-semibold tracking-tight">
