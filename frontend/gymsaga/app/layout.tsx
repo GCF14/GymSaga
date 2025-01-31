@@ -54,14 +54,6 @@ export default function RootLayout({
               'opsz' 24;
               color: #ef4444;
             }
-            .material-symbols-rounded.bold {
-              font-variation-settings:
-              'FILL' 0,
-              'wght' 300,
-              'GRAD' 200,
-              'opsz' 24;
-              font-size: 20px;
-            }
             .material-symbols-rounded.medium {
               font-size: 3rem;
             }
@@ -95,6 +87,7 @@ export default function RootLayout({
             <Toaster />
           </WorkoutsContextProvider>
         </ThemeProvider>
+        <div id="portal-root"></div>
       </body>
     </html>
   );
