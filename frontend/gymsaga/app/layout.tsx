@@ -30,10 +30,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {/* Adding Mapbox CSS */}
-        <link
-          href="https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css"
-          rel="stylesheet"
-        />
+        <link href="https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css" rel="stylesheet"/>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
         <style>
@@ -74,9 +71,7 @@ export default function RootLayout({
           `}
         </style>
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider
         attribute="class"
         defaultTheme="system"
@@ -87,7 +82,6 @@ export default function RootLayout({
             <Toaster />
           </WorkoutsContextProvider>
         </ThemeProvider>
-        <div id="portal-root"></div>
       </body>
     </html>
   );

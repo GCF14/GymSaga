@@ -16,24 +16,16 @@ export default function Navbar() {
         <NavigationMenu>
         <NavigationMenuList>
             <NavigationMenuItem>
-                <Link href="/posts" passHref> 
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>Posts Testing Page</NavigationMenuLink>
-                </Link>
+                    <NavigationMenuLink className={navigationMenuTriggerStyle()} href="/posts">Posts Testing Page</NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
-                <Link href="/" passHref> 
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>Home</NavigationMenuLink>
-                </Link>
+                    <NavigationMenuLink className={navigationMenuTriggerStyle()} href="/">Home</NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
-                <Link href="/map" passHref> 
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>Map</NavigationMenuLink>
-                </Link>
+                    <NavigationMenuLink className={navigationMenuTriggerStyle()} href="/map">Map</NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
-                <Link href="/profile" passHref> 
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>Profile</NavigationMenuLink>
-                </Link>
+                    <NavigationMenuLink className={navigationMenuTriggerStyle()} href="/profile">Profile</NavigationMenuLink>
             </NavigationMenuItem>
         </NavigationMenuList>
         </NavigationMenu>
