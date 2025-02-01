@@ -71,9 +71,7 @@ export default function RootLayout({
           `}
         </style>
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider
         attribute="class"
         defaultTheme="system"
@@ -84,7 +82,6 @@ export default function RootLayout({
             <Toaster />
           </WorkoutsContextProvider>
         </ThemeProvider>
-        <div id="portal-root"></div>
       </body>
     </html>
   );

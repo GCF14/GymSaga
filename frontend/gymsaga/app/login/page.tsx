@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { LoginForm } from "../../components/login-form";
 import SignupForm from "../../components/signup-form";
 import type { Metadata } from 'next'
 
@@ -18,9 +17,16 @@ export default function Login() {
             src="/GymSagaDark.svg"
             width={30}
             height={30}
-            alt="GymSaga Logo"
-            className=""
+            alt="GymSaga Logo Dark"
+            className="block dark:hidden"
           />
+          <Image
+              src="/GymSagaLight.svg"
+              width={30}
+              height={30}
+              alt="GymSaga Logo Light"
+              className="hidden dark:block"
+            />
           <h2 className="text-xl font-bold tracking-tight ml-2">GymSaga</h2>
         </div>
         <div className="m-4">
