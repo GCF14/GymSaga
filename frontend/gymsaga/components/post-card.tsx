@@ -22,15 +22,8 @@ import React from "react";
 import { Toggle } from "@/components/ui/toggle"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
-import CommentCard from "@/components/comments-card"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-  } from "@/components/ui/dropdown-menu"  
+import CommentCard from "@/components/comments-card" 
+import MoreMenu from "@/components/dropdown-menu"
 
 interface PostCardProps {
     username: string;
@@ -101,28 +94,7 @@ export default function PostCard({ username, content }: PostCardProps) {
                         </HoverCard>
                     </CardTitle>
                     </div>
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" className="hover-button">
-                                <span className="material-symbols-rounded">
-                                    more_vert
-                                </span>
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuItem onClick={() => {}}>
-                                Edit
-                            </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => {}}>
-                                Delete
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={() => {}}>
-                                Report
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                    <MoreMenu />
                 </div>
                 <CardDescription>{date}</CardDescription>
             </CardHeader>
