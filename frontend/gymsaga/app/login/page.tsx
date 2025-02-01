@@ -5,6 +5,7 @@ import Image from "next/image";
 import { LoginForm } from "../../components/login-form";
 import { SignupForm } from "../../components/signup-form";
 import { useTheme } from "next-themes";
+import Head from "next/head";
 
 export default function Login() {
   const [isLogin, setIsLogin] = useState(true);
@@ -12,10 +13,10 @@ export default function Login() {
 
   return (
     <>
-      <head>
+      <Head>
         <title>GymSaga - Login</title>
         <meta name="description" content="GymSaga Login" />
-      </head>
+      </Head>
       <div className="w-full h-screen flex flex-col justify-center items-center bg-background">
         <div className="flex items-center">
           <Image
