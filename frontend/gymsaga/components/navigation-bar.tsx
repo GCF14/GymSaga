@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Navbar from "@/components/navigationbar-menu";
 import { ModeToggle } from "@/components/modetoggle";

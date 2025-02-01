@@ -1,4 +1,3 @@
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -9,19 +8,19 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useState } from "react"
+import SignupForm from "./signup-form"
 
-interface LoginFormProps {
+export function LoginForm() {
+  const [isSignup, setIsSingup] = useState(false);
 
-    onSwitch: () => void;
-  
-}
+  const handleSignupClick = () => {
+    setIsSingup(true);
+  };
 
-export function LoginForm({ onSwitch }: LoginFormProps, {
-  className,
-  ...props
-}: React.ComponentPropsWithoutRef<"div">) {
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    isSignup ? <SignupForm /> :
+    <div className="flex flex-col gap-6">
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
@@ -62,7 +61,7 @@ export function LoginForm({ onSwitch }: LoginFormProps, {
             </div>
             <div className="mt-4 text-center text-sm">
                 Don&apos;t have an account?{" "}
-                <button onClick={onSwitch} className="underline underline-offset-4">
+                <button className="underline underline-offset-4" onClick={handleSignupClick}>
                     Sign up
                     </button>
                 </div>

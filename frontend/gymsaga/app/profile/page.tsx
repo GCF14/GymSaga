@@ -1,9 +1,13 @@
-"use client"
-
 import ProfileCard from "@/components/profile-card";
 import NavigationBar from "@/components/navigation-bar";
 import ProfileTab from "@/components/profile-tab";
 import Head from "next/head";
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: "GymSaga Profile",
+  description: "GymSaga Profile Page",
+}
 
 export default function Profile() {
   return (
