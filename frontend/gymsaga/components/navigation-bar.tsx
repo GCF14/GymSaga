@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Navbar from "@/components/navigationbar-menu";
 import { ModeToggle } from "@/components/modetoggle";
@@ -19,7 +21,7 @@ export default function NavigationBar() {
                         height={40}
                         alt="GymSaga Logo"
                     />
-                    </Link>
+                </Link>
                 <Link href="/" className="inline-flex ml-2">
                     <h2 className="text-xl font-extrabold tracking-tight">GymSaga</h2>
                 </Link>
