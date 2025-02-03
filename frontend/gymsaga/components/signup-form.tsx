@@ -15,6 +15,22 @@ import { LoginForm } from "./login-form"
 
 export default function SignupForm() {
   const [isLogin, setIsLogin] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const[userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    console.log("First Name: ", firstName);
+    console.log("Last Name: ", lastName);
+    console.log("Username: ", userName);
+    console.log("Email: ", email);
+    console.log("Password: ", password);
+
+  }
 
   const handleLoginClick = () => {
     setIsLogin(true);
@@ -31,13 +47,24 @@ export default function SignupForm() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="grid gap-4">
               <div className="grid grid-cols-2 gap-4">
                 <Label htmlFor="first-name">First name</Label>
                 <Label htmlFor="last-name">Last name</Label>
-                <Input id="first-name" type="text" placeholder="Matthew" required />
-                <Input id="last-name" type="text" placeholder="Smith" required />
+                <Input 
+                  id="first-name" 
+                  type="text" 
+                  placeholder="Matthew" 
+                  onChange={(e) => setFirstName(e.target.value)}
+                  value={firstName}
+                  required />
+                <Input id="last-name" 
+                  type="text" 
+                  placeholder="Smith" 
+                  onChange={(e) => setLastName(e.target.value)}
+                  value={lastName}
+                  required />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="username">Username</Label>
@@ -45,6 +72,8 @@ export default function SignupForm() {
                   id="username"
                   type="text"
                   placeholder="MatthewSmith05"
+                  onChange={(e) => setUserName(e.target.value)}
+                  value={userName}
                   required
                 />
               </div>
@@ -54,6 +83,8 @@ export default function SignupForm() {
                   id="email"
                   type="email"
                   placeholder="m@example.com"
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={email}
                   required
                 />
               </div>
@@ -61,7 +92,12 @@ export default function SignupForm() {
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
                 </div>
-                <Input id="password" type="password" required />
+                <Input id="password" 
+                  type="password" 
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
+                  required 
+                />
               </div>
               <Button type="submit" className="w-full">
                 Sign Up

@@ -13,6 +13,16 @@ import SignupForm from "./signup-form"
 
 export function LoginForm() {
   const [isSignup, setIsSingup] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    console.log("Email: ", email);
+    console.log("Password: ", password);
+
+  }
 
   const handleSignupClick = () => {
     setIsSingup(true);
@@ -29,7 +39,7 @@ export function LoginForm() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
@@ -37,6 +47,8 @@ export function LoginForm() {
                   id="email"
                   type="email"
                   placeholder="m@example.com"
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={email}
                   required
                 />
               </div>
@@ -50,7 +62,13 @@ export function LoginForm() {
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input 
+                  id="password" 
+                  type="password" 
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
+                  required 
+                />
               </div>
               <Button type="submit" className="w-full">
                 Login

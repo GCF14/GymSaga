@@ -1,11 +1,13 @@
+'use client'
+
 import { createContext, useReducer, ReactNode } from "react";
 
-
+// set state to null
 interface AuthState {
   user: any | null; 
 }
 
-
+// set action types
 type AuthAction = 
   | { type: "LOGIN"; payload: any } 
   | { type: "LOGOUT" };
