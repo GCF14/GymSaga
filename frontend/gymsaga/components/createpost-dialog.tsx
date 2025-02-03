@@ -1,22 +1,6 @@
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-  } from "@/components/ui/card"
-import {
-    Avatar,
-    AvatarFallback,
-    AvatarImage,
-} from "@/components/ui/avatar";
 import React from "react";
-import { Toggle } from "@/components/ui/toggle"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
-import { createPortal } from "react-dom";
-import DefaultDropZone from "./drop-zone";
 import { Textarea } from "./ui/textarea";
 import {
     Dialog,
@@ -28,7 +12,6 @@ import {
     DialogTitle,
     DialogTrigger,
   } from "@/components/ui/dialog"
-import { Separator } from "@radix-ui/react-dropdown-menu";
 
 export default function CreatePostDialog() {
     return (
@@ -46,15 +29,26 @@ export default function CreatePostDialog() {
                     <DialogTitle>
                         Create Post
                     </DialogTitle>
+                    <DialogDescription>
+                        Share your thoughts with others!
+                    </DialogDescription>
                 </DialogHeader>
-                <DefaultDropZone />
-                <Textarea className="mt-4" placeholder="Write something..."></Textarea>
+                <div className="flex items-center gap-2">
+                    <Textarea placeholder="Write something..." rows={10}></Textarea>
+                </div>
                 <DialogFooter>
-                    <DialogClose asChild>
-                        <Button onClick={() => {toast.success("Post created successfully!")}}>
-                            Post
+                    <div className="w-full flex justify-between">
+                        <Button variant="outline" size="icon" className="hover-button">
+                            <span className="material-symbols-rounded">
+                                attachment
+                            </span>
                         </Button>
-                    </DialogClose>                
+                        <DialogClose asChild className="flex justify-end">
+                            <Button onClick={() => {toast.success("Post created successfully!")}}>
+                                Post
+                            </Button>
+                        </DialogClose>
+                    </div>
                 </DialogFooter>
             </DialogContent>
         </Dialog>
