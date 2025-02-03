@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
 import { LoginForm } from "./login-form"
+import { useSignup } from "@/hooks/useSignup"
 
 export default function SignupForm() {
   const [isLogin, setIsLogin] = useState(false);
@@ -20,15 +21,12 @@ export default function SignupForm() {
   const[userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { signup, error, isLoading} = useSignup()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    console.log("First Name: ", firstName);
-    console.log("Last Name: ", lastName);
-    console.log("Username: ", userName);
-    console.log("Email: ", email);
-    console.log("Password: ", password);
+    await signup(email, password)
 
   }
 
@@ -99,9 +97,10 @@ export default function SignupForm() {
                   required 
                 />
               </div>
-              <Button type="submit" className="w-full">
+              <Button type="submit" className="w-full" disabled={isLoading}>
                 Sign Up
               </Button>
+              {error && <div className="mt-2 text-sm text-red-600 bg-red-100 border border-red-400 p-2 rounded-md">{error}</div>}
             </div>
             <div className="mt-4 text-center text-sm">
               Already have an account?{" "}
