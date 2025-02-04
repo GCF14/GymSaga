@@ -59,7 +59,7 @@ export default function RootLayout({
               font-size: 7rem;
             }
             .hover-button:hover {
-              color: hs(var(--muted-foreground));
+              color: hsl(var(--muted-foreground));
               background-color: hsl(var(--secondary));
             }
             .dark .hover-button:hover {

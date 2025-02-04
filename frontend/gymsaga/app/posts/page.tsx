@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect } from "react";
 import NavigationBar from "@/components/navigation-bar";
 import WorkoutDetails from "@/components/testingBackend/WorkoutDetails";
