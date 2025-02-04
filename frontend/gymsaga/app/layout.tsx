@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { WorkoutsContextProvider } from '@/context/WorkoutsContext';
+import { AuthContextProvider } from '@/context/AuthContext';
 import { Toaster } from "@/components/ui/sonner"
 
 const geistSans = localFont({
@@ -77,10 +78,12 @@ export default function RootLayout({
         defaultTheme="system"
         enableSystem
         disableTransitionOnChange>
-          <WorkoutsContextProvider>
-            {children}
-            <Toaster />
-          </WorkoutsContextProvider>
+          <AuthContextProvider>
+            <WorkoutsContextProvider>
+              {children}
+              <Toaster />
+            </WorkoutsContextProvider>
+          </AuthContextProvider>
         </ThemeProvider>
       </body>
     </html>
