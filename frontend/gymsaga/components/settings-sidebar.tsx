@@ -1,0 +1,23 @@
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+  } from "@/components/ui/card"
+
+export default function SettingsSidebar() {
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle>
+                    Settings
+                </CardTitle>
+                <CardDescription>
+                    Manage your preferences here!
+                </CardDescription>
+            </CardHeader>
+        </Card>
+    )
+}

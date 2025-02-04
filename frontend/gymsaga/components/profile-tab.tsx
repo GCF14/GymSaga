@@ -13,7 +13,7 @@ interface ProfileTabProps {
     className?: string;
 }
 
-const ProfileTab: React.FC<ProfileTabProps> = ({ className }) => {
+export default function ProfileTab({ className }: ProfileTabProps) {
     return (
         <Tabs defaultValue="posts" className={`flex flex-col h-[calc(100vh-8rem)] ${className}`}>
             <div className="flex justify-center">
@@ -76,5 +76,3 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ className }) => {
         </Tabs>
     )
 }
-
-export default ProfileTab
