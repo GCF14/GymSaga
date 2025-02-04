@@ -7,20 +7,17 @@ import {
     CardTitle,
   } from "@/components/ui/card"
 
-interface SettingsSidebarProps {
+interface SettingsCardProps {
     className?: string;
 }
 
-export default function SettingsSidebar({ className }: SettingsSidebarProps) {
+export default function SettingsCard({ className }: SettingsCardProps) {
     return (
         <Card className={className}>
             <CardHeader>
                 <CardTitle>
                     Settings
                 </CardTitle>
-                <CardDescription>
-                    Manage your preferences here!
-                </CardDescription>
             </CardHeader>
         </Card>
     )
