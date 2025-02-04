@@ -15,6 +15,7 @@ export default function Home() {
         <div className="flex-col w-1/2 mt-16 space-y-4">
           <PostCard username={"Matthew Raymundo"} content={"This is the post template of our app!"}/>
           <PostCard username={"Gerard Christian"} content={"Testing if works"}/>
+          <PostCard username={"Ethan Ong"} content={"This is crazy"}/>
         </div>
       </div>
     </>

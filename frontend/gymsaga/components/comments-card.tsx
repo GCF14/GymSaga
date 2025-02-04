@@ -10,15 +10,14 @@ import {
     Avatar,
     AvatarFallback,
     AvatarImage,
-} from "@/components/ui/avatar";
-import React from "react";
-import { Toggle } from "@/components/ui/toggle"
+} from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { toast } from "sonner"
 import { Separator } from "@/components/ui/separator"
 import MoreMenu from "@/components/dropdown-menu"
-import NestedComments from "@/components/nested-comments";
-import { Textarea } from "@/components/ui/textarea";
+import NestedComments from "@/components/nested-comments"
+import { Textarea } from "@/components/ui/textarea"
+import LikeCommentShareBar from "@/components/likecommentshare-bar"
+import React, { useRef } from "react"
 
 interface CommentCardProps {
     onClose: () => void;
@@ -27,27 +26,52 @@ interface CommentCardProps {
 export default function CommentCard({ onClose }: CommentCardProps) {
     const [isLiked, setIsLiked] = React.useState(false);
     const [isNestedCommentVisible, setIsNestedCommentVisible] = React.useState(false);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleLike = () => {
         setIsLiked(!isLiked);
     }
 
-    const handleNestedComment = () => {
+    const handleNestedComments = () => {
         setIsNestedCommentVisible(!isNestedCommentVisible);
     }
+
+    const handleAttachmentClick = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.click();
+        }
+    }
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files && event.target.files.length > 0) {
+            const file = event.target.files[0];
+            console.log(file);
+        }
+    }
+
+    React.useEffect(() => {
+        document.body.style.overflow = "hidden";
+
+        return () => {
+            document.body.style.overflow = "auto";
+        }
+    }, []);
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
             <div className="fixed inset-0 bg-black opacity-50" onClick={onClose}></div>
             <Card className="relative z-60 w-1/2 h-3/4 flex flex-col">
                 <CardHeader>
-                    <h3 className="border-b pb-2 scroll-m-20 text-2xl font-semibold tracking-tight">
-                        Comments
-                    </h3>
+                    <CardTitle>
+                    Comments
+                    </CardTitle>
+                    <CardDescription>
+                    Contribute your ideas and connect with others!
+                    </CardDescription>
                 </CardHeader>
                 <CardContent className="flex-1 overflow-y-auto">
-                        <div className="flex flex-col gap-2">
-                            <div className="flex justify-between mr-4">
+                        <div className="flex flex-col">
+                            <div className="flex justify-between">
                                 <div className="flex items-center">
                                     <Avatar className="w-10 h-10 mr-2">
                                         <AvatarImage src="/Logo.png" alt="Avatar" />
@@ -64,47 +88,16 @@ export default function CommentCard({ onClose }: CommentCardProps) {
                                 <p className="ml-12 mb-2">
                                     That's crazy, it actually works!
                                 </p>
-                                <div className="flex items-center ml-10 mb-4">
-                                    <Toggle onClick={handleLike}>
-                                    <span className={`material-symbols-rounded ${isLiked ? 'material-symbols-rounded filled' : ''}`}>
-                                            favorite
-                                        </span>
-                                    </Toggle>
-                                    <Button variant="ghost" className="hover-button px-2" onClick={handleNestedComment}>
-                                        <span className="material-symbols-rounded">
-                                            mode_comment
-                                        </span>
-                                    </Button>
-                                    <Button
-                                    variant="ghost"
-                                    className="hover-button px-2"
-                                    onClick={() => {
-                                        navigator.clipboard.writeText(window.location.href).then(() => {
-                                            toast("Link Copied! 🎉", {
-                                                description: "Share it with your friends and let them join the fun!",
-                                                action: {
-                                                    label: "Close",
-                                                    onClick: () => toast.dismiss(),
-                                                },
-                                            });
-                                        }).catch(err => {
-                                            console.error('Failed to copy: ', err);
-                                        });
-                                    }}>
-                                        <span className="material-symbols-rounded">
-                                            share
-                                        </span>
-                                    </Button>
-                                </div>
+                                <LikeCommentShareBar className="ml-10" onClick={() => { handleLike(); handleNestedComments(); }} />
                                 {isNestedCommentVisible && <NestedComments />}
                                 {isNestedCommentVisible && <NestedComments />}
                                 {isNestedCommentVisible && <NestedComments />}
                             <Separator className="mb-4" />
                         </div>
                 </CardContent>
-                <CardFooter>
+                <CardFooter className="p-4 rounded-md">
                     <div className="flex w-full justify-center items-center">
-                        <Button variant="outline" size="icon" className="hover-button">
+                        <Button variant="outline" size="icon" className="hover-button" onClick={handleAttachmentClick}>
                             <span className="material-symbols-rounded">
                                 attachment
                             </span>
@@ -115,6 +108,12 @@ export default function CommentCard({ onClose }: CommentCardProps) {
                                 send
                             </span>
                         </Button>
+                        <input
+                            type="file"
+                            className="hidden"
+                            ref={fileInputRef}
+                            onChange={handleFileChange}
+                        />  
                     </div>
                 </CardFooter>
             </Card>
