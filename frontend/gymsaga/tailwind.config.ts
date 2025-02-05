@@ -61,6 +61,21 @@ const config: Config = {
   				ring: 'hsl(var(--sidebar-ring))'
   			}
   		},
+		 keyframes: {
+		   "fade-right": {
+			 "0%": {
+			   opacity: "0",
+			   transform: "translateX(-2rem)"
+			 },
+			 "100%": {
+			   opacity: "1",
+			   transform: "translateX(0)"
+			 }
+		   }
+		 },
+		 animation: {
+		   "fade-right": "fade-right 0.2s ease"
+		 },   
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
