@@ -3,7 +3,7 @@
 import Image from "next/image";
 import SignupForm from "./signup-form";
 
-export default function ClientLogin() {
+export default function ClientSignup() {
 
   return (
     <>
