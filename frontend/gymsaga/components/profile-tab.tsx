@@ -8,6 +8,7 @@ import {
     CardTitle,
   } from "@/components/ui/card"
 import React from "react"
+import PostCard from "@/components/post-card"
 
 interface ProfileTabProps {
     className?: string;
@@ -24,7 +25,7 @@ export default function ProfileTab({ className }: ProfileTabProps) {
                 </TabsList>
             </div>
             <div className="flex-grow overflow-hidden p-2">
-                <TabsContent value="meal-plan" className="h-full">
+                <TabsContent value="meal-plan" className="h-full animate-fade-right">
                     <Card className="h-full flex flex-col">
                         <CardHeader>
                             <CardTitle>Meal Plan</CardTitle>
@@ -40,23 +41,19 @@ export default function ProfileTab({ className }: ProfileTabProps) {
                         </CardFooter>
                     </Card>
                 </TabsContent>
-                <TabsContent value="posts" className="h-full">
+                <TabsContent value="posts" className="h-full animate-fade-right">
                     <Card className="h-full flex flex-col">
                         <CardHeader>
                             <CardTitle>My Posts</CardTitle>
-                            <CardDescription>Short Description</CardDescription>
+                            <CardDescription>Look back on your previous posts!</CardDescription>
                         </CardHeader>
-                            <CardContent className="h-full overflow-hidden">
-                                <h1 className="text-9xl font-bold text-center text-primary">
-                                    Posts Posts Posts Posts Posts Posts Posts Posts Posts Posts Posts Posts Posts  
-                                </h1>
+                            <CardContent className="flex flex-col h-full overflow-y-auto gap-4">
+                                <PostCard username={"Matthew Raymundo"} content={"This is the post template of our app!"} />
+                                <PostCard username={"Matthew Raymundo"} content={"Di ko alam ano lalagay sa page na toh"} />
                             </CardContent>
-                        <CardFooter>
-                            <p>Footer</p>
-                        </CardFooter>
                     </Card>
                 </TabsContent>
-                <TabsContent value="workout" className="h-full">
+                <TabsContent value="workout" className="h-full animate-fade-right">
                     <Card className="h-full flex flex-col">
                         <CardHeader>
                             <CardTitle>Workout Routine</CardTitle>

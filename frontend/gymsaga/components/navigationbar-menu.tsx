@@ -25,6 +25,9 @@ export default function Navbar() {
                     <NavigationMenuLink className={navigationMenuTriggerStyle()} href="/map">Map</NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
+                    <NavigationMenuLink className={navigationMenuTriggerStyle()} href="/social-link">Social Link</NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
                     <NavigationMenuLink className={navigationMenuTriggerStyle()} href="/profile">Profile</NavigationMenuLink>
             </NavigationMenuItem>
         </NavigationMenuList>
