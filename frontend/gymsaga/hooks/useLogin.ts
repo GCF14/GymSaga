@@ -1,18 +1,18 @@
 import { useAuthContext } from '@/hooks/useAuthContext';
 import { useState } from 'react';
 
-export const useSignup = () => {
+export const useLogin = () => {
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     const { dispatch } = useAuthContext()
     const port = process.env.NEXT_PUBLIC_PORT
 
 
-    const signup = async (email: string, password: string) => {
+    const login = async (email: string, password: string) => {
         setIsLoading(true)
         setError(null)
 
-        const response = await fetch(`http://localhost:${port}/api/users/signup`, {
+        const response = await fetch(`http://localhost:${port}/api/users/login`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({email, password}),
@@ -36,5 +36,5 @@ export const useSignup = () => {
         }
     }
 
-    return { signup, error, isLoading }
+    return { login, error, isLoading }
 }

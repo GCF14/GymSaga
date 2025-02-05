@@ -1,6 +1,7 @@
 'use client'
 
-import { createContext, useReducer, ReactNode } from "react";
+import { createContext, useReducer, ReactNode, useEffect } from "react";
+import Cookies from "js-cookie";
 
 // set state to null
 interface AuthState {
@@ -36,7 +37,31 @@ interface AuthContextProviderProps {
 }
 
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
-  const [state, dispatch] = useReducer(authReducer, { user: null });
+  const [state, dispatch] = useReducer(authReducer, { 
+    user: null 
+  });
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch("http://localhost:5500/api/users/me", {
+          method: "GET",
+          credentials: "include", // Ensure cookies are sent
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          dispatch({ type: "LOGIN", payload: data });
+        } else {
+          dispatch({ type: "LOGOUT" });
+        }
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   console.log("AuthContext state: ", state);
 
