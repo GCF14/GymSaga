@@ -10,18 +10,18 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
 import SignupForm from "./signup-form"
+import { useLogin } from "@/hooks/useLogin"
 
 export function LoginForm() {
   const [isSignup, setIsSingup] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login, error, isLoading } = useLogin()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    console.log("Email: ", email);
-    console.log("Password: ", password);
-
+    await login(email, password)
   }
 
   const handleSignupClick = () => {
@@ -70,9 +70,7 @@ export function LoginForm() {
                   required 
                 />
               </div>
-              <Button type="submit" className="w-full">
-                Login
-              </Button>
+              <Button type="submit" className="w-full" disabled={isLoading}>Login</Button>
               <Button variant="outline" className="w-full">
                 Login with Google
               </Button>
@@ -81,8 +79,10 @@ export function LoginForm() {
                 Don&apos;t have an account?{" "}
                 <button className="underline underline-offset-4" onClick={handleSignupClick}>
                     Sign up
-                    </button>
-                </div>
+                </button>
+            </div>
+            {error && <div className="bg-red-500 text-white text-sm p-2 rounded-md">{error}</div>}
+              
           </form>
         </CardContent>
       </Card>
