@@ -70,15 +70,15 @@ export default function SignupForm() {
     <div className="flex flex-col gap-6">
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">Sign Up</CardTitle>
+          <CardTitle className="text-xl 2xl:text-2xl">Sign Up</CardTitle>
           <CardDescription>
           Enter your information to create an account
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
-            <div className="grid gap-4">
-              <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-2 2xl:gap-4">
+              <div className="grid grid-cols-2 gap-1">
                 <Label htmlFor="first-name">First name</Label>
                 <Label htmlFor="last-name">Last name</Label>
                 <Input 
@@ -95,7 +95,7 @@ export default function SignupForm() {
                   value={lastName}
                   required />
               </div>
-              <div className="grid gap-2">
+              <div className="grid gap-1">
                 <Label htmlFor="username">Username</Label>
                 <Input
                   id="username"
@@ -138,15 +138,11 @@ export default function SignupForm() {
                     Log in
               </button>
             </div>
-
-            
           </form>
           {user && (
-            
             <div>
               <button onClick={handleClick}>Logout</button>
             </div>
-
           )}
         </CardContent>
       </Card>
