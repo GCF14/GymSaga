@@ -15,6 +15,7 @@ import { LoginForm } from "./login-form"
 import { useSignup } from "@/hooks/useSignup"
 import { toast } from "sonner"
 import { useEffect } from "react"
+import { useLogout } from "@/hooks/useLogout"
 
 export default function SignupForm() {
   const [isLogin, setIsLogin] = useState(false);
@@ -24,6 +25,7 @@ export default function SignupForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { signup, error, isLoading} = useSignup()
+  const { logout } = useLogout()
 
   useEffect(() => {
     if (error) {
@@ -56,6 +58,10 @@ export default function SignupForm() {
   const handleLoginClick = () => {
     setIsLogin(true);
   };
+
+  const handleClick = () => {
+    logout()
+  }
 
   return (
     isLogin ? <LoginForm /> :
@@ -130,7 +136,12 @@ export default function SignupForm() {
                     Log in
               </button>
             </div>
+
+            
           </form>
+          <div>
+              <button onClick={handleClick}>Logout</button>
+            </div>
         </CardContent>
       </Card>
     </div>

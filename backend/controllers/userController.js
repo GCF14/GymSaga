@@ -34,7 +34,7 @@ const signUpUser = async (req, res) => {
         const token = createToken(user._id)
 
         res.cookie('token', token, {
-            httpOnly: false, // This will prevent access using javascript
+            httpOnly: true, // This will prevent access using javascript
             secure: process.env.NODE_ENV === 'production', // Set secure flag in production (HTTPS)
             sameSite: 'Strict', // This will protect against CSRF
             maxAge: 2592000000 // 30 days
@@ -48,4 +48,16 @@ const signUpUser = async (req, res) => {
     
 }
 
-module.exports = { signUpUser, loginUser }
+// logout the user
+const logoutUser = async (req, res) => {
+    res.cookie('token', "", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'Strict',
+        expires: new Date(0)
+    })
+
+    res.status(200).json({message: 'Logged out successfully'})
+}
+
+module.exports = { signUpUser, loginUser, logoutUser }
