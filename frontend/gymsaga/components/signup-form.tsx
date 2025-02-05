@@ -14,6 +14,7 @@ import { useState } from "react"
 import { LoginForm } from "./login-form"
 import { useSignup } from "@/hooks/useSignup"
 import { toast } from "sonner"
+import { useEffect } from "react"
 
 export default function SignupForm() {
   const [isLogin, setIsLogin] = useState(false);
@@ -24,22 +25,32 @@ export default function SignupForm() {
   const [password, setPassword] = useState("");
   const { signup, error, isLoading} = useSignup()
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await signup(email, password);
+  useEffect(() => {
     if (error) {
-      toast("Error", {
-        description: error,
+      toast.error("Error: " + error, {
         action: {
           label: "Close",
           onClick: () => toast.dismiss(),
         },
         style: {
-          color: "#7f1d1d",
+          color: "#ffffff",
           borderColor: "#7f1d1d",
+          backgroundColor: "#7f1d1d",
         },
+        actionButtonStyle: {
+          backgroundColor: "#7f1d1d",
+          borderColor: "#ffffff",
+          color: "#ffffff",
+          borderWidth: "1px",
+          borderStyle: "solid", 
+        }
       });
     }
+  }, [error]);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await signup(email, password);
   };
 
   const handleLoginClick = () => {
