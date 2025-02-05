@@ -12,17 +12,20 @@ import {
     DialogTitle,
     DialogTrigger,
   } from "@/components/ui/dialog"
+import { RainbowButton } from "@/components/ui/rainbow-button";
 
 export default function CreatePostDialog() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button>
+                <RainbowButton className="rounded-md h-9 w-24">
                     <span className="material-symbols-rounded">
                         post_add
                     </span>
-                    Post
-                </Button>
+                    <p className="ml-2">
+                        Post
+                    </p>
+                </RainbowButton>
             </DialogTrigger>
             <DialogContent className="min-w-[750px]">
                 <DialogHeader>
