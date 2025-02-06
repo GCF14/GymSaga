@@ -6,7 +6,6 @@ import WorkoutDetails from "@/components/testingBackend/WorkoutDetails";
 import WorkoutForm from "@/components/testingBackend/WorkoutForm";
 import { useWorkoutsContext } from "@/hooks/useWorkoutsContext"; 
 import { Workout } from "@/types/workout"; 
-import Head from "next/head";
 import "./style.css";
 
 const port = process.env.NEXT_PUBLIC_PORT;
@@ -32,10 +31,6 @@ export default function Posts() {
 
   return (
     <>
-      <Head>
-        <title>GymSaga - Posts Testing Page</title>
-        <meta name="description" content="GymSaga Profile" />
-      </Head>
       <div className="w-full h-full items-center flex flex-col bg-background p-8 scrollbar-hide">
         <NavigationBar />
         <div className="mt-16 container">
