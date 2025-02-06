@@ -11,7 +11,6 @@ import React from "react"
 import PostCard from "@/components/post-card"
 import MealCarousel from "@/components/meal-carousel";
 import EditSaveButton from "@/components/editsave-button";
-import { Edit } from "lucide-react";
 
 interface ProfileTabProps {
     className?: string;
