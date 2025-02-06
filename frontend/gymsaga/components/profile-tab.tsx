@@ -10,7 +10,6 @@ import {
 import React from "react"
 import PostCard from "@/components/post-card"
 import MealCarousel from "@/components/meal-carousel";
-import { Particles } from "@/components/particles";
 
 interface ProfileTabProps {
     className?: string;
@@ -28,13 +27,7 @@ export default function ProfileTab({ className }: ProfileTabProps) {
             </div>
             <div className="flex-grow overflow-hidden p-2">
                 <TabsContent value="meal-plan" className="relative h-full animate-fade-right">
-                    <Card className="z-10 h-full flex flex-col">
-                        <Particles
-                            className="absolute inset-0 z-0"
-                            quantity={100}
-                            ease={80}
-                            refresh
-                        />
+                    <Card className="h-full flex flex-col">
                         <CardHeader>
                             <CardTitle>Meal Plan</CardTitle>
                             <CardDescription>Short Description</CardDescription>
@@ -48,13 +41,7 @@ export default function ProfileTab({ className }: ProfileTabProps) {
                     </Card>
                 </TabsContent>
                 <TabsContent value="posts" className="relative h-full animate-fade-right">
-                    <Card className="z-10 h-full flex flex-col">
-                        <Particles
-                            className="absolute inset-0 z-0"
-                            quantity={100}
-                            ease={80}
-                            refresh
-                        />
+                    <Card className="h-full flex flex-col">
                         <CardHeader>
                             <CardTitle>My Posts</CardTitle>
                             <CardDescription>Look back on your previous posts!</CardDescription>
@@ -66,13 +53,7 @@ export default function ProfileTab({ className }: ProfileTabProps) {
                     </Card>
                 </TabsContent>
                 <TabsContent value="workout" className="relative h-full animate-fade-right">
-                    <Card className="z-10 h-full flex flex-col">
-                        <Particles
-                            className="absolute inset-0 z-0"
-                            quantity={100}
-                            ease={80}
-                            refresh
-                        />
+                    <Card className="h-full flex flex-col">
                         <CardHeader>
                             <CardTitle>Workout Routine</CardTitle>
                             <CardDescription>Short Description</CardDescription>
