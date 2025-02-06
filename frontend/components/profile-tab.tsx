@@ -36,7 +36,7 @@ export default function ProfileTab({ className }: ProfileTabProps) {
                             <CardContent className="h-full w-full flex flex-1 overflow-hidden">
                                 <MealCarousel />
                             </CardContent>
-                        <CardFooter>
+                        <CardFooter className="flex justify-end mr-24">
                             <EditSaveButton />
                         </CardFooter>
                     </Card>
