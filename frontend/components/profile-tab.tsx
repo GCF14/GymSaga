@@ -9,6 +9,8 @@ import {
   } from "@/components/ui/card"
 import React from "react"
 import PostCard from "@/components/post-card"
+import MealCarousel from "@/components/meal-carousel";
+import EditSaveButton from "@/components/editsave-button";
 
 interface ProfileTabProps {
     className?: string;
@@ -25,23 +27,21 @@ export default function ProfileTab({ className }: ProfileTabProps) {
                 </TabsList>
             </div>
             <div className="flex-grow overflow-hidden p-2">
-                <TabsContent value="meal-plan" className="h-full animate-fade-right">
+                <TabsContent value="meal-plan" className="relative h-full animate-fade-right">
                     <Card className="h-full flex flex-col">
                         <CardHeader>
                             <CardTitle>Meal Plan</CardTitle>
                             <CardDescription>Short Description</CardDescription>
                         </CardHeader>
-                            <CardContent className="h-full overflow-hidden">
-                                <h1 className="text-9xl font-bold text-center text-primary">
-                                    Meal Plan Meal Plan Meal Plan Meal Plan Meal Plan Meal Plan Meal Plan Meal Plan 
-                                </h1>
+                            <CardContent className="h-full w-full flex flex-1 overflow-hidden">
+                                <MealCarousel />
                             </CardContent>
                         <CardFooter>
-                            <p>Footer</p>
+                            <EditSaveButton />
                         </CardFooter>
                     </Card>
                 </TabsContent>
-                <TabsContent value="posts" className="h-full animate-fade-right">
+                <TabsContent value="posts" className="relative h-full animate-fade-right">
                     <Card className="h-full flex flex-col">
                         <CardHeader>
                             <CardTitle>My Posts</CardTitle>
@@ -53,7 +53,7 @@ export default function ProfileTab({ className }: ProfileTabProps) {
                             </CardContent>
                     </Card>
                 </TabsContent>
-                <TabsContent value="workout" className="h-full animate-fade-right">
+                <TabsContent value="workout" className="relative h-full animate-fade-right">
                     <Card className="h-full flex flex-col">
                         <CardHeader>
                             <CardTitle>Workout Routine</CardTitle>
