@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@/components/ui/button"
+import { Button } from "./ui/button"
 import { toast } from "sonner"
 import { Textarea } from "./ui/textarea";
 import {
@@ -11,8 +11,9 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-  } from "@/components/ui/dialog"
-import { RainbowButton } from "@/components/ui/rainbow-button";
+  } from "./ui/dialog"
+import { RainbowButton } from "./magicui/rainbow-button";
+import AttachmentButton from "./attachment-button";
 
 export default function CreatePostDialog() {
     return (
@@ -41,11 +42,7 @@ export default function CreatePostDialog() {
                 </div>
                 <DialogFooter>
                     <div className="w-full flex justify-between">
-                        <Button variant="outline" size="icon" className="hover-button">
-                            <span className="material-symbols-rounded">
-                                attachment
-                            </span>
-                        </Button>
+                        <AttachmentButton />
                         <DialogClose asChild className="flex justify-end">
                             <Button onClick={() => {toast.success("Post created successfully!")}}>
                                 Post
