@@ -4,6 +4,8 @@
 
 ## (Unreleased)
 
+PSA: This is a personal project for learning so it may or may not be released
+
 A Progressive Web App (PWA) for gym enthusiasts, combining social networking with a crowdsourced gym map. GymSaga lets users share and discover gym details like available machines, cleanliness, and facilities. Accessible on both mobile and desktop, GymSaga helps you connect, explore, and stay motivated in your fitness journey! 💪🗺️
 
 ## 📥 Local Installation
