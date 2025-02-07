@@ -7,18 +7,19 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-} from "@/components/ui/card";
+} from "./ui/card";
 import {
     Avatar,
     AvatarFallback,
     AvatarImage,
-} from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import MoreMenu from "@/components/dropdown-menu";
-import NestedComments from "@/components/nested-comments";
-import { Textarea } from "@/components/ui/textarea";
-import LikeCommentShareBar from "@/components/likecommentshare-bar";
+} from "./ui/avatar";
+import { Button } from "./ui/button";
+import { Separator } from "./ui/separator";
+import MoreMenu from "./dropdown-menu";
+import NestedComments from "./nested-comments";
+import { Textarea } from "./ui/textarea";
+import LikeCommentShareBar from "./likecommentshare-bar";
+import AttachmentButton from "./attachment-button";
 
 interface CommentCardProps {
     onClose: () => void;
@@ -27,7 +28,6 @@ interface CommentCardProps {
 export default function CommentCard({ onClose }: CommentCardProps) {
     const [isLiked, setIsLiked] = React.useState(false);
     const [isNestedCommentVisible, setIsNestedCommentVisible] = React.useState(false);
-    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleLike = () => {
         setIsLiked(!isLiked);
@@ -35,19 +35,6 @@ export default function CommentCard({ onClose }: CommentCardProps) {
 
     const handleNestedComments = () => {
         setIsNestedCommentVisible(!isNestedCommentVisible);
-    };
-
-    const handleAttachmentClick = () => {
-        if (fileInputRef.current) {
-            fileInputRef.current.click();
-        }
-    };
-
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files && event.target.files.length > 0) {
-            const file = event.target.files[0];
-            console.log(file);
-        }
     };
 
     React.useEffect(() => {
@@ -90,19 +77,11 @@ export default function CommentCard({ onClose }: CommentCardProps) {
                 </CardContent>
                 <CardFooter className="p-4 rounded-md">
                     <div className="flex w-full justify-center items-center">
-                        <Button variant="outline" size="icon" className="hover-button" onClick={handleAttachmentClick}>
-                            <span className="material-symbols-rounded">attachment</span>
-                        </Button>
+                        <AttachmentButton />
                         <Textarea placeholder="Write a comment..." rows={1} className="w-4/5 mx-4" />
                         <Button size="icon" className="hover-button">
                             <span className="material-symbols-rounded">send</span>
                         </Button>
-                        <input
-                            type="file"
-                            className="hidden"
-                            ref={fileInputRef}
-                            onChange={handleFileChange}
-                        />
                     </div>
                 </CardFooter>
             </Card>
