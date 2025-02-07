@@ -12,7 +12,7 @@ import {
     DialogTitle,
     DialogTrigger,
   } from "@/components/ui/dialog"
-import { RainbowButton } from "@/components/ui/rainbow-button";
+import { RainbowButton } from "@/components/magicui/rainbow-button";
 
 export default function CreatePostDialog() {
     return (

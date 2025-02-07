@@ -21,6 +21,8 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { Button } from "./ui/button";
+import { Edit } from "lucide-react";
+import EditSaveButton from "./editsave-button";
   
 
 interface ProfileCardProps {
@@ -59,11 +61,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className }) => {
                 </h2>
             </CardContent>
             <CardFooter>
-                <div className="flex justify-center items-center w-full">
-                    <div className="flex justify-between items-center w-3/4">
-                        <Button>Edit</Button>
-                        <Button disabled>Save</Button>
-                    </div>
+                <div className="flex justify-end items-center w-full">
+                    <EditSaveButton />
                 </div>
             </CardFooter>
         </Card>
