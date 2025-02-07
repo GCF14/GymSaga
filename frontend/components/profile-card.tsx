@@ -38,7 +38,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className }) => {
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger>
-                                    <BoxReveal boxColor="hsl(var(--primary))" duration={0.25}>
+                                    <BoxReveal boxColor="hsl(var(--primary))" duration={0.40}>
                                         <Avatar className="w-24 h-24">
                                             <AvatarImage src="/Logo.png" alt="Avatar" />
                                             <AvatarFallback>
@@ -55,10 +55,10 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className }) => {
                             </Tooltip>
                         </TooltipProvider>
                     </div>
-                    <BoxReveal boxColor="hsl(var(--primary))" duration={0.25}>
+                    <BoxReveal boxColor="hsl(var(--primary))" duration={0.40}>
                         <CardTitle className="pt-2">@MatthewRiley05</CardTitle>
                     </BoxReveal>
-                    <BoxReveal boxColor="hsl(var(--primary))" duration={0.25}>
+                    <BoxReveal boxColor="hsl(var(--primary))" duration={0.40}>
                         <CardDescription className="pt-2">[JCA '23 🇵🇭|PolyU '27 🇭🇰]</CardDescription>
                     </BoxReveal>
                 </CardHeader>
