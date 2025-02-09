@@ -14,13 +14,13 @@ export default function Home() {
       <div className="w-full h-full items-center flex flex-col bg-background p-8 scrollbar-hide">
         <NavigationBar />
         <div className="flex-col w-1/2 mt-16 space-y-4">
-          <BlurFade delay={0.25} inView>
+          <BlurFade inView>
             <PostCard username={"Matthew Raymundo"} content={"This is the post template of our app!"}/>
           </BlurFade>
-          <BlurFade delay={0.5} inView>
+          <BlurFade inView>
             <PostCard username={"Gerard Christian"} content={"Testing if it works"}/>
           </BlurFade>
-          <BlurFade delay={0.75} inView>
+          <BlurFade inView>
             <PostCard username={"Ethan Ong"} content={"This is crazy"}/>
           </BlurFade>
           <BlurFade inView>
