@@ -6,10 +6,9 @@ import {
     CardHeader,
     CardTitle,
   } from "@/components/ui/card"
-import Icons from "@/public/shadcn"
-import { Separator } from "@/components/ui/separator";
-import Image from "next/image";
-import { AnimatedIconBeam } from "./animatedicon-beam";
+import { Separator } from "@/components/ui/separator"
+import { AnimatedIconBeam } from "./animatedicon-beam"
+import { BlurFade } from "@/components/magicui/blur-fade"
 
 interface SettingsCardProps {
     className?: string;
@@ -17,22 +16,24 @@ interface SettingsCardProps {
 
 export default function SettingsCard({ className }: SettingsCardProps) {
     return (
-        <Card className={`overflow-auto ${className}`}>
-            <CardHeader>
-                <CardTitle className="text-3xl">
-                    Settings
-                </CardTitle>
-            </CardHeader>
-            <CardContent className="">
-                <CardTitle className="text-2xl mb-2">
-                    Credits
-                </CardTitle>
-                <Separator />
-                <p className="mt-4">
-                    Made with ❤️ by the GymSaga Team 
-                </p>
-                <AnimatedIconBeam />
-            </CardContent>
-        </Card>
+        <BlurFade className="col-span-3" direction="left">
+            <Card className={`overflow-auto h-[calc(100vh-8rem)] ${className}`}>
+                <CardHeader>
+                    <CardTitle className="text-3xl">
+                        Settings
+                    </CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <CardTitle className="text-2xl mb-2">
+                        Credits
+                    </CardTitle>
+                    <Separator />
+                    <p className="mt-4">
+                        Made with ❤️ by the GymSaga Team 
+                    </p>
+                    <AnimatedIconBeam />
+                </CardContent>
+            </Card>
+        </BlurFade>
     )
 }
