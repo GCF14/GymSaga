@@ -1,7 +1,7 @@
-import NavigationBar from "@/components/navigation-bar";
-import PostCard from "@/components/post-card";
+import NavigationBar from "@/components/navigation-bar"
+import PostCard from "@/components/post-card"
 import type { Metadata } from 'next'
-import { BlurFade } from "@/components/magicui/blur-fade";
+import { BlurFade } from "@/components/magicui/blur-fade"
 
 export const metadata: Metadata = {
   title: "GymSaga Home",

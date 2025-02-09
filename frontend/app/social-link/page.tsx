@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import NavigationBar from "@/components/navigation-bar";
+import NavigationBar from "@/components/navigation-bar"
 
 export const metadata: Metadata = {
   title: "GymSaga Social Link",

@@ -1,7 +1,7 @@
-import { Metadata } from "next";
-import NavigationBar from "@/components/navigation-bar";
-import SettingsSidebar from "@/components/settings-sidebar";
-import SettingsCard from "@/components/settings-card";
+import { Metadata } from "next"
+import NavigationBar from "@/components/navigation-bar"
+import SettingsSidebar from "@/components/settings-sidebar"
+import SettingsCard from "@/components/settings-card"
 
 export const metadata: Metadata = {
     title: "GymSaga Home",
