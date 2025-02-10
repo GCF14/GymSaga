@@ -20,7 +20,7 @@ interface ProfileTabProps {
 export default function ProfileTab({ className }: ProfileTabProps) {
     return (
         <Tabs defaultValue="posts" className={`flex flex-col h-[calc(100vh-8rem)] ${className}`}>
-            <BlurFade direction="right" className="flex flex-col overflow-hidden">
+            <BlurFade direction="left" className="flex flex-col overflow-hidden">
                 <div className="flex justify-center">
                     <TabsList className="grid w-1/2 grid-cols-3">
                         <TabsTrigger value="meal-plan">Meal Plan</TabsTrigger>
