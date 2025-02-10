@@ -10,7 +10,7 @@ A Progressive Web App (PWA) for gym enthusiasts, combining social networking wit
 
 ## 📥 Local Installation
 The first step is to install Node.js. You can either do this by either downloading the automatic windows installer or install it from PowerShell using Winget
-
+<br></br>
 ### 1. Node.js Windows Automatic Installer (Recommended)
 Download and install Node.js using [Node.js MSI Installer](https://nodejs.org/dist/v23.7.0/node-v23.7.0-x64.msi)
 
@@ -33,8 +33,12 @@ Download Node.js through the Fast and Simple Node.js Manager using the Windows t
   npm -v
   ```
 
+<br></br>
+
 ### 2. Git Windows Installer
 Download and install Git using [Git 64-bit Installer](https://github.com/git-for-windows/git/releases/download/v2.47.1.windows.2/Git-2.47.1.2-64-bit.exe)
+
+<br></br>
 
 ### 3. Clone this repository
 Select the directory you want this repository to be downloaded in using the terminal then clone it to the directory
@@ -42,7 +46,11 @@ Select the directory you want this repository to be downloaded in using the term
   git clone https://github.com/GCF14/GymSaga
   ```
 
+<br></br>
+
 ### 4. Contact the repo collaborators for the API endpoints through the issues tab or directly messaging them through personal platforms
+
+<br></br>
 
 ### 5. Run the frontend
 Use either the Windows terminal or the VSCode terminal and navigate to the GymSaga base directory
@@ -59,6 +67,8 @@ Use either the Windows terminal or the VSCode terminal and navigate to the GymSa
   npm run dev
   ```
 
+<br></br>
+
 ### 6. Run the backend
 Use either the Windows terminal or the VSCode terminal and navigate to the GymSaga base directory
 1. Change directory to the backend folder
@@ -73,6 +83,8 @@ Use either the Windows terminal or the VSCode terminal and navigate to the GymSa
   ```
   npm run dev
   ```
+
+<br></br>
 
 ### 7. Open the localhost connection through the port returned by the frontend npm run dev
 Google Chrome is recommended but it should support any other browsers
