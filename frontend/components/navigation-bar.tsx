@@ -12,9 +12,9 @@ export default function NavigationBar() {
     const { resolvedTheme } = useTheme();
 
     return (
-        <header className="fixed top-0 z-50 flex items-center justify-between w-full h-16 bg-transparent backdrop-blur-md shadow-md border-solid border-b">
-            <div className="flex items-center ml-4 flex-1 justify-start">
-                <Link href="/" className="inline-flex">
+        <div className="fixed flex flex-row top-0 z-50 w-full h-16 bg-transparent backdrop-blur-md shadow-md border-solid border-b">
+            <div className="flex flex-row items-center gap-2 ml-2">
+                <Link href="/" className="">
                     <Image
                         src={resolvedTheme === "light" ? "/GymSagaDark.svg" : "/GymSagaLight.svg"}
                         width={40}
@@ -22,18 +22,18 @@ export default function NavigationBar() {
                         alt="GymSaga Logo"
                     />
                 </Link>
-                <Link href="/" className="inline-flex ml-2">
+                <Link href="/" className="">
                     <h2 className="text-xl font-extrabold tracking-tight">GymSaga</h2>
                 </Link>
             </div>
-            <div className="flex-1 flex justify-center">
+            <div className="flex flex-grow justify-center items-center">
                 <Navbar />
             </div>
-            <div className="flex items-center mr-4 gap-4 flex-1 justify-end">
+            <div className="flex flex-row items-center gap-2 mr-2">
                 <CreatePostDialog />
                 <SettingsButton />
                 <ModeToggle />
             </div>
-        </header>
+        </div>
     );
 }

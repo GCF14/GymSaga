@@ -29,13 +29,13 @@ export default function MealTable() {
                     <TableCell>80 grams</TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell className="font-medium">Watermelon</TableCell>
+                    <TableCell className="font-medium">Mango</TableCell>
                     <TableCell>500 grams</TableCell>
                     <TableCell>150 kcal</TableCell>
                     <TableCell>35 grams</TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell className="font-medium">Kool-aid</TableCell>
+                    <TableCell className="font-medium">Orange Juice</TableCell>
                     <TableCell>250 mL</TableCell>
                     <TableCell>20 kcal</TableCell>
                     <TableCell>0 grams</TableCell>

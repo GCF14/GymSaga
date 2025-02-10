@@ -30,9 +30,14 @@ export default function SettingsSidebar({ className }: SettingsSidebarProps) {
                         </CardDescription>
                     </BoxReveal>
                     <CardContent className="p-0 pt-4 w-full">
-                        <Button variant="outline" className="justify-start w-full">
-                            Credits
-                        </Button>
+                        <div className="flex flex-col gap-2">
+                            <Button variant="outline" className="justify-start w-full">
+                                Account
+                            </Button>
+                            <Button variant="outline" className="justify-start w-full">
+                                Credits
+                            </Button>
+                        </div>
                     </CardContent>
                 </CardHeader>
             </Card>
