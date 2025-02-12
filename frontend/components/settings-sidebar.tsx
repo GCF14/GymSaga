@@ -41,10 +41,12 @@ export default function SettingsSidebar({ className }: SettingsSidebarProps) {
                     <CardContent className="p-0 pt-4 w-full">
                         <div className="flex flex-col gap-2">
                             <Button variant="ghost" onClick={() => scrollToSection('account')} className="justify-start w-full">
+                                <span className="material-symbols-rounded">person</span>
                                 Account
                             </Button>
                             <Button variant="ghost" onClick={() => scrollToSection('credits')} className="justify-start w-full">
-                                Credits
+                                <span className="material-symbols-rounded">info</span>
+                                About
                             </Button>
                         </div>
                     </CardContent>
