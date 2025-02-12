@@ -29,7 +29,7 @@ export default function DeleteAccountButton() {
             </AlertDialogHeader>
             <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction className="bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90">Continue</AlertDialogAction>
+            <AlertDialogAction className="bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90">Continue</AlertDialogAction>
             </AlertDialogFooter>
         </AlertDialogContent>
         </AlertDialog>

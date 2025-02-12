@@ -28,7 +28,7 @@ export default function ProfileTab({ className }: ProfileTabProps) {
                         <TabsTrigger value="workout">Workout Routine</TabsTrigger>
                     </TabsList>
                 </div>
-                <div className="flex-grow overflow-hidden p-2">
+                <div className="grow overflow-hidden p-2">
                     <TabsContent value="meal-plan" className="relative h-full animate-fade-right">
                         <Card className="h-full flex flex-col">
                             <CardHeader>
