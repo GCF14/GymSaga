@@ -19,7 +19,7 @@ const Circle = forwardRef<
     <div
       ref={ref}
       className={cn(
-        "z-10 flex size-12 items-center justify-center rounded-full border-2 bg-white p-3 shadow-[0_0_20px_-12px_rgba(0,0,0,0.8)]",
+        "z-10 flex size-12 items-center justify-center rounded-full border-2 bg-white p-3 shadow-xs",
         className,
       )}
     >
@@ -42,10 +42,10 @@ export function AnimatedIconBeam() {
 
   return (
     <div
-      className="relative flex h-[250px] w-full items-center justify-center overflow-hidden bg-background pt-4 p-10"
+      className="relative flex p-8 w-full items-center justify-center overflow-hidden bg-background"
       ref={containerRef}
     >
-      <div className="flex size-full max-h-[200px] max-w-3/4 flex-col items-stretch justify-between gap-10">
+      <div className="flex size-full max-h-[200px] w-4/5 flex-col items-stretch justify-between gap-10">
         <div className="flex flex-row items-center justify-between">
           <div className="flex flex-row items-center justify-between">
           <span className="mr-2 text-xl hidden font-bold lg:inline-block">MagicUI</span>

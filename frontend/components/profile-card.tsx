@@ -78,7 +78,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className }) => {
                         </BoxReveal>
                     </CardDescription>
                 </CardHeader>
-                <CardContent className="flex-grow overflow-hidden">
+                <CardContent className="grow overflow-hidden">
                     <BlurFade>
                         <p>
                             [JCA '23 🇵🇭|PolyU '27 🇭🇰]

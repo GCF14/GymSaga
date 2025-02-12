@@ -22,7 +22,7 @@ export default function NavigationBar() {
                     <h2 className="text-xl font-extrabold tracking-tight">GymSaga</h2>
                 </Link>
             </div>
-            <div className="flex flex-grow justify-center items-center">
+            <div className="flex grow justify-center items-center">
                 <Navbar />
             </div>
             <div className="flex flex-row items-center gap-2 mr-2">
