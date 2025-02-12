@@ -23,7 +23,7 @@ import {
 import { BoxReveal } from "@/components/magicui/box-reveal"
 import EditSaveButton from "@/components/editsave-button"
 import { BlurFade } from "@/components/magicui/blur-fade"
-  
+import BadgeRow from "@/components/badge-row"
 
 interface ProfileCardProps {
     className?: string;
@@ -55,16 +55,34 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className }) => {
                             </Tooltip>
                         </TooltipProvider>
                     </div>
-                    <BoxReveal boxColor="hsl(var(--primary))" duration={0.50}>
-                        <CardTitle className="pt-2">@MatthewRiley05</CardTitle>
-                    </BoxReveal>
-                    <BoxReveal boxColor="hsl(var(--primary))" duration={0.50}>
-                        <CardDescription className="pt-2">[JCA '23 🇵🇭|PolyU '27 🇭🇰]</CardDescription>
-                    </BoxReveal>
+                        <CardTitle className="">
+                            <BoxReveal boxColor="hsl(var(--primary))" duration={0.50}>
+                                <p className="py-2">
+                                    @MatthewRiley05
+                                </p>
+                            </BoxReveal>
+                        </CardTitle>
+                    <CardDescription className="flex flex-col">
+                        <BoxReveal boxColor="hsl(var(--primary))" duration={0.50}>
+                            <div>
+                                <BadgeRow />
+                                <div className="mt-2 flex flex-row gap-2">
+                                    <p>
+                                        0 Followers
+                                    </p>
+                                    <p>
+                                        0 Following
+                                    </p>
+                                </div>
+                            </div>
+                        </BoxReveal>
+                    </CardDescription>
                 </CardHeader>
                 <CardContent className="flex-grow overflow-hidden">
                     <BlurFade>
-                        <p>Card Content</p>
+                        <p>
+                            [JCA '23 🇵🇭|PolyU '27 🇭🇰]
+                        </p>
                     </BlurFade>
                 </CardContent>
                 <CardFooter>
