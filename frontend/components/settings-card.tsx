@@ -9,14 +9,14 @@ import {
 import { Separator } from "@/components/ui/separator"
 import { AnimatedIconBeam } from "./animatedicon-beam"
 import { BlurFade } from "@/components/magicui/blur-fade"
-import { Button } from "./ui/button";
-import DeleteAccountButton from "./deleteaccount-button";
+import DeleteAccountButton from "@/components/deleteaccount-button";
 
 interface SettingsCardProps {
     className?: string;
 }
 
 export default function SettingsCard({ className }: SettingsCardProps) {
+
     return (
         <BlurFade className="col-span-3" direction="left">
             <Card className={`overflow-auto h-[calc(100vh-8rem)] ${className}`}>
@@ -27,7 +27,7 @@ export default function SettingsCard({ className }: SettingsCardProps) {
                 </CardHeader>
                 <CardContent>
                     <div className="w-full mb-8">
-                        <CardTitle className="text-2xl mb-2">
+                        <CardTitle id="account" className="text-2xl mb-2">
                             Account
                         </CardTitle>
                         <Separator />
@@ -39,11 +39,11 @@ export default function SettingsCard({ className }: SettingsCardProps) {
                         </div>
                     </div>
                     <div className="mb-8">
-                        <CardTitle className="text-2xl mb-2">
+                        <CardTitle id="credits" className="text-2xl mb-2">
                             Credits
                         </CardTitle>
                         <Separator />
-                        <p className="mt-4">
+                        <p className="m-4">
                             Made with ❤️ by the GymSaga Team 
                         </p>
                         <AnimatedIconBeam />

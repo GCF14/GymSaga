@@ -1,28 +1,15 @@
 "use client"
 
-import Image from "next/image";
 import SignupForm from "./signup-form";
+import GymSagaSquareSmall from "@/public/GymSagaSquareSmall";
 
 export default function ClientSignup() {
 
   return (
     <>
           <div className="flex items-center">
-            <Image
-              src="/GymSagaDark.svg"
-              width={30}
-              height={30}
-              alt="GymSaga Logo Dark"
-              className="block dark:hidden"
-            />
-            <Image
-                src="/GymSagaLight.svg"
-                width={30}
-                height={30}
-                alt="GymSaga Logo Light"
-                className="hidden dark:block"
-              />
-            <h2 className="text-xl font-bold tracking-tight ml-2">GymSaga</h2>
+            <GymSagaSquareSmall />
+            <h2 className="text-xl font-extrabold tracking-tight ml-2">GymSaga</h2>
           </div>
           <div className="m-4">
             <SignupForm/>

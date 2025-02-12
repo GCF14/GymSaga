@@ -1,9 +1,9 @@
 import React from 'react';
 
-const GymSagaSquare: React.FC = () => (
+const GymSagaSquareSmall: React.FC = () => (
   <svg
-    width="40"
-    height="40"
+    width="30"
+    height="30"
     viewBox="0 0 40 40"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -71,4 +71,4 @@ const GymSagaSquare: React.FC = () => (
   </svg>
 );
 
-export default GymSagaSquare;
+export default GymSagaSquareSmall;

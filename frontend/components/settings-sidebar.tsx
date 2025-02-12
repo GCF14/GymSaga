@@ -1,3 +1,5 @@
+"use client"
+
 import {
     Card,
     CardContent,
@@ -15,6 +17,13 @@ interface SettingsSidebarProps {
 }
 
 export default function SettingsSidebar({ className }: SettingsSidebarProps) {
+    const scrollToSection = (sectionId: string) => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      };
+
     return (
         <BlurFade direction="up">
             <Card className={`h-[calc(100vh-8rem)] ${className}`}>
@@ -31,10 +40,10 @@ export default function SettingsSidebar({ className }: SettingsSidebarProps) {
                     </BoxReveal>
                     <CardContent className="p-0 pt-4 w-full">
                         <div className="flex flex-col gap-2">
-                            <Button variant="outline" className="justify-start w-full">
+                            <Button variant="ghost" onClick={() => scrollToSection('account')} className="justify-start w-full">
                                 Account
                             </Button>
-                            <Button variant="outline" className="justify-start w-full">
+                            <Button variant="ghost" onClick={() => scrollToSection('credits')} className="justify-start w-full">
                                 Credits
                             </Button>
                         </div>

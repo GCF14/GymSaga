@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   }
   
   export default function Home() {
+
+    
     return (
       <>
         <div className="w-full h-full items-center flex flex-col bg-background p-8 scrollbar-hide">
