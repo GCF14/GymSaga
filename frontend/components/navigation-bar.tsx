@@ -1,12 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import Navbar from "@/components/navigationbar-menu";
-import { ModeToggle } from "@/components/modetoggle";
+import Navbar from "@/components/navigation-bar-menu";
+import { ModeToggle } from "@/components/mode-toggle";
 import { useTheme } from "next-themes";
 import SettingsButton from "@/components/settings-button";
 import Link from "next/link";
-import CreatePostDialog from "./createpost-dialog";
+import CreatePostDialog from "./create-post-dialog";
 import GymSagaSquare from "@/public/GymSagaSquare";
 
 export default function NavigationBar() {

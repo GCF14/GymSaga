@@ -1,4 +1,6 @@
-import React, { useRef } from "react";
+"use client";
+
+import React, { useState } from "react";
 import { createPortal } from "react-dom";
 import {
     Card,
@@ -18,7 +20,7 @@ import { Separator } from "./ui/separator";
 import MoreMenu from "./dropdown-menu";
 import NestedComments from "./nested-comments";
 import { Textarea } from "./ui/textarea";
-import LikeCommentShareBar from "./likecommentshare-bar";
+import LikeCommentShareBar from "./like-comment-share-bar";
 import AttachmentButton from "./attachment-button";
 
 interface CommentCardProps {
@@ -28,6 +30,12 @@ interface CommentCardProps {
 export default function CommentCard({ onClose }: CommentCardProps) {
     const [isLiked, setIsLiked] = React.useState(false);
     const [isNestedCommentVisible, setIsNestedCommentVisible] = React.useState(false);
+    const [files, setFiles] = useState<File[]>([])
+    
+    const handleFilesChange = (newFiles: File[]) => {
+        setFiles(newFiles)
+        console.log("Files updated:", newFiles)
+    }
 
     const handleLike = () => {
         setIsLiked(!isLiked);
@@ -75,11 +83,11 @@ export default function CommentCard({ onClose }: CommentCardProps) {
                         <Separator className="mb-4" />
                     </div>
                 </CardContent>
-                <CardFooter className="p-4 rounded-md">
-                    <div className="flex w-full justify-center items-center">
-                        <AttachmentButton />
-                        <Textarea placeholder="Write a comment..." rows={1} className="w-4/5 mx-4" />
-                        <Button size="icon" className="hover-button">
+                <CardFooter>
+                    <div className="w-full flex flex-row gap-2 justify-center items-center">
+                        <AttachmentButton onFilesChange={handleFilesChange} maxFiles={1} />
+                        <Textarea placeholder="Write a comment..." rows={1} className="flex-grow" />
+                        <Button size="icon" className="px-2">
                             <span className="material-symbols-rounded">send</span>
                         </Button>
                     </div>

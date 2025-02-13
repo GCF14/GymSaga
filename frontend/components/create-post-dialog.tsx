@@ -1,4 +1,6 @@
-import React from "react";
+"use client"
+
+import React, { useState } from "react";
 import { Button } from "./ui/button"
 import { toast } from "sonner"
 import { Textarea } from "./ui/textarea";
@@ -16,6 +18,13 @@ import { RainbowButton } from "./magicui/rainbow-button";
 import AttachmentButton from "./attachment-button";
 
 export default function CreatePostDialog() {
+    const [files, setFiles] = useState<File[]>([])
+
+    const handleFilesChange = (newFiles: File[]) => {
+      setFiles(newFiles)
+      console.log("Files updated:", newFiles)
+    }
+
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -42,7 +51,7 @@ export default function CreatePostDialog() {
                 </div>
                 <DialogFooter>
                     <div className="w-full flex justify-between">
-                        <AttachmentButton />
+                        <AttachmentButton onFilesChange={handleFilesChange} maxFiles={5} />
                         <DialogClose asChild className="flex justify-end">
                             <Button onClick={() => {toast.success("Post created successfully!")}}>
                                 Post

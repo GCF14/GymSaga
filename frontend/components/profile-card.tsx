@@ -21,7 +21,7 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { BoxReveal } from "@/components/magicui/box-reveal"
-import EditSaveButton from "@/components/editsave-button"
+import EditSaveButton from "@/components/edit-save-button"
 import { BlurFade } from "@/components/magicui/blur-fade"
 import BadgeRow from "@/components/badge-row"
 

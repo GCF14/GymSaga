@@ -59,6 +59,14 @@ export default function RootLayout({
               'opsz' 24;
               font-size: 20px;
             }
+            .material-symbols-rounded.thin {
+              font-variation-settings:
+              'FILL' 0,
+              'wght' 150,
+              'GRAD' 0,
+              'opsz' 24;
+              font-size: 20px;
+            }
             .material-symbols-rounded.filled {
               font-variation-settings:
               'FILL' 1,

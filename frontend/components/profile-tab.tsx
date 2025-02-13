@@ -10,7 +10,7 @@ import {
 import React from "react"
 import PostCard from "@/components/post-card"
 import MealCarousel from "@/components/meal-carousel";
-import EditSaveButton from "@/components/editsave-button";
+import EditSaveButton from "@/components/edit-save-button";
 import { BlurFade } from "./magicui/blur-fade";
 
 interface ProfileTabProps {
