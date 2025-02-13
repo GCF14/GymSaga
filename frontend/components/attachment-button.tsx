@@ -17,7 +17,7 @@ export default function AttachmentButton({ onFilesChange, maxFiles }: Attachment
         if (event.target.files) {
             const newFiles = Array.from(event.target.files);
             if (maxFiles && (files.length + newFiles.length > maxFiles)) {
-                toast.error(`Error: You can upload up to ${maxFiles} file.`, {
+                toast.error(`Error: You can upload up to ${maxFiles} file${maxFiles > 1 ? 's' : ''}.`, {
                     action: {
                       label: "Close",
                       onClick: () => toast.dismiss(),
