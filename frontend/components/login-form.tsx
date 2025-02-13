@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -11,17 +12,27 @@ import { Label } from "@/components/ui/label"
 import { useState } from "react"
 import SignupForm from "./signup-form"
 import { useLogin } from "@/hooks/useLogin"
+import { useRouter } from "next/navigation";
 
 export function LoginForm() {
   const [isSignup, setIsSingup] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login, error, isLoading } = useLogin()
+  const router = useRouter();
+
+  
+  
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    await login(email, password)
+    const success = await login(email, password);
+
+    if (success) { 
+      router.push("/");
+    }
+
   }
 
   const handleSignupClick = () => {
