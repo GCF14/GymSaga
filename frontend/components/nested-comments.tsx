@@ -6,7 +6,7 @@ import {
 import MoreMenu from "@/components/dropdown-menu"
 import React from "react"
 import Link from "next/link"
-import LikeCommentShareBar from "@/components/likecommentshare-bar"
+import LikeCommentShareBar from "@/components/like-comment-share-bar"
 
 export default function NestedComments() {
     const [isLiked, setIsLiked] = React.useState(false);

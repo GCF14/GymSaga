@@ -7,9 +7,9 @@ import {
     CardTitle,
   } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import { AnimatedIconBeam } from "./animatedicon-beam"
+import { AnimatedIconBeam } from "./animated-icon-beam"
 import { BlurFade } from "@/components/magicui/blur-fade"
-import DeleteAccountButton from "@/components/deleteaccount-button";
+import DeleteAccountButton from "@/components/delete-account-button";
 
 interface SettingsCardProps {
     className?: string;
