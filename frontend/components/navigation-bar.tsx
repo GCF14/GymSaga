@@ -1,13 +1,13 @@
 "use client";
 
-import Image from "next/image";
-import Navbar from "@/components/navigation-bar-menu";
+import NavbarMenu from "@/components/navigation-bar-menu";
 import { ModeToggle } from "@/components/mode-toggle";
 import { useTheme } from "next-themes";
 import SettingsButton from "@/components/settings-button";
 import Link from "next/link";
 import CreatePostDialog from "./create-post-dialog";
 import GymSagaSquare from "@/public/GymSagaSquare";
+import SheetMenu from "./sheet-menu";
 
 export default function NavigationBar() {
     const { resolvedTheme } = useTheme();
@@ -22,13 +22,16 @@ export default function NavigationBar() {
                     <h2 className="text-xl font-extrabold tracking-tight">GymSaga</h2>
                 </Link>
             </div>
-            <div className="flex grow justify-center items-center">
-                <Navbar />
+            <div className="hidden md:flex flex grow justify-center items-center">
+                <NavbarMenu />
             </div>
-            <div className="flex flex-row items-center gap-2 mr-2">
+            <div className="hidden md:flex flex flex-row items-center gap-2 mr-2">
                 <CreatePostDialog />
                 <SettingsButton />
                 <ModeToggle />
+            </div>
+            <div className="md:hidden flex flex-row items-center ml-auto gap-2 mr-2">
+                <SheetMenu />
             </div>
         </div>
     );

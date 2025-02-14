@@ -11,12 +11,12 @@ import {
   } from "@/components/ui/navigation-menu"
 import Link from "next/link"
 
-export default function Navbar() {
+export default function NavbarMenu() {
     return (
         <NavigationMenu>
         <NavigationMenuList>
             <NavigationMenuItem>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()} href="/posts">Posts Testing Page</NavigationMenuLink>
+                    <NavigationMenuLink className={navigationMenuTriggerStyle()} href="/posts">Posts</NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
                 <Link href="/" legacyBehavior passHref>

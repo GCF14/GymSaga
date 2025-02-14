@@ -13,7 +13,7 @@ export default function Home() {
     <>
       <div className="w-full h-full items-center flex flex-col bg-background p-8 scrollbar-hide">
         <NavigationBar />
-        <div className="flex-col w-1/2 mt-16 space-y-4">
+        <div className="flex-col w-full md:w-1/2 mt-16 space-y-4">
           <BlurFade inView>
             <PostCard username={"Matthew Raymundo"} content={"This is the post template of our app!"}/>
           </BlurFade>
