@@ -24,6 +24,7 @@ export const useSignup = () => {
         if (!response.ok) {
             setIsLoading(false)
             setError(json.error)
+            return false;
         }
 
         if(response.ok) {
@@ -32,6 +33,7 @@ export const useSignup = () => {
             dispatch({type: 'LOGIN', payload: json})
 
             setIsLoading(false)
+            return true;
 
         }
     }

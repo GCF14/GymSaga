@@ -17,6 +17,7 @@ import { toast } from "sonner"
 import { useEffect } from "react"
 import { useLogout } from "@/hooks/useLogout"
 import { useAuthContext } from "@/hooks/useAuthContext"
+import { useRouter } from "next/navigation";
 
 export default function SignupForm() {
   const [isLogin, setIsLogin] = useState(false);
@@ -28,6 +29,7 @@ export default function SignupForm() {
   const { signup, error, isLoading} = useSignup()
   const { logout } = useLogout()
   const { user } = useAuthContext()
+  const router = useRouter();
 
   useEffect(() => {
     if (error) {
@@ -54,7 +56,11 @@ export default function SignupForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await signup(email, password);
+    const success = await signup(email, password);
+
+    if (success) { 
+      router.push("/");
+    }
   };
 
   const handleLoginClick = () => {
