@@ -31,6 +31,7 @@
     "canvas-confetti": "^1.9.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "cmdk": "^1.0.4",
     "date-fns": "^4.1.0",
     "dotenv": "^16.4.7",
     "embla-carousel": "^8.5.2",

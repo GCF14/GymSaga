@@ -21,7 +21,7 @@ export default function SettingsButton() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button variant="outline" className="p-0 size-8 cursor-pointer">
           <span className="material-symbols-rounded">
             settings
           </span>

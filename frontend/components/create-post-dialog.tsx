@@ -28,7 +28,7 @@ export default function CreatePostDialog() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <RainbowButton className="rounded-md h-9 w-24">
+                <RainbowButton className="rounded-md h-8 w-24">
                     <span className="material-symbols-rounded">
                         post_add
                     </span>

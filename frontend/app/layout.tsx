@@ -75,6 +75,9 @@ export default function RootLayout({
               'opsz' 24;
               color: #ef4444;
             }
+            .material-symbols-rounded.small {
+              font-size: 1rem;
+            }
             .material-symbols-rounded.medium {
               font-size: 3rem;
             }
