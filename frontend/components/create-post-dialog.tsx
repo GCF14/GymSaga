@@ -28,13 +28,13 @@ export default function CreatePostDialog() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <RainbowButton className="rounded-md h-8 w-24">
+                <RainbowButton className="rounded-md h-8 w-20 transition hover:scale-105 duration-300">
                     <span className="material-symbols-rounded">
                         post_add
                     </span>
-                    <p className="ml-2">
+                    <span className="text-sm ml-2">
                         Post
-                    </p>
+                    </span>
                 </RainbowButton>
             </DialogTrigger>
             <DialogContent className="min-w-[750px]">

@@ -15,11 +15,13 @@ import {
   } from "@/components/ui/command"
 import { Button } from "@/components/ui/button"
 import { Kbd } from "@/components/ui/kbd"
+import { useLogout } from "@/hooks/useLogout"
 
 export default function CommandBar() {
   const [open, setOpen] = React.useState(false)
   const [input, setInput] = React.useState("")
   const router = useRouter()
+  const { logout } = useLogout()
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -45,7 +47,7 @@ export default function CommandBar() {
         <Button
         onClick={() => setOpen(true)}
         variant="outline"
-        className="group inline-flex items-center transition-[width] gap-2 w-22 hover:w-36 h-8 pl-2 pr-0 cursor-pointer"
+        className="group inline-flex items-center transition-all duration-300 gap-2 w-22 hover:w-36 h-8 pl-2 pr-0 cursor-pointer"
         >
             <span className="material-symbols-rounded small">search</span>
             <span className="inline-block overflow-hidden whitespace-nowrap transition-[max-width] duration-300 max-w-0 group-hover:max-w-[100px]">
@@ -81,6 +83,11 @@ export default function CommandBar() {
           <CommandSeparator />
           <CommandGroup heading="Settings">
             <CommandItem onSelect={() => handleSelect("/settings")}>Settings</CommandItem>
+            <CommandItem onSelect={() => {
+                handleSelect("/login");
+                logout();
+            }}>Logout
+            </CommandItem>
           </CommandGroup>
         </CommandList>
       </CommandDialog>
