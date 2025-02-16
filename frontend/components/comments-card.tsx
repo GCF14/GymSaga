@@ -56,7 +56,7 @@ export default function CommentCard({ onClose }: CommentCardProps) {
     return createPortal(
         <div className="fixed inset-0 z-50 flex items-center justify-center">
             <div className="fixed inset-0 bg-black opacity-50" onClick={onClose}></div>
-            <Card className="relative z-60 w-1/2 h-3/4 flex flex-col">
+            <Card className="relative z-60 w-full m-4 md:w-1/2 h-3/4 flex flex-col">
                 <CardHeader>
                     <CardTitle>Comments</CardTitle>
                     <CardDescription>Contribute your ideas and connect with others!</CardDescription>

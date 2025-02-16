@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -13,6 +14,8 @@ import { useState } from "react"
 import SignupForm from "./signup-form"
 import { useLogin } from "@/hooks/useLogin"
 import { useRouter } from "next/navigation";
+import { useEffect } from "react"
+import { toast } from "sonner"
 
 export function LoginForm() {
   const [isSignup, setIsSingup] = useState(false);
@@ -21,8 +24,28 @@ export function LoginForm() {
   const { login, error, isLoading } = useLogin()
   const router = useRouter();
 
-  
-  
+  useEffect(() => {
+    if (error) {
+      toast.error("Error: " + error, {
+        action: {
+          label: "Close",
+          onClick: () => toast.dismiss(),
+        },
+        style: {
+          color: "#ffffff",
+          borderColor: "#7f1d1d",
+          backgroundColor: "#7f1d1d",
+        },
+        actionButtonStyle: {
+          backgroundColor: "#7f1d1d",
+          borderColor: "#ffffff",
+          color: "#ffffff",
+          borderWidth: "1px",
+          borderStyle: "solid", 
+        }
+      });
+    }
+  }, [error]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -91,9 +114,7 @@ export function LoginForm() {
                 <button className="underline underline-offset-4" onClick={handleSignupClick}>
                     Sign up
                 </button>
-            </div>
-            {error && <div className="bg-red-500 text-white text-sm p-2 rounded-md">{error}</div>}
-              
+            </div>              
           </form>
         </CardContent>
       </Card>

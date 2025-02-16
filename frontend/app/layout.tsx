@@ -75,6 +75,9 @@ export default function RootLayout({
               'opsz' 24;
               color: #ef4444;
             }
+            .material-symbols-rounded.small {
+              font-size: 1rem;
+            }
             .material-symbols-rounded.medium {
               font-size: 3rem;
             }
@@ -95,7 +98,7 @@ export default function RootLayout({
           `}
         </style>
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider
         attribute="class"
         defaultTheme="system"

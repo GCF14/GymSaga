@@ -15,20 +15,16 @@ import { LoginForm } from "./login-form"
 import { useSignup } from "@/hooks/useSignup"
 import { toast } from "sonner"
 import { useEffect } from "react"
-import { useLogout } from "@/hooks/useLogout"
-import { useAuthContext } from "@/hooks/useAuthContext"
 import { useRouter } from "next/navigation";
 
 export default function SignupForm() {
   const [isLogin, setIsLogin] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const[userName, setUserName] = useState("");
+  const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { signup, error, isLoading} = useSignup()
-  const { logout } = useLogout()
-  const { user } = useAuthContext()
+  const { signup, error, isLoading } = useSignup();
   const router = useRouter();
 
   useEffect(() => {
@@ -66,10 +62,6 @@ export default function SignupForm() {
   const handleLoginClick = () => {
     setIsLogin(true);
   };
-
-  const handleClick = () => {
-    logout()
-  }
 
   return (
     isLogin ? <LoginForm /> :
@@ -145,11 +137,6 @@ export default function SignupForm() {
               </button>
             </div>
           </form>
-          {user && (
-            <div>
-              <button onClick={handleClick}>Logout</button>
-            </div>
-          )}
         </CardContent>
       </Card>
     </div>
