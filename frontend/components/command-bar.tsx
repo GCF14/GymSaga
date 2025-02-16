@@ -75,18 +75,35 @@ export default function CommandBar() {
             </div>
           </CommandEmpty>
           <CommandGroup heading="Pages">
-            <CommandItem onSelect={() => handleSelect("/")}>Home</CommandItem>
-            <CommandItem onSelect={() => handleSelect("/map")}>Map</CommandItem>
-            <CommandItem onSelect={() => handleSelect("/social-link")}>Social Link</CommandItem>
-            <CommandItem onSelect={() => handleSelect("/profile")}>Profile</CommandItem>
+            <CommandItem onSelect={() => handleSelect("/")} className="items-center">
+              <span className="material-symbols-rounded">home</span>
+              <span>Home</span>
+            </CommandItem>
+            <CommandItem onSelect={() => handleSelect("/map")}>
+              <span className="material-symbols-rounded">map</span>
+              <span>Map</span>
+            </CommandItem>
+            <CommandItem onSelect={() => handleSelect("/social-link")}>
+              <span className="material-symbols-rounded">group</span>
+              <span>Social Link</span>
+            </CommandItem>
+            <CommandItem onSelect={() => handleSelect("/profile")}>
+              <span className="material-symbols-rounded">person</span>
+              <span>Profile</span>
+            </CommandItem>
           </CommandGroup>
           <CommandSeparator />
           <CommandGroup heading="Settings">
-            <CommandItem onSelect={() => handleSelect("/settings")}>Settings</CommandItem>
+            <CommandItem onSelect={() => handleSelect("/settings")}>
+              <span className="material-symbols-rounded">settings</span>
+              <span>Settings</span>
+            </CommandItem>
             <CommandItem onSelect={() => {
                 handleSelect("/login");
                 logout();
-            }}>Logout
+            }}>
+              <span className="material-symbols-rounded">logout</span>
+              <span>Logout</span>
             </CommandItem>
           </CommandGroup>
         </CommandList>

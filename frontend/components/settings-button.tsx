@@ -69,7 +69,7 @@ export default function SettingsButton() {
             <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
             Logout
             </DropdownMenuItem>
-        </Link>
+        </Link> 
       </DropdownMenuContent>
     </DropdownMenu>
   );
