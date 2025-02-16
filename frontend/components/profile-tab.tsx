@@ -12,6 +12,7 @@ import PostCard from "@/components/post-card"
 import MealCarousel from "@/components/meal-carousel";
 import EditSaveButton from "@/components/edit-save-button";
 import { BlurFade } from "./magicui/blur-fade";
+import WorkoutCarousel from "./workout-carousel";
 
 interface ProfileTabProps {
     className?: string;
@@ -61,13 +62,11 @@ export default function ProfileTab({ className }: ProfileTabProps) {
                                 <CardTitle>Workout Routine</CardTitle>
                                 <CardDescription>Short Description</CardDescription>
                             </CardHeader>
-                                <CardContent className="h-full overflow-hidden">
-                                    <h1 className="text-9xl font-bold text-center text-primary">
-                                        Workout Routine Workout Routine Workout Routine Workout Routine Workout Routine 
-                                    </h1>
+                                <CardContent className="h-full w-full flex flex-1 overflow-hidden">
+                                    <WorkoutCarousel />
                                 </CardContent>
                             <CardFooter>
-                                <p>Footer</p>
+                                <EditSaveButton />
                             </CardFooter>
                         </Card>
                     </TabsContent>

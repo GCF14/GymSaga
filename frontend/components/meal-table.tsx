@@ -15,7 +15,7 @@ export default function MealTable() {
             <TableCaption></TableCaption>
             <TableHeader>
                 <TableRow>
-                <TableHead>Name</TableHead>
+                <TableHead>Meal Name</TableHead>
                 <TableHead>Weight</TableHead>
                 <TableHead>Calories</TableHead>
                 <TableHead>Protein</TableHead>
