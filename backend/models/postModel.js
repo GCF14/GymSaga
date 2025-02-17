@@ -1,16 +1,17 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-
 const postSchema = new Schema({
     content: {
         type: String,
         required: true
     },
-
-    // username + timestamp would be the primary ID
     username: {
         type: String,
+        required: true
+    },
+    dateOfCreation: {
+        type: Date,
         required: true
     },
     numOfLikes: {
@@ -21,7 +22,7 @@ const postSchema = new Schema({
     likedBy: {
         type: Array, 
         required: true
-    }
+    },
 }, { timestamps: true })
 
 module.exports = mongoose.model('Post', postSchema)

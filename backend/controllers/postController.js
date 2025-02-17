@@ -17,7 +17,7 @@ async function getPost(req, res) {
 }
 
 async function createNewPost(req, res) {
-    const {content, username, numOfLikes, likedBy} = req.body
+    const {content, username, dateOfCreation, numOfLikes, likedBy} = req.body
     if(!content) {
         emptyFields.push('content')
     }
@@ -26,6 +26,9 @@ async function createNewPost(req, res) {
     }
     if (!numOfLikes) {
         emptyFields.push('numOfLikes')
+    }
+    if (!dateOfCreation) {
+        emptyFields.push('dateOfCreation')
     }
     if (!likedBy) {
         emptyFields.push('likedBy')
@@ -36,7 +39,7 @@ async function createNewPost(req, res) {
     }
 
     try {
-        const post = await Posts.create({ content, username, numOfLikes, likedBy })
+        const post = await Posts.create({ content, username, dateOfCreation, numOfLikes, likedBy })
         res.status(200).json(post)
     } 
     catch(error) {
