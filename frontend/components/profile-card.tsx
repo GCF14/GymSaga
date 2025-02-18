@@ -21,7 +21,7 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { BoxReveal } from "@/components/magicui/box-reveal"
-import EditSaveButton from "@/components/edit-button"
+import EditButton from "@/components/edit-button"
 import { BlurFade } from "@/components/magicui/blur-fade"
 import BadgeRow from "@/components/badge-row"
 
@@ -87,7 +87,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className }) => {
                 </CardContent>
                 <CardFooter>
                     <div className="flex justify-end items-center w-full">
-                        <EditSaveButton />
+                        <EditButton type="profile" />
                     </div>
                 </CardFooter>
             </Card>
