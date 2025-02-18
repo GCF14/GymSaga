@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useWorkoutsContext } from "@/hooks/useWorkoutsContext"; // Updated import
+import { useAuthContext } from "@/hooks/useAuthContext";
 
 const port = process.env.NEXT_PUBLIC_PORT;
 
@@ -11,10 +12,15 @@ const WorkoutForm = () => {
     const[reps, setReps] = useState('')
     const [error, setError] = useState<string | null>(null);
     const [emptyFields, setEmptyFields] = useState<string[]>([]);
-
+    const { user } = useAuthContext();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+
+        if(!user) {
+            setError("You must be logged in")
+            return
+        }
 
         const workout = {title, load, reps}
 
@@ -22,15 +28,17 @@ const WorkoutForm = () => {
             method: 'POST',
             body: JSON.stringify(workout),
             headers: {
-                "Content-Type": 'application/json'
-            }   
+                "Content-Type": 'application/json',
+            },
+            credentials: "include",   
         })
 
         const json = await response.json()
 
         if(!response.ok) {
             setError(json.error)
-            setEmptyFields(json.emptyFields)
+            setEmptyFields(json.emptyFields || []);
+            
         }
 
         if(response.ok) {
