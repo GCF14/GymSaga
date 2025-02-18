@@ -5,7 +5,6 @@ const requireAuth = async (req, res, next) => {
 
     //verify authentication
     const token = req.cookies?.token; 
-    console.log("Extracted Token:", token);
     if (!token) {
         return res.status(401).json({ error: 'Authorization token required' });
     }
