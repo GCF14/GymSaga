@@ -10,15 +10,16 @@ import {
 import React from "react"
 import PostCard from "@/components/post-card"
 import MealCarousel from "@/components/meal-carousel";
-import EditSaveButton from "@/components/edit-button";
+import EditButton from "@/components/edit-button";
 import { BlurFade } from "./magicui/blur-fade";
 import WorkoutCarousel from "./workout-carousel";
 
 interface ProfileTabProps {
     className?: string;
+    isOwner: boolean;
 }
 
-export default function ProfileTab({ className }: ProfileTabProps) {
+export default function ProfileTab({ className, isOwner }: ProfileTabProps) {
     return (
         <Tabs defaultValue="posts" className={`flex flex-col h-[calc(100vh-8rem)] ${className}`}>
             <BlurFade direction="left" className="flex flex-col overflow-hidden">
@@ -37,7 +38,7 @@ export default function ProfileTab({ className }: ProfileTabProps) {
                                     <CardTitle>Meal Plan</CardTitle>
                                     <CardDescription>Short Description</CardDescription>
                                 </div>
-                                <EditSaveButton type="meal" />
+                                {isOwner && <EditButton type="meal" />}
                             </CardHeader>
                                 <CardContent className="h-full w-full flex flex-1 overflow-hidden">
                                     <MealCarousel />
@@ -63,7 +64,7 @@ export default function ProfileTab({ className }: ProfileTabProps) {
                                     <CardTitle>Workout Routine</CardTitle>
                                     <CardDescription>Short Description</CardDescription>
                                 </div>
-                                <EditSaveButton type="workout" />
+                                {isOwner && <EditButton type="workout" />}
                             </CardHeader>
                             <CardContent className="h-full w-full flex flex-1 overflow-hidden">
                                 <WorkoutCarousel />

@@ -27,9 +27,10 @@ import BadgeRow from "@/components/badge-row"
 
 interface ProfileCardProps {
     className?: string;
+    isOwner: boolean;
 }
 
-const ProfileCard: React.FC<ProfileCardProps> = ({ className }) => {
+const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner }) => {
     return (
         <BlurFade direction="up" className="flex flex-col overflow-hidden">
             <Card className={`h-[calc(100vh-8rem)] ${className}`}>
@@ -87,7 +88,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className }) => {
                 </CardContent>
                 <CardFooter>
                     <div className="flex justify-end items-center w-full">
-                        <EditButton type="profile" />
+                        {isOwner && <EditButton type="profile" />}
                     </div>
                 </CardFooter>
             </Card>

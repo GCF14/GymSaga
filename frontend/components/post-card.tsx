@@ -24,6 +24,7 @@ import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 import CommentCard from "@/components/comments-card" 
 import MoreMenu from "@/components/dropdown-menu"
+import Link from "next/link";
 
 interface PostCardProps {
     username: string;
@@ -67,30 +68,36 @@ export default function PostCard({ username, content }: PostCardProps) {
                         </Avatar>
                     <CardTitle>
                         <HoverCard>
-                            <HoverCardTrigger className="hover-underline">{username}</HoverCardTrigger>
-                                <HoverCardContent className="w-80">
-                                    <div className="flex justify-between space-x-4">
-                                    <Avatar>
-                                        <AvatarImage src="/Logo.png" />
-                                        <AvatarFallback>
-                                            <span className="material-symbols-rounded medium">
-                                                account_circle
-                                            </span>
-                                        </AvatarFallback>
-                                    </Avatar>
-                                    <div className="space-y-1">
-                                        <h4 className="text-sm font-semibold">@matthewriley05</h4>
-                                        <p className="text-sm">
-                                        The GymSaga CEO and Co-Founder. Working on making fitness fun and accessible for everyone. 🏋️‍♂️💪
-                                        </p>
-                                        <div className="flex items-center pt-2">
-                                        <span className="text-xs text-muted-foreground">
-                                            Joined June 2005
+                            <Link href={`/${username}`}>
+                                <HoverCardTrigger className="hover-underline">
+                                        {username}
+                                </HoverCardTrigger>
+                            </Link>
+                            <HoverCardContent className="w-80">
+                                <div className="flex justify-between space-x-4">
+                                <Avatar>
+                                    <AvatarImage src="/Logo.png" />
+                                    <AvatarFallback>
+                                        <span className="material-symbols-rounded medium">
+                                            account_circle
                                         </span>
-                                        </div>
+                                    </AvatarFallback>
+                                </Avatar>
+                                <div className="space-y-1">
+                                    <h4 className="text-sm font-semibold">
+                                        {username}
+                                    </h4>
+                                    <p className="text-sm">
+                                    The GymSaga CEO and Co-Founder. Working on making fitness fun and accessible for everyone. 🏋️‍♂️💪
+                                    </p>
+                                    <div className="flex items-center pt-2">
+                                    <span className="text-xs text-muted-foreground">
+                                        Joined June 2005
+                                    </span>
                                     </div>
-                                    </div>
-                                </HoverCardContent>
+                                </div>
+                                </div>
+                            </HoverCardContent>
                         </HoverCard>
                     </CardTitle>
                     </div>
