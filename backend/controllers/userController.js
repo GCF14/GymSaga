@@ -23,7 +23,8 @@ const loginUser = async (req, res) => {
             maxAge: 2592000000 // 30 days
         });
 
-        res.status(200).json({email, token})
+
+        res.status(200).json({email: user.email, username: user.username, token})
     } catch (error) {
         res.status(400).json({error: error.message})
     }
@@ -47,6 +48,7 @@ const signUpUser = async (req, res) => {
             maxAge: 2592000000 // 30 days
         });
 
+
         res.status(200).json({email, token})
     } catch (error) {
         res.status(400).json({error: error.message})
@@ -63,6 +65,7 @@ const logoutUser = async (req, res) => {
         sameSite: 'Strict',
         expires: new Date(0)
     })
+
 
     res.status(200).json({message: 'Logged out successfully'})
 }
