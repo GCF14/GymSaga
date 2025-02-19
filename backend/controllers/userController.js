@@ -23,7 +23,8 @@ const loginUser = async (req, res) => {
             maxAge: 2592000000 // 30 days
         });
 
-        res.status(200).json({email, token})
+
+        res.status(200).json({email: user.email, username: user.username, token})
     } catch (error) {
         res.status(400).json({error: error.message})
     }
@@ -32,10 +33,10 @@ const loginUser = async (req, res) => {
 
 // signup the user 
 const signUpUser = async (req, res) => {
-    const {email, password} = req.body
+    const {email, password, username, firstName, lastName} = req.body
 
     try {
-        const user = await User.signup(email, password)
+        const user = await User.signup(email, password, username, firstName, lastName)
         
         // create the token
         const token = createToken(user._id)
@@ -46,6 +47,7 @@ const signUpUser = async (req, res) => {
             sameSite: 'Strict', // This will protect against CSRF
             maxAge: 2592000000 // 30 days
         });
+
 
         res.status(200).json({email, token})
     } catch (error) {
@@ -64,11 +66,12 @@ const logoutUser = async (req, res) => {
         expires: new Date(0)
     })
 
+
     res.status(200).json({message: 'Logged out successfully'})
 }
 
 
-const getUser = (req, res) => {
+const getUser = async (req, res) => {
   // Get token from cookies
   const token = req.cookies.token;
 
@@ -79,8 +82,10 @@ const getUser = (req, res) => {
   try {
     // Verify the token
     const decoded = jwt.verify(token, process.env.SECRET); 
+    
+    const user = await User.findById(decoded._id).select('username'); 
 
-    res.json({ userId: decoded._id, email: decoded.email });
+    res.json({ userId: decoded._id, username: user.username });
   } catch (err) {
     res.status(401).json({ error: 'Invalid or expired token' });
   }

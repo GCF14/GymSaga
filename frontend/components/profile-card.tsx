@@ -21,15 +21,16 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { BoxReveal } from "@/components/magicui/box-reveal"
-import EditSaveButton from "@/components/edit-save-button"
+import EditButton from "@/components/edit-button"
 import { BlurFade } from "@/components/magicui/blur-fade"
 import BadgeRow from "@/components/badge-row"
 
 interface ProfileCardProps {
     className?: string;
+    isOwner: boolean;
 }
 
-const ProfileCard: React.FC<ProfileCardProps> = ({ className }) => {
+const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner }) => {
     return (
         <BlurFade direction="up" className="flex flex-col overflow-hidden">
             <Card className={`h-[calc(100vh-8rem)] ${className}`}>
@@ -87,7 +88,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className }) => {
                 </CardContent>
                 <CardFooter>
                     <div className="flex justify-end items-center w-full">
-                        <EditSaveButton />
+                        {isOwner && <EditButton type="profile" />}
                     </div>
                 </CardFooter>
             </Card>
