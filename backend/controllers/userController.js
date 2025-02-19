@@ -32,10 +32,10 @@ const loginUser = async (req, res) => {
 
 // signup the user 
 const signUpUser = async (req, res) => {
-    const {email, password} = req.body
+    const {email, password, username, firstName, lastName} = req.body
 
     try {
-        const user = await User.signup(email, password)
+        const user = await User.signup(email, password, username, firstName, lastName)
         
         // create the token
         const token = createToken(user._id)
@@ -68,7 +68,7 @@ const logoutUser = async (req, res) => {
 }
 
 
-const getUser = (req, res) => {
+const getUser = async (req, res) => {
   // Get token from cookies
   const token = req.cookies.token;
 
@@ -79,8 +79,10 @@ const getUser = (req, res) => {
   try {
     // Verify the token
     const decoded = jwt.verify(token, process.env.SECRET); 
+    
+    const user = await User.findById(decoded._id).select('username'); 
 
-    res.json({ userId: decoded._id, email: decoded.email });
+    res.json({ userId: decoded._id, username: user.username });
   } catch (err) {
     res.status(401).json({ error: 'Invalid or expired token' });
   }
