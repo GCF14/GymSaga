@@ -29,9 +29,15 @@ export const useLogin = () => {
         }
 
         if(response.ok) {
+
+            if (json.username) {
+                localStorage.setItem('username', json.username);
+            }
+
             
             // update the auth context
             dispatch({type: 'LOGIN', payload: json})
+
 
             setIsLoading(false)
             return true;
