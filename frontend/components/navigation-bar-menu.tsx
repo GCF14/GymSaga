@@ -12,7 +12,7 @@ import {
 import Link from "next/link"
 
 export default function NavbarMenu() {
-    const username = "MatthewRiley05"
+    const username = localStorage.getItem("username")
 
     return (
         <NavigationMenu>
