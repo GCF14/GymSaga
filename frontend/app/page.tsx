@@ -15,7 +15,7 @@ export default function Home() {
         <NavigationBar />
         <div className="flex-col w-full md:w-1/2 mt-16 space-y-4">
           <BlurFade inView>
-            <PostCard username={"Matthew Raymundo"} content={"This is the post template of our app!"}/>
+            <PostCard username={"@MatthewRiley05"} content={"This is the post template of our app!"}/>
           </BlurFade>
           <BlurFade inView>
             <PostCard username={"Gerard Christian"} content={"Testing if it works"}/>
