@@ -23,10 +23,10 @@ body {
   flex: 1; 
 }
 
-.posts {
+.workouts {
   width: 75%;
 }
-.post-details {
+.workout-details {
   background: #fff;
   border-radius: 4px;
   margin: 20px auto;
@@ -36,17 +36,17 @@ body {
   
   
 }
-.post-details h4 {
+.workout-details h4 {
   margin: 0 0 10px 0;
   font-size: 1.2em;
   color: var(--primary);
 }
-.post-details p {
+.workout-details p {
   margin: 0;
   font-size: 0.9em;
   color: #555;
 }
-.post-details span {
+.workout-details span {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -57,7 +57,7 @@ body {
   color: #333;
 }
 
-/* new post form */
+/* new workout form */
 label, input {
   display: block;
 }
@@ -88,7 +88,7 @@ div.error {
   margin: 20px 0;
 }
 
-.post-button {
+.workout-button {
   background-color: #2c3e50;
   color: white;
 }

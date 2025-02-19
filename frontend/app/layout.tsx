@@ -3,10 +3,12 @@ import localFont from "next/font/local"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { WorkoutsContextProvider } from '@/context/WorkoutsContext'
+import { PostsContextProvider } from "@/context/PostsContext"
 import { AuthContextProvider } from '@/context/AuthContext'
 import { Toaster } from "@/components/ui/sonner"
 import GymSagaDark from "@/public/GymSagaDark.svg"
 import GymSagaLight from "@/public/GymSagaLight.svg"
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -105,10 +107,12 @@ export default function RootLayout({
         enableSystem
         disableTransitionOnChange>
           <AuthContextProvider>
+            // <PostsContextProvider>
             <WorkoutsContextProvider>
               {children}
               <Toaster />
             </WorkoutsContextProvider>
+            </PostsContextProvider>
           </AuthContextProvider>
         </ThemeProvider>
       </body>

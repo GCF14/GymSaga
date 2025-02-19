@@ -11,10 +11,6 @@ const postCommentSchema = new Schema({
         type: String,
         required: true
     },
-    dateOfCreation: {
-        type: Date,
-        required: true
-    },
     numOfLikes: {
         type: Number,
         required: true

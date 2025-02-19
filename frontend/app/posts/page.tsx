@@ -2,45 +2,44 @@
 
 import { useEffect } from "react";
 import NavigationBar from "@/components/navigation-bar";
-import WorkoutDetails from "@/components/testingBackend/WorkoutDetails";
-import WorkoutForm from "@/components/testingBackend/WorkoutForm";
-import { useWorkoutsContext } from "@/hooks/useWorkoutsContext"; 
-import { Workout } from "@/types/workout"; 
+import PostDetails from "@/components/backend/PostDetails";
+import PostForm from "@/components/backend/PostForm";
+import { usePostsContext } from "@/hooks/usePostsContext"; 
+import { Post } from "@/types/post"; 
 import "./style.css";
 
 const port = process.env.NEXT_PUBLIC_PORT;
 
 export default function Posts() {
-  const { workouts, dispatch } = useWorkoutsContext();
+  const { posts, dispatch } = usePostsContext();
   
   useEffect(() => {
-    const fetchWorkouts = async () => {
-      const response = await fetch(`http://localhost:${port}/api/workouts`);
+    async function fetchPosts() {
+      const response = await fetch(`http://localhost:${port}/api/posts`);
       const json = await response.json();
 
       if (response.ok) {
-        dispatch({ type: "SET_WORKOUTS", payload: json });
+        dispatch({ type: "SET_POSTS", payload: json });
       }
-    };
-
-    fetchWorkouts();
+    }
+    fetchPosts();
   }, [dispatch]);
 
   
-  const workoutList = workouts ?? [];
+  const postList = posts ?? [];
 
-  console.log("TEST OTHER")
+
   return (
     <>
       <div className="w-full h-full items-center flex flex-col bg-background p-8 scrollbar-hide">
         <NavigationBar />
         <div className="mt-16 container">
-          <div className="workouts">
-            {workoutList.map((workout: Workout) => (
-              <WorkoutDetails key={workout._id} workout={workout} />
+          <div className="posts">
+            {postList.map((post: Post) => (
+              <PostDetails key={post._id} post={post} />
             ))}
           </div>
-          <WorkoutForm />
+          <PostForm />
         </div>
       </div>
     </>
