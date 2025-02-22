@@ -68,11 +68,11 @@ export default function PostCard({ username, content }: PostCardProps) {
                         </Avatar>
                     <CardTitle>
                         <HoverCard>
-                            <Link href={`/${username}`}>
-                                <HoverCardTrigger className="hover-underline">
-                                        {username}
-                                </HoverCardTrigger>
-                            </Link>
+                            <HoverCardTrigger asChild className="hover-underline">
+                                <Link href={`/${username}`}>
+                                    {username}
+                                </Link>
+                            </HoverCardTrigger>
                             <HoverCardContent className="w-80">
                                 <div className="flex justify-between space-x-4">
                                 <Avatar>
