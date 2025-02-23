@@ -56,30 +56,30 @@ export default function SettingsCard({ className }: SettingsCardProps) {
                             <h3 className="ml-4 my-4 scroll-m-20 text-xl font-semibold tracking-tight">
                                 Account Details
                             </h3>
-                            <div className="flex flex-col items-center gap-4 ml-8">
+                            <div className="flex flex-col gap-4 ml-8">
                                 <div className="flex flex-row items-center gap-2">
                                     <span className="text-right w-24">
                                         Email
                                     </span>
-                                    <Input disabled type="username" placeholder={email ?? ""} className="w-64" />
+                                    <Input disabled type="username" placeholder={email ?? ""} className="w-80" />
                                 </div>
                                 <div className="flex flex-row items-center gap-2">
                                     <span className="text-right w-24">
                                         Username
                                     </span>
-                                    <Input disabled type="username" placeholder={username ?? ""} className="w-64" />
+                                    <Input disabled type="username" placeholder={username ?? ""} className="w-80" />
                                 </div>
                                 <div className="flex flex-row items-center gap-2">
                                     <span className="text-right w-24">
                                         First Name
                                     </span>
-                                    <Input disabled type="first name" placeholder={firstName ?? ""} className="w-64" />
+                                    <Input disabled type="first name" placeholder={firstName ?? ""} className="w-80" />
                                 </div>
                                 <div className="flex flex-row items-center gap-2">
                                     <span className="text-right w-24">
                                         Last Name
                                     </span>
-                                    <Input disabled type="last name" placeholder={lastName ?? ""} className="w-64" />
+                                    <Input disabled type="last name" placeholder={lastName ?? ""} className="w-80" />
                                 </div>
                             </div>
                             <Button className="ml-auto w-20 mt-4" onClick={() => alert("Not implemented")}>
