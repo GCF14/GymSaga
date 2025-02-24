@@ -61,25 +61,25 @@ export default function SettingsCard({ className }: SettingsCardProps) {
                                     <span className="text-right w-24">
                                         Email
                                     </span>
-                                    <Input disabled type="username" placeholder={email ?? ""} className="w-80" />
+                                    <Input disabled type="username" placeholder={email ?? ""} className="w-96" />
                                 </div>
                                 <div className="flex flex-row items-center gap-2">
                                     <span className="text-right w-24">
                                         Username
                                     </span>
-                                    <Input disabled type="username" placeholder={username ?? ""} className="w-80" />
+                                    <Input disabled type="username" placeholder={username ?? ""} className="w-96" />
                                 </div>
                                 <div className="flex flex-row items-center gap-2">
                                     <span className="text-right w-24">
                                         First Name
                                     </span>
-                                    <Input disabled type="first name" placeholder={firstName ?? ""} className="w-80" />
+                                    <Input disabled type="first name" placeholder={firstName ?? ""} className="w-96" />
                                 </div>
                                 <div className="flex flex-row items-center gap-2">
                                     <span className="text-right w-24">
                                         Last Name
                                     </span>
-                                    <Input disabled type="last name" placeholder={lastName ?? ""} className="w-80" />
+                                    <Input disabled type="last name" placeholder={lastName ?? ""} className="w-96" />
                                 </div>
                             </div>
                             <Button className="ml-auto w-20 mt-4" onClick={() => alert("Not implemented")}>
