@@ -13,25 +13,33 @@ import {
 import { useEffect } from "react";
 import { useWorkoutsContext } from "@/hooks/useWorkoutsContext";
 import { Workout } from "@/types/workout";
+import { useAuthContext } from "@/hooks/useAuthContext";
 
 export default function WorkoutTable() {
     const port = process.env.NEXT_PUBLIC_PORT
     const { workouts, dispatch } = useWorkoutsContext();
+    const { user } = useAuthContext();
 
     useEffect(() => {
         const fetchWorkouts = async () => {
-          const response = await fetch(`http://localhost:${port}/api/workouts`);
-          const json = await response.json();
-    
-          if (response.ok) {
-            dispatch({ type: "SET_WORKOUTS", payload: json });
-          }
-        };
-    
-        fetchWorkouts();
-      }, [dispatch]);
+        const response = await fetch(`http://localhost:${port}/api/workouts`, {
+            credentials: "include",
+        });
+        const json = await response.json();
 
-      const workoutList = workouts ?? [];
+        if (response.ok) {
+            dispatch({ type: "SET_WORKOUTS", payload: json });
+        }
+        };
+
+        if (user) {
+        fetchWorkouts();
+        }
+
+        
+    }, [dispatch, user]);
+
+    const workoutList = workouts ?? [];
 
     return (
         <Table>
