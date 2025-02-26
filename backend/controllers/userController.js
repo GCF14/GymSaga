@@ -1,5 +1,6 @@
 const User = require('../models/userModel')
 const jwt = require('jsonwebtoken')
+const mongoose = require('mongoose')
 
 
 
@@ -91,5 +92,29 @@ const getUser = async (req, res) => {
   }
 };
 
+// delete a user
+const deleteUser = async(req, res) => {
+    const { id } = req.params
 
-module.exports = { signUpUser, loginUser, logoutUser, getUser }
+    if(!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({error:'No such user'})
+    }
+
+    const user = await User.findOneAndDelete({_id: id})
+
+    if(!user) {
+        return res.status(400).json({error:'No such user'})
+    }
+
+    res.cookie('token', "", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production' ? true : false,
+        sameSite: 'Strict',
+        expires: new Date(0)
+    })
+
+    res.status(200).json({message: 'Deleted account successfully'})
+}
+
+
+module.exports = { signUpUser, loginUser, logoutUser, getUser, deleteUser }
