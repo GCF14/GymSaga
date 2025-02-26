@@ -22,11 +22,7 @@ export default function DeleteAccountButton() {
     const router = useRouter();
 
     const handleContinueClick = async () => {
-        if (!user || !user.id) {
-            return;
-        }
-
-        const success = await deleteAccount(user.id); 
+        const success = await deleteAccount(user.userId); 
 
         if (success) {
             localStorage.clear();
