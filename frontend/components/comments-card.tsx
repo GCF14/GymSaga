@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import {
     Card,
@@ -28,8 +28,8 @@ interface CommentCardProps {
 }
 
 export default function CommentCard({ onClose }: CommentCardProps) {
-    const [isLiked, setIsLiked] = React.useState(false);
-    const [isNestedCommentVisible, setIsNestedCommentVisible] = React.useState(false);
+    const [isLiked, setIsLiked] = useState(false);
+    const [isNestedCommentVisible, setIsNestedCommentVisible] = useState(false);
     const [files, setFiles] = useState<File[]>([])
     
     const handleFilesChange = (newFiles: File[]) => {
@@ -45,7 +45,7 @@ export default function CommentCard({ onClose }: CommentCardProps) {
         setIsNestedCommentVisible(!isNestedCommentVisible);
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         document.body.style.overflow = "hidden";
 
         return () => {
