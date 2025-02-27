@@ -12,8 +12,6 @@ import {
 import Link from "next/link"
 
 export default function NavbarMenu() {
-    const username = localStorage.getItem("username")
-
     return (
         <NavigationMenu>
         <NavigationMenuList>
@@ -36,7 +34,7 @@ export default function NavbarMenu() {
                 </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-                <Link href={`/${username}`} legacyBehavior passHref>
+                <Link href="/profile" legacyBehavior passHref>
                     <NavigationMenuLink className={navigationMenuTriggerStyle()}>Profile</NavigationMenuLink>
                 </Link>
             </NavigationMenuItem>

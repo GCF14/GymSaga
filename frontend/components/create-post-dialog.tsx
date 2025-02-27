@@ -1,9 +1,9 @@
 "use client"
 
 import React, { useState } from "react";
-import { Button } from "@/components/ui/button"
+import { Button } from "./ui/button"
 import { toast } from "sonner"
-import { Textarea } from "@/components/ui/textarea";
+import { Textarea } from "./ui/textarea";
 import {
     Dialog,
     DialogClose,
@@ -13,9 +13,9 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-  } from "@/components/ui/dialog"
-import { RainbowButton } from "@/components/magicui/rainbow-button";
-import AttachmentButton from "@/components/attachment-button";
+  } from "./ui/dialog"
+import { RainbowButton } from "./magicui/rainbow-button";
+import AttachmentButton from "./attachment-button";
 
 export default function CreatePostDialog() {
     const [files, setFiles] = useState<File[]>([])

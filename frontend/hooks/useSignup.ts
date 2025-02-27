@@ -8,14 +8,14 @@ export const useSignup = () => {
     const port = process.env.NEXT_PUBLIC_PORT
 
 
-    const signup = async (email: string, password: string, username: string, firstName: string, lastName: string) => {
+    const signup = async (email: string, password: string) => {
         setIsLoading(true)
         setError(null)
 
         const response = await fetch(`http://localhost:${port}/api/users/signup`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({email, password, username, firstName, lastName}),
+            body: JSON.stringify({email, password}),
             credentials: 'include'  // Allow cookies
         })
 
@@ -31,7 +31,6 @@ export const useSignup = () => {
             
             // update the auth context
             dispatch({type: 'LOGIN', payload: json})
-            localStorage.setItem('username', username)
 
             setIsLoading(false)
             return true;

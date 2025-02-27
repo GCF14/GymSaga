@@ -10,16 +10,15 @@ import {
 import React from "react"
 import PostCard from "@/components/post-card"
 import MealCarousel from "@/components/meal-carousel";
-import EditButton from "@/components/edit-button";
+import EditSaveButton from "@/components/edit-save-button";
 import { BlurFade } from "./magicui/blur-fade";
 import WorkoutCarousel from "./workout-carousel";
 
 interface ProfileTabProps {
     className?: string;
-    isOwner: boolean;
 }
 
-export default function ProfileTab({ className, isOwner }: ProfileTabProps) {
+export default function ProfileTab({ className }: ProfileTabProps) {
     return (
         <Tabs defaultValue="posts" className={`flex flex-col h-[calc(100vh-8rem)] ${className}`}>
             <BlurFade direction="left" className="flex flex-col overflow-hidden">
@@ -33,16 +32,16 @@ export default function ProfileTab({ className, isOwner }: ProfileTabProps) {
                 <div className="grow overflow-hidden p-2">
                     <TabsContent value="meal-plan" className="relative h-full animate-fade-right">
                         <Card className="h-full flex flex-col">
-                            <CardHeader className="flex flex-row justify-between">
-                                <div>
-                                    <CardTitle>Meal Plan</CardTitle>
-                                    <CardDescription>Short Description</CardDescription>
-                                </div>
-                                {isOwner && <EditButton type="meal" />}
+                            <CardHeader>
+                                <CardTitle>Meal Plan</CardTitle>
+                                <CardDescription>Short Description</CardDescription>
                             </CardHeader>
                                 <CardContent className="h-full w-full flex flex-1 overflow-hidden">
                                     <MealCarousel />
                                 </CardContent>
+                            <CardFooter className="flex justify-end mr-24">
+                                <EditSaveButton />
+                            </CardFooter>
                         </Card>
                     </TabsContent>
                     <TabsContent value="posts" className="relative h-full animate-fade-right">
@@ -59,16 +58,16 @@ export default function ProfileTab({ className, isOwner }: ProfileTabProps) {
                     </TabsContent>
                     <TabsContent value="workout" className="relative h-full animate-fade-right">
                         <Card className="h-full flex flex-col">
-                            <CardHeader className="flex flex-row justify-between">
-                                <div>
-                                    <CardTitle>Workout Routine</CardTitle>
-                                    <CardDescription>Short Description</CardDescription>
-                                </div>
-                                {isOwner && <EditButton type="workout" />}
+                            <CardHeader>
+                                <CardTitle>Workout Routine</CardTitle>
+                                <CardDescription>Short Description</CardDescription>
                             </CardHeader>
-                            <CardContent className="h-full w-full flex flex-1 overflow-hidden">
-                                <WorkoutCarousel />
-                            </CardContent>
+                                <CardContent className="h-full w-full flex flex-1 overflow-hidden">
+                                    <WorkoutCarousel />
+                                </CardContent>
+                            <CardFooter>
+                                <EditSaveButton />
+                            </CardFooter>
                         </Card>
                     </TabsContent>
                 </div>

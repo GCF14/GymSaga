@@ -21,7 +21,6 @@ import { useTheme } from "next-themes"
 export default function SettingsButton() {
   const { logout } = useLogout()
   const { setTheme } = useTheme()
-  const username = localStorage.getItem("username")
 
   const handleLogout = () => {
     logout()
@@ -39,7 +38,7 @@ export default function SettingsButton() {
       <DropdownMenuContent>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <Link href={`/${username}`}>
+        <Link href="/profile">
           <DropdownMenuItem className="cursor-pointer">
             Profile
           </DropdownMenuItem>

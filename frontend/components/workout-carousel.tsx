@@ -16,13 +16,8 @@ return (
                 <WorkoutTable />
             </SliderMainItem>
             <SliderMainItem className="border flex justify-center h-full rounded-md">
-                <WorkoutTable />
             </SliderMainItem>
             <SliderMainItem className="border flex justify-center h-full rounded-md">
-                <WorkoutTable />
-            </SliderMainItem>
-            <SliderMainItem className="border flex justify-center h-full rounded-md">
-                <WorkoutTable />
             </SliderMainItem>
         </CarouselMainContainer>
     </div>

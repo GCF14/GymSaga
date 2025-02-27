@@ -22,7 +22,6 @@ export default function CommandBar() {
   const [input, setInput] = React.useState("")
   const router = useRouter()
   const { logout } = useLogout()
-  const username = localStorage.getItem("username")
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -88,7 +87,7 @@ export default function CommandBar() {
               <span className="material-symbols-rounded">group</span>
               <span>Social Link</span>
             </CommandItem>
-            <CommandItem onSelect={() => handleSelect(`/${username}`)}>
+            <CommandItem onSelect={() => handleSelect("/profile")}>
               <span className="material-symbols-rounded">person</span>
               <span>Profile</span>
             </CommandItem>
