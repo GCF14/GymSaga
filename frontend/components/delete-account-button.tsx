@@ -15,7 +15,6 @@ import {
   import { useRouter } from "next/navigation";
   import { Input } from "@/components/ui/input";
 
-
 export default function DeleteAccountButton() {
     const { deleteAccount, isLoading, error } = useDeleteAccount();
     const { user } = useAuthContext(); 
