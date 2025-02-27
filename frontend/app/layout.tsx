@@ -106,11 +106,11 @@ export default function RootLayout({
         enableSystem
         disableTransitionOnChange>
           <AuthContextProvider>
-            // <PostsContextProvider>
-            <WorkoutsContextProvider>
-              {children}
-              <Toaster />
-            </WorkoutsContextProvider>
+            <PostsContextProvider>
+              <WorkoutsContextProvider>
+                {children}
+                <Toaster />
+              </WorkoutsContextProvider>
             </PostsContextProvider>
           </AuthContextProvider>
         </ThemeProvider>
