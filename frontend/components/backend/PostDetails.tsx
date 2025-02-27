@@ -9,7 +9,7 @@ const PostDetails = ({ post }: { post: Post }) => {
     
 
 
-    async function handleClick(){
+    const handleClick = async() => {
 
         const response = await fetch(`http://localhost:${port}/api/posts/` + post._id, {
           method: 'DELETE',

@@ -1,5 +1,7 @@
 import { useState } from "react"
 import { usePostsContext } from "@/hooks/usePostsContext"; // Updated import
+import { useAuthContext } from "@/hooks/useAuthContext";
+
 
 const port = process.env.NEXT_PUBLIC_PORT;
 
@@ -14,10 +16,14 @@ const PostForm = () => {
 
     const [error, setError] = useState<string | null>(null);
     const [emptyFields, setEmptyFields] = useState<string[]>([]);
+    const { user } = useAuthContext();
 
-    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-
+        if(!user) {
+            setError("You must be logged in")
+            return
+        }
         const post = {content, username}
 
         const response = await fetch(`http://localhost:${port}/api/posts`, {
@@ -25,7 +31,8 @@ const PostForm = () => {
             body: JSON.stringify(post),
             headers: {
                 "Content-Type": 'application/json'
-            }   
+            },  
+            //credentials: "include", 
         })
 
         const json = await response.json()
@@ -45,7 +52,7 @@ const PostForm = () => {
             console.log('New post has been created', json)
             dispatch({type: 'CREATE_POSTS', payload: json})
         }
-    }
+    };
 
 // note: change username label later
     return (
@@ -69,8 +76,8 @@ const PostForm = () => {
                 className={emptyFields.includes('username') ? 'error': ''}
             />
 
-
-            <button className="post-button">Post</button>
+            
+            <button className="post-button">Add Post</button>
             {error && <div className="error">{error}</div>}
         </form>
 

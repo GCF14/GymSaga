@@ -7,7 +7,6 @@ import PostForm from "@/components/backend/PostForm";
 import { usePostsContext } from "@/hooks/usePostsContext"; 
 import { Post } from "@/types/post"; 
 import "./style.css";
-import { useAuthContext } from "@/hooks/useAuthContext";
 
 const port = process.env.NEXT_PUBLIC_PORT;
 
@@ -15,7 +14,7 @@ export default function Posts() {
   const { posts, dispatch } = usePostsContext();
   
   useEffect(() => {
-    async function fetchPosts() {
+    const fetchPosts = async () => {
       const response = await fetch(`http://localhost:${port}/api/posts`);
       const json = await response.json();
 
