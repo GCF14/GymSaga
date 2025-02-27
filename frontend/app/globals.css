@@ -213,3 +213,44 @@
     @apply bg-background text-foreground;
   }
 }
+
+.material-symbols-rounded {
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+  font-size: 20px;
+}
+
+.material-symbols-rounded.thin {
+  font-variation-settings: 'FILL' 0, 'wght' 150, 'GRAD' 0, 'opsz' 24;
+  font-size: 20px;
+}
+
+.material-symbols-rounded.filled {
+  font-variation-settings: 'FILL' 1, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+  color: #ef4444;
+}
+
+.material-symbols-rounded.small {
+  font-size: 1rem;
+}
+
+.material-symbols-rounded.medium {
+  font-size: 3rem;
+}
+
+.material-symbols-rounded.large {
+  font-size: 7rem;
+}
+
+.hover-button:hover {
+  color: hsl(var(--muted-foreground));
+  background-color: hsl(var(--secondary));
+}
+
+.dark .hover-button:hover {
+  color: hsl(var(--muted-foreground));
+  background-color: hsl(var(--secondary));
+}
+
+.hover-underline:hover {
+  text-decoration: underline;
+}
