@@ -1,8 +1,6 @@
 "use client";
 
 import NavbarMenu from "@/components/navigation-bar-menu";
-import { ModeToggle } from "@/components/mode-toggle";
-import { useTheme } from "next-themes";
 import SettingsButton from "@/components/settings-button";
 import Link from "next/link";
 import CreatePostDialog from "@/components/create-post-dialog";
@@ -11,8 +9,6 @@ import SheetMenu from "@/components/sheet-menu";
 import CommandBar from "@/components/command-bar";
 
 export default function NavigationBar() {
-    const { resolvedTheme } = useTheme();
-
     return (
         <div className="fixed flex flex-row top-0 z-50 w-full h-14 bg-transparent backdrop-blur-md shadow-md border-solid border-b">
             <div className="flex flex-row items-center gap-2 ml-2">
