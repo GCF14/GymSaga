@@ -11,8 +11,9 @@ import "./style.css";
 const port = process.env.NEXT_PUBLIC_PORT;
 
 export default function Posts() {
-  const { posts, dispatch } = usePostsContext();
-  
+  const { workouts, dispatch } = useWorkoutsContext();
+    const { user } = useAuthContext();
+
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await fetch(`http://localhost:${port}/api/posts`);

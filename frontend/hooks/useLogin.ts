@@ -31,7 +31,10 @@ export const useLogin = () => {
         if(response.ok) {
 
             if (json.username) {
+                localStorage.setItem('email', json.email);
                 localStorage.setItem('username', json.username);
+                localStorage.setItem('firstName', json.firstName);
+                localStorage.setItem('lastName', json.lastName);
             }
 
             

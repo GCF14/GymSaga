@@ -1,7 +1,6 @@
 'use client'
 
 import { createContext, useReducer, ReactNode, useEffect } from "react";
-import Cookies from "js-cookie";
 
 // set state to null
 interface AuthState {
