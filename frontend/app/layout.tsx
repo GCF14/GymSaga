@@ -44,7 +44,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" type="image/svg+xml" href="/icon.tsx" sizes="any" />
         <link rel="preload" href="https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css" as="style"/>
         <link rel="preload" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" as="style"/>
         <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css" />

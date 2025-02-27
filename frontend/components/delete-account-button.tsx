@@ -10,8 +10,29 @@ import {
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
   import { Button } from "@/components/ui/button"
+  import { useDeleteAccount } from "@/hooks/useDeleteAccount" 
+  import { useAuthContext } from "@/hooks/useAuthContext" 
+  import { useRouter } from "next/navigation";
+
 
 export default function DeleteAccountButton() {
+    const { deleteAccount, isLoading, error } = useDeleteAccount();
+    const { user } = useAuthContext(); 
+    const router = useRouter();
+
+    const handleContinueClick = async () => {
+        if (!user || !user.id) {
+            return;
+        }
+
+        const success = await deleteAccount(user.id); 
+
+        if (success) {
+            localStorage.clear();
+            router.push("/login");
+        }
+    };
+
     return (
         <AlertDialog>
         <AlertDialogTrigger asChild>
@@ -29,7 +50,7 @@ export default function DeleteAccountButton() {
             </AlertDialogHeader>
             <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction className="bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90">Continue</AlertDialogAction>
+            <AlertDialogAction className="bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90" onClick={handleContinueClick} disabled={isLoading} >Continue</AlertDialogAction>
             </AlertDialogFooter>
         </AlertDialogContent>
         </AlertDialog>

@@ -1,17 +1,23 @@
 import { Workout } from "@/types/workout"; 
 import { useWorkoutsContext } from "@/hooks/useWorkoutsContext";
 import { formatDistanceToNow } from 'date-fns/formatDistanceToNow'
+import { useAuthContext } from "@/hooks/useAuthContext";
 
 const port = process.env.NEXT_PUBLIC_PORT;
 
 const WorkoutDetails = ({ workout }: { workout: Workout }) => {
     const { dispatch } = useWorkoutsContext();
-    
+    const { user } = useAuthContext();
 
     const handleClick = async () => {
 
+      if(!user) {
+        return
+      }
+
         const response = await fetch(`http://localhost:${port}/api/workouts/` + workout._id, {
           method: 'DELETE',
+          credentials: "include",
         })
       
         const json = await response.json();
