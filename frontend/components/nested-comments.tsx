@@ -34,7 +34,7 @@ export default function NestedComments() {
                 <MoreMenu />
             </div>
             <p className="ml-9 mb-2">
-                <Link href={username} className="hover:underline font-bold">@{username}</Link> This is a subcomment!
+                <Link href={username} passHref className="hover:underline font-bold">@{username}</Link> This is a subcomment!
             </p>
             <LikeCommentShareBar className="ml-7" onClick={handleLike} />
         </div>

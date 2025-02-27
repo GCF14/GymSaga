@@ -37,7 +37,7 @@ export default function SheetMenu() {
                 </SheetHeader>
                 <div className="flex flex-col gap-4 grow mt-4">
                     {menuItems.map((item, index) => (
-                        <Link key={index} href={item.href}>
+                        <Link key={index} href={item.href} passHref>
                             <Button variant="ghost">
                                 <span className="material-symbols-rounded">{item.icon}</span>
                                 <span className="ml-2 text-xl">{item.label}</span>

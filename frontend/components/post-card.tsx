@@ -69,7 +69,7 @@ export default function PostCard({ username, content }: PostCardProps) {
                     <CardTitle>
                         <HoverCard>
                             <HoverCardTrigger asChild className="hover-underline">
-                                <Link href={`/${username}`}>
+                                <Link href={`/${username}`} passHref>
                                     {username}
                                 </Link>
                             </HoverCardTrigger>

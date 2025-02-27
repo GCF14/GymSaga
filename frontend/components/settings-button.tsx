@@ -45,12 +45,12 @@ export default function SettingsButton() {
       <DropdownMenuContent>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <Link href={`/${username}`}>
+        <Link href={`/${username}`} passHref>
           <DropdownMenuItem className="cursor-pointer">
             Profile
           </DropdownMenuItem>
         </Link>
-        <Link href="/settings">
+        <Link href="/settings" passHref>
           <DropdownMenuItem className="cursor-pointer">
             Settings
           </DropdownMenuItem>
@@ -72,7 +72,7 @@ export default function SettingsButton() {
           </DropdownMenuPortal>
         </DropdownMenuSub>
         <DropdownMenuSeparator />
-        <Link href="/login">
+        <Link href="/login" passHref>
             <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
             Logout
             </DropdownMenuItem>
