@@ -2,8 +2,8 @@
 
 import { useEffect } from "react";
 import NavigationBar from "@/components/navigation-bar";
-import WorkoutDetails from "@/components/testingBackend/WorkoutDetails";
-import WorkoutForm from "@/components/testingBackend/WorkoutForm";
+import WorkoutDetails from "@/components/backend/WorkoutDetails";
+import WorkoutForm from "@/components/backend/WorkoutForm";
 import { useWorkoutsContext } from "@/hooks/useWorkoutsContext"; 
 import { Workout } from "@/types/workout"; 
 import "./style.css";

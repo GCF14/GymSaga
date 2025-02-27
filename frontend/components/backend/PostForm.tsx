@@ -9,10 +9,10 @@ const PostForm = () => {
 
     const { dispatch } = usePostsContext ()
     const [content, setContent] = useState('')
-    const[username, setUsername] = useState('')
+    const [username, setUsername] = useState('')
     
-    // const[numOfLikes, setNumOfLikes] = useState('')
-    // const[likedBy, setLikedBy] = useState('')
+    const[numOfLikes, setNumOfLikes] = useState(0)
+    const[likedBy, setLikedBy] = useState([])
 
     const [error, setError] = useState<string | null>(null);
     const [emptyFields, setEmptyFields] = useState<string[]>([]);
@@ -24,7 +24,7 @@ const PostForm = () => {
             setError("You must be logged in")
             return
         }
-        const post = {content, username}
+        const post = {content, username, numOfLikes, likedBy}
 
         const response = await fetch(`http://localhost:${port}/api/posts`, {
             method: 'POST',
@@ -32,7 +32,7 @@ const PostForm = () => {
             headers: {
                 "Content-Type": 'application/json'
             },  
-            //credentials: "include", 
+            credentials: "include", 
         })
 
         const json = await response.json()
@@ -45,8 +45,8 @@ const PostForm = () => {
         if(response.ok) {
             setContent('')
             setUsername('')
-            // setNumOfLikes('')
-            // setLikedBy('')
+            setNumOfLikes(0)
+            setLikedBy([])
             setError(null)
             setEmptyFields([])
             console.log('New post has been created', json)
@@ -64,7 +64,7 @@ const PostForm = () => {
                 type="text"
                 onChange={(e) => setContent(e.target.value)}
                 value={content}
-                className={emptyFields.includes('content') ? 'error': ''}
+                className={emptyFields?.includes('content') ? 'error': ''}
             />
 
             
@@ -73,11 +73,13 @@ const PostForm = () => {
                 type="text"
                 onChange={(e) => setUsername(e.target.value)}
                 value={username}
-                className={emptyFields.includes('username') ? 'error': ''}
+                className={emptyFields?.includes('username') ? 'error': ''}
             />
 
             
-            <button className="post-button">Add Post</button>
+            <button className="post-button">
+                Add Post
+            </button>
             {error && <div className="error">{error}</div>}
         </form>
 

@@ -9,8 +9,6 @@ const {
 } = require('../controllers/postController')
 // const requireAuth = require('../middleware/requireAuth')
 
-
-
 // router.use(requireAuth)
 
 router.get('/', getAllPosts)

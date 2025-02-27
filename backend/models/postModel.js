@@ -12,12 +12,14 @@ const postSchema = new Schema({
     },
     numOfLikes: {
         type: Number,
-        required: true
+        default: 0,
+        required: false
     },
     // usernames of the accounts that liked the post. 
     likedBy: {
-        type: Array, 
-        required: true
+        type: Array,
+        default: [], 
+        required: false
     },
 }, { timestamps: true })
 

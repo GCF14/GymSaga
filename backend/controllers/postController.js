@@ -17,7 +17,7 @@ async function getPost(req, res) {
 }
 
 async function createNewPost(req, res) {
-    const {content, username} = req.body
+    const {content, username, numOfLikes, likedBy} = req.body
     let emptyFields = [];
     if(!content) {
         emptyFields.push('content')
@@ -25,19 +25,16 @@ async function createNewPost(req, res) {
     if(!username) {
         emptyFields.push('username')
     }
-    // if (!numOfLikes) {
-    //     emptyFields.push('numOfLikes')
-    // }
-    // if (!likedBy) {
-    //     emptyFields.push('likedBy')
-    // }
+    
+    
+   
 
     if(emptyFields.length > 0) {
         return res.status(400).json({ error: 'Please fill in all fields', emptyFields })
     }
 
     try {
-        const post = await Posts.create({ content, username, numOfLikes, likedBy })
+        const post = await Post.create({ content, username, numOfLikes, likedBy })
         res.status(200).json(post)
     } 
     catch(error) {
