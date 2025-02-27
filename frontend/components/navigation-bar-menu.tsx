@@ -1,3 +1,5 @@
+"use client"
+
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -10,9 +12,14 @@ import {
     navigationMenuTriggerStyle,
   } from "@/components/ui/navigation-menu"
 import Link from "next/link"
+import { useEffect, useState } from "react"
 
 export default function NavbarMenu() {
-    const username = localStorage.getItem("username")
+    const [username, setUsername] = useState<string | null>(null);
+
+    useEffect(() => {
+        setUsername(localStorage.getItem("username"))
+    }, [])
 
     return (
         <NavigationMenu>

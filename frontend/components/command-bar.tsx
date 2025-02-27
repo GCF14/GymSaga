@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useCallback } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { useRouter } from "next/navigation"
 import {
     Command,
@@ -18,13 +18,17 @@ import { Kbd } from "@/components/ui/kbd"
 import { useLogout } from "@/hooks/useLogout"
 
 export default function CommandBar() {
-  const [open, setOpen] = React.useState(false)
-  const [input, setInput] = React.useState("")
+  const [open, setOpen] = useState(false)
+  const [input, setInput] = useState("")
   const router = useRouter()
   const { logout } = useLogout()
-  const username = localStorage.getItem("username")
+  const [username, setUsername] = useState<string | null>(null)
 
-  React.useEffect(() => {
+  useEffect(() => {
+      setUsername(localStorage.getItem("username"))
+  }, [])
+
+  useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault()
