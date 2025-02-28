@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button"
 import { Kbd } from "@/components/ui/kbd"
 import { useLogout } from "@/hooks/useLogout"
 import CreatePostDialog from "@/components/create-post-dialog"
+import { useTheme } from "next-themes"
 
 export default function CommandBar() {
   const [open, setOpen] = useState(false)
@@ -25,6 +26,7 @@ export default function CommandBar() {
   const { logout } = useLogout()
   const [username, setUsername] = useState<string | null>(null)
   const [dialogOpen, setDialogOpen] = useState(false)
+  const { theme, setTheme } = useTheme()
 
   useEffect(() => {
       setUsername(localStorage.getItem("username"))
@@ -67,7 +69,6 @@ export default function CommandBar() {
                 <span className="text-sm">K</span>
             </Kbd>
         </Button>
-
       <CommandDialog open={open} onOpenChange={setOpen}>
         <CommandInput
           placeholder="Type a command or search..."
@@ -104,6 +105,10 @@ export default function CommandBar() {
             <CommandItem onSelect={() => { setDialogOpen(true); setOpen(false); }}>
               <span className="material-symbols-rounded">post_add</span>
               <span>Create Post</span>
+            </CommandItem>
+            <CommandItem onSelect={() => {setTheme(theme === "light" ? "dark" : "light"); setOpen(false);}}>
+              <span className="material-symbols-rounded">contrast</span>
+              <span>Mode</span>
             </CommandItem>
           </CommandGroup>
           <CommandSeparator />
