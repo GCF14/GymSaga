@@ -17,7 +17,13 @@ import {
 import { RainbowButton } from "@/components/magicui/rainbow-button";
 import AttachmentButton from "@/components/attachment-button";
 
-export default function CreatePostDialog() {
+interface CreatePostDialogProps {
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
+    hideTrigger?: boolean;
+}
+
+export default function CreatePostDialog({ open, onOpenChange, hideTrigger = false }: CreatePostDialogProps) {
     const [files, setFiles] = useState<File[]>([])
 
     const handleFilesChange = (newFiles: File[]) => {
@@ -26,17 +32,19 @@ export default function CreatePostDialog() {
     }
 
     return (
-        <Dialog>
-            <DialogTrigger asChild>
-                <RainbowButton className="rounded-md h-8 w-20 transition hover:scale-105 duration-300">
-                    <span className="material-symbols-rounded">
-                        post_add
-                    </span>
-                    <span className="text-sm ml-2">
-                        Post
-                    </span>
-                </RainbowButton>
-            </DialogTrigger>
+        <Dialog open={open} onOpenChange={onOpenChange}>
+            {!hideTrigger && (
+                <DialogTrigger asChild>
+                    <RainbowButton className="rounded-md h-8 w-20 transition hover:scale-105 duration-300">
+                        <span className="material-symbols-rounded">
+                            post_add
+                        </span>
+                        <span className="text-sm ml-2">
+                            Post
+                        </span>
+                    </RainbowButton>
+                </DialogTrigger>
+            )}
             <DialogContent className="min-w-[750px]">
                 <DialogHeader>
                     <DialogTitle>

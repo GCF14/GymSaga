@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Kbd } from "@/components/ui/kbd"
 import { useLogout } from "@/hooks/useLogout"
+import CreatePostDialog from "@/components/create-post-dialog"
 
 export default function CommandBar() {
   const [open, setOpen] = useState(false)
@@ -23,6 +24,7 @@ export default function CommandBar() {
   const router = useRouter()
   const { logout } = useLogout()
   const [username, setUsername] = useState<string | null>(null)
+  const [dialogOpen, setDialogOpen] = useState(false)
 
   useEffect(() => {
       setUsername(localStorage.getItem("username"))
@@ -98,6 +100,13 @@ export default function CommandBar() {
             </CommandItem>
           </CommandGroup>
           <CommandSeparator />
+          <CommandGroup heading="Actions">
+            <CommandItem onSelect={() => { setDialogOpen(true); setOpen(false); }}>
+              <span className="material-symbols-rounded">post_add</span>
+              <span>Create Post</span>
+            </CommandItem>
+          </CommandGroup>
+          <CommandSeparator />
           <CommandGroup heading="Settings">
             <CommandItem onSelect={() => handleSelect("/settings")}>
               <span className="material-symbols-rounded">settings</span>
@@ -113,6 +122,7 @@ export default function CommandBar() {
           </CommandGroup>
         </CommandList>
       </CommandDialog>
+      <CreatePostDialog hideTrigger open={dialogOpen} onOpenChange={setDialogOpen} />
     </>
   )
 }
