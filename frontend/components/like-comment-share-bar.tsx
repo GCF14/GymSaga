@@ -19,7 +19,10 @@ export default function LikeCommentShareBar({ onClick, className }: LikeCommentS
     return (
         <div className={`flex items-center mb-4 ${className}`}>
             <Toggle onClick={handleLike}>
-                <Heart color={isLiked ? "red" : "currentColor"} />
+                <Heart
+                fill={isLiked ? "#ef4444" : "none"}
+                color={isLiked ? "#ef4444" : "currentColor"}
+                />
             </Toggle>
             <Button variant="ghost" size="icon" className="hover-button" onClick={onClick}>
                 <MessageSquare />

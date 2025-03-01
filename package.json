@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "date-fns": "^4.1.0",
-    "mapbox-gl": "^3.9.1"
-  }
-}

@@ -108,7 +108,10 @@ export default function PostCard({ username, content }: PostCardProps) {
             <CardFooter>
                 <div className="flex items-center">
                     <Toggle onClick={handleLike}>
-                        <Heart color={isLiked ? "red" : "currentColor"} />
+                        <Heart
+                        fill={isLiked ? "#ef4444" : "none"}
+                        color={isLiked ? "#ef4444" : "currentColor"}
+                        />
                     </Toggle>
                     <Button variant="ghost" size="icon" className="hover-button" onClick={handleComment}>
                         <MessageSquare />
