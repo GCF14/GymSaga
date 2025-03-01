@@ -8,6 +8,8 @@ import { AuthContextProvider } from '@/context/AuthContext'
 import { Toaster } from "@/components/ui/sonner"
 import GymSagaDark from "@/public/GymSagaDark.svg"
 import GymSagaLight from "@/public/GymSagaLight.svg"
+import "@/public/mapbox-gl.css"
+import 'material-symbols/rounded.css';
 
 
 const geistSans = localFont({
