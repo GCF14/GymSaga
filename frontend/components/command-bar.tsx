@@ -18,6 +18,7 @@ import { Kbd } from "@/components/ui/kbd"
 import { useLogout } from "@/hooks/useLogout"
 import CreatePostDialog from "@/components/create-post-dialog"
 import { useTheme } from "next-themes"
+import { Search, House, Map, Users, User, SquarePen, Contrast, Settings, LogOut } from "lucide-react"
 
 export default function CommandBar() {
   const [open, setOpen] = useState(false)
@@ -58,7 +59,7 @@ export default function CommandBar() {
         variant="outline"
         className="group inline-flex items-center transition-all duration-300 gap-2 w-22 hover:w-36 h-8 pl-2 pr-0 cursor-pointer"
         >
-            <span className="material-symbols-rounded small">search</span>
+            <Search />
             <span className="inline-block overflow-hidden whitespace-nowrap transition-[max-width] duration-300 max-w-0 group-hover:max-w-[100px]">
                 <span className="text-xs transition-opacity delay-150 opacity-0 group-hover:opacity-100">
                     Search...
@@ -78,50 +79,50 @@ export default function CommandBar() {
         <CommandList>
           <CommandEmpty>
             <div className="flex flex-row items-center justify-center gap-2">
-              <span className="material-symbols-rounded">search</span>
+              <Search />
               Searching for {input}
             </div>
           </CommandEmpty>
           <CommandGroup heading="Pages">
             <CommandItem onSelect={() => handleSelect("/")} className="items-center">
-              <span className="material-symbols-rounded">home</span>
+              <House />
               <span>Home</span>
             </CommandItem>
             <CommandItem onSelect={() => handleSelect("/map")}>
-              <span className="material-symbols-rounded">map</span>
+              <Map />
               <span>Map</span>
             </CommandItem>
             <CommandItem onSelect={() => handleSelect("/social-link")}>
-              <span className="material-symbols-rounded">group</span>
+              <Users />
               <span>Social Link</span>
             </CommandItem>
             <CommandItem onSelect={() => handleSelect(`/${username}`)}>
-              <span className="material-symbols-rounded">person</span>
+              <User />
               <span>Profile</span>
             </CommandItem>
           </CommandGroup>
           <CommandSeparator />
           <CommandGroup heading="Actions">
             <CommandItem onSelect={() => { setDialogOpen(true); setOpen(false); }}>
-              <span className="material-symbols-rounded">post_add</span>
+              <SquarePen />
               <span>Create Post</span>
             </CommandItem>
             <CommandItem onSelect={() => {setTheme(theme === "light" ? "dark" : "light"); setOpen(false);}}>
-              <span className="material-symbols-rounded">contrast</span>
+              <Contrast />
               <span>Mode</span>
             </CommandItem>
           </CommandGroup>
           <CommandSeparator />
           <CommandGroup heading="Settings">
             <CommandItem onSelect={() => handleSelect("/settings")}>
-              <span className="material-symbols-rounded">settings</span>
+              <Settings />
               <span>Settings</span>
             </CommandItem>
             <CommandItem onSelect={() => {
                 handleSelect("/login");
                 logout();
             }}>
-              <span className="material-symbols-rounded">logout</span>
+              <LogOut />
               <span>Logout</span>
             </CommandItem>
           </CommandGroup>

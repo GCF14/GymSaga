@@ -19,6 +19,7 @@ import {
 import { useLogout } from "@/hooks/useLogout"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from 'react'
+import { Settings } from 'lucide-react'
 
 export default function SettingsButton() {
   const { logout } = useLogout()
@@ -36,10 +37,8 @@ export default function SettingsButton() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="p-0 size-8 cursor-pointer">
-          <span className="material-symbols-rounded">
-            settings
-          </span>
+        <Button variant="outline" size="icon" className="cursor-pointer">
+          <Settings />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>

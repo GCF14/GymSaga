@@ -2,6 +2,7 @@ import { Toggle } from "@/components/ui/toggle"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 import React from "react";
+import { Heart, MessageSquare, ExternalLink } from "lucide-react"
 
 interface LikeCommentShareBarProps {
     onClick: () => void;
@@ -18,18 +19,15 @@ export default function LikeCommentShareBar({ onClick, className }: LikeCommentS
     return (
         <div className={`flex items-center mb-4 ${className}`}>
             <Toggle onClick={handleLike}>
-                <span className={`material-symbols-rounded ${isLiked ? 'material-symbols-rounded filled' : ''}`}>
-                    favorite
-                </span>
+                <Heart color={isLiked ? "red" : "currentColor"} />
             </Toggle>
-            <Button variant="ghost" className="hover-button px-2" onClick={onClick}>
-                <span className="material-symbols-rounded">
-                    mode_comment
-                </span>
+            <Button variant="ghost" size="icon" className="hover-button" onClick={onClick}>
+                <MessageSquare />
             </Button>
             <Button
             variant="ghost"
-            className="hover-button px-2"
+            size="icon"
+            className="hover-button"
             onClick={() => {
                 navigator.clipboard.writeText(window.location.href).then(() => {
                     toast("Link Copied! 🎉", {
@@ -43,9 +41,7 @@ export default function LikeCommentShareBar({ onClick, className }: LikeCommentS
                     console.error('Failed to copy: ', err);
                 });
             }}>
-                <span className="material-symbols-rounded">
-                    share
-                </span>
+                <ExternalLink />
             </Button>
         </div>
     )

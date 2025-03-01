@@ -11,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { BlurFade } from "@/components/magicui/blur-fade"
 import { BoxReveal } from "@/components/magicui/box-reveal"
+import { User, Info } from "lucide-react"
 
 interface SettingsSidebarProps {
     className?: string;
@@ -41,11 +42,11 @@ export default function SettingsSidebar({ className }: SettingsSidebarProps) {
                     <CardContent className="p-0 pt-4 w-full">
                         <div className="flex flex-col gap-2">
                             <Button variant="ghost" onClick={() => scrollToSection('account')} className="justify-start w-full">
-                                <span className="material-symbols-rounded">person</span>
+                                <User />
                                 Account
                             </Button>
                             <Button variant="ghost" onClick={() => scrollToSection('credits')} className="justify-start w-full">
-                                <span className="material-symbols-rounded">info</span>
+                                <Info />
                                 About
                             </Button>
                         </div>

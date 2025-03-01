@@ -7,6 +7,7 @@ import MoreMenu from "@/components/dropdown-menu"
 import React from "react"
 import Link from "next/link"
 import LikeCommentShareBar from "@/components/like-comment-share-bar"
+import { CircleUser } from "lucide-react"
 
 export default function NestedComments() {
     const [isLiked, setIsLiked] = React.useState(false);
@@ -24,9 +25,7 @@ export default function NestedComments() {
                     <Avatar className="w-7 h-7 mr-2">
                         <AvatarImage src="/Logo.png" alt="Avatar" />
                         <AvatarFallback>
-                            <span className="material-symbols-rounded large">
-                                account_circle
-                            </span>
+                            <CircleUser />
                         </AvatarFallback>
                     </Avatar>
                     OngPagong04

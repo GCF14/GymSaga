@@ -7,15 +7,14 @@ import {
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"  
 import { Button } from "@/components/ui/button"
+import { EllipsisVertical } from "lucide-react"
 
 export default function MoreMenu() {
     return(
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="hover-button">
-                    <span className="material-symbols-rounded">
-                        more_vert
-                    </span>
+                    <EllipsisVertical />
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>

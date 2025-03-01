@@ -1,3 +1,5 @@
+"use client"
+
 import {
     Sheet,
     SheetContent,
@@ -9,26 +11,32 @@ import {
   } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import CreatePostDialog from "./create-post-dialog"
+import CreatePostDialog from "@/components/create-post-dialog"
 import { ModeToggle } from "@/components/mode-toggle"
 import SettingsButton from "@/components/settings-button"
+import { Menu, Home, Map, Users, User, SquarePen } from "lucide-react"
+import { useEffect, useState } from "react"
 
 export default function SheetMenu() {
+    const [username, setUsername] = useState<string | null>(null);
+    
+    useEffect(() => {
+        setUsername(localStorage.getItem("username"))
+    }, [])
+
     const menuItems = [
-        {icon: "post_add", label: "Posts", href: "/posts"},
-        {icon: "home", label: "Home", href: "/"},
-        {icon: "map", label: "Map", href: "/map"},
-        {icon: "group", label: "Social Link", href: "/social-link"},
-        {icon: "person", label: "Profile", href: "/profile"}
+        {icon: SquarePen, label: "Posts", href: "/posts"},
+        {icon: Home, label: "Home", href: "/"},
+        {icon: Map, label: "Map", href: "/map"},
+        {icon: Users, label: "Social Link", href: "/social-link"},
+        {icon: User, label: "Profile", href: `/${username}`},
     ]
 
     return (
         <Sheet>
             <SheetTrigger asChild>
                 <Button variant="outline" size="icon">
-                    <span className="material-symbols-rounded">
-                        menu
-                    </span>
+                    <Menu />
                 </Button>
             </SheetTrigger>
             <SheetContent className="flex flex-col gap-2">
@@ -39,7 +47,7 @@ export default function SheetMenu() {
                     {menuItems.map((item, index) => (
                         <Link key={index} href={item.href} passHref>
                             <Button variant="ghost">
-                                <span className="material-symbols-rounded">{item.icon}</span>
+                                <item.icon />
                                 <span className="ml-2 text-xl">{item.label}</span>
                             </Button>
                         </Link>

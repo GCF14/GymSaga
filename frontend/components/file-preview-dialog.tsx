@@ -1,6 +1,7 @@
 "use client"
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Film, Disc3, Image, File, ImagePlay } from "lucide-react"
 
 interface FilePreviewDialogProps {
   file: File | null
@@ -41,18 +42,18 @@ export function FilePreviewDialog({ file, onClose }: FilePreviewDialogProps) {
         const fileSubtype = file.type.split("/")[1];
 
         if (fileType === "image" && fileSubtype === "gif") {
-            return <span className="material-symbols-rounded">gif_box</span>;
+            return <ImagePlay />
         }
 
         switch (fileType) {
             case "image":
-                return <span className="material-symbols-rounded">image</span>
+                return <Image />
             case "video":
-                return <span className="material-symbols-rounded">movie</span>
+                return <Film />
             case "audio":
-                return <span className="material-symbols-rounded">music_note</span>
+                return <Disc3 />
             default:
-                return <span className="material-symbols-rounded">description</span>
+                return <File />
         }
     }
 

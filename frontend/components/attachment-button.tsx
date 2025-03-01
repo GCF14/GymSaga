@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { Button } from "@/components/ui/button"
 import { FilePreviewDialog } from "@/components/file-preview-dialog"
 import { toast } from "sonner"
+import { Image, Film, Disc3, File, ImagePlay, Paperclip, CircleX, Circle } from "lucide-react"
 
 interface AttachmentButtonProps {
     onFilesChange: (file: File[]) => void;
@@ -59,25 +60,25 @@ export default function AttachmentButton({ onFilesChange, maxFiles }: Attachment
         const fileSubtype = file.type.split("/")[1];
     
         if (fileType === "image" && fileSubtype === "gif") {
-            return <span className="material-symbols-rounded">gif_box</span>;
+            return <ImagePlay />
         }
 
         switch (fileType) {
             case "image":
-                return <span className="material-symbols-rounded">image</span>
+                return <Image />
             case "video":
-                return <span className="material-symbols-rounded">movie</span>
+                return <Film />
             case "audio":
-                return <span className="material-symbols-rounded">music_note</span>
+                return <Disc3 />
             default:
-                return <span className="material-symbols-rounded">description</span>
+                return <File />
         }
     }
 
     return (
         <div className="flex flex-row gap-2 items-start">
             <Button onClick={triggerFileInput} variant="outline" size="icon" className="hover-button">
-                <span className="material-symbols-rounded">attach_file</span>
+                <Paperclip />
             </Button>
             <input 
                 type="file"
@@ -99,7 +100,7 @@ export default function AttachmentButton({ onFilesChange, maxFiles }: Attachment
                         onClick={() => handleRemoveFile(file)}
                         aria-label={`Remove ${file.name}`}
                     >
-                        <span className="material-symbols-rounded thin">cancel</span>
+                        <CircleX />
                     </Button>
             </div>
           ))}

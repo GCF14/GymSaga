@@ -24,6 +24,7 @@ import { BoxReveal } from "@/components/magicui/box-reveal"
 import EditButton from "@/components/edit-button"
 import { BlurFade } from "@/components/magicui/blur-fade"
 import BadgeRow from "@/components/badge-row"
+import { CircleUser } from "lucide-react"
 
 interface ProfileCardProps {
     className?: string;
@@ -43,9 +44,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner }) => {
                                         <Avatar className="w-24 h-24">
                                             <AvatarImage src="/Logo.png" alt="Avatar" />
                                             <AvatarFallback>
-                                                <span className="material-symbols-rounded large">
-                                                    account_circle
-                                                </span>
+                                                <CircleUser />
                                             </AvatarFallback>
                                         </Avatar>
                                     </BoxReveal>

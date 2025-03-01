@@ -9,19 +9,20 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-} from "./ui/card";
+} from "@/components/ui/card";
 import {
     Avatar,
     AvatarFallback,
     AvatarImage,
-} from "./ui/avatar";
-import { Button } from "./ui/button";
-import { Separator } from "./ui/separator";
-import MoreMenu from "./dropdown-menu";
-import NestedComments from "./nested-comments";
-import { Textarea } from "./ui/textarea";
-import LikeCommentShareBar from "./like-comment-share-bar";
-import AttachmentButton from "./attachment-button";
+} from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import MoreMenu from "@/components/dropdown-menu";
+import NestedComments from "@/components/nested-comments";
+import { Textarea } from "@/components/ui/textarea";
+import LikeCommentShareBar from "@/components/like-comment-share-bar";
+import AttachmentButton from "@/components/attachment-button";
+import { CircleUser, SendHorizonal } from "lucide-react"
 
 interface CommentCardProps {
     onClose: () => void;
@@ -68,7 +69,7 @@ export default function CommentCard({ onClose }: CommentCardProps) {
                                 <Avatar className="w-10 h-10 mr-2">
                                     <AvatarImage src="/Logo.png" alt="Avatar" />
                                     <AvatarFallback>
-                                        <span className="material-symbols-rounded large">account_circle</span>
+                                        <CircleUser />
                                     </AvatarFallback>
                                 </Avatar>
                                 <CardTitle>GerardChristian05</CardTitle>
@@ -87,8 +88,8 @@ export default function CommentCard({ onClose }: CommentCardProps) {
                     <div className="w-full flex flex-row gap-2 justify-center items-center">
                         <AttachmentButton onFilesChange={handleFilesChange} maxFiles={1} />
                         <Textarea placeholder="Write a comment..." rows={1} className="flex-grow" />
-                        <Button size="icon" className="px-2">
-                            <span className="material-symbols-rounded">send</span>
+                        <Button size="icon" className="px-4">
+                            <SendHorizonal />
                         </Button>
                     </div>
                 </CardFooter>

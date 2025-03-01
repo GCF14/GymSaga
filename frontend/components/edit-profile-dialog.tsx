@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "./ui/textarea"
 import { toast } from "sonner"
+import { Pen } from "lucide-react"
 
 export default function EditProfileDialog() {
     const username = "MatthewRiley05"
@@ -23,7 +24,7 @@ export default function EditProfileDialog() {
         <Dialog>
             <DialogTrigger asChild>
                 <Button variant="outline" size="icon">
-                    <span className="material-symbols-rounded">edit</span>
+                    <Pen />
                 </Button>
             </DialogTrigger>
             <DialogContent className="min-w-[500px]">

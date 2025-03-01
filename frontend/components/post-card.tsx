@@ -25,6 +25,7 @@ import { toast } from "sonner"
 import CommentCard from "@/components/comments-card" 
 import MoreMenu from "@/components/dropdown-menu"
 import Link from "next/link";
+import { CircleUser, Heart, MessageSquare, ExternalLink } from "lucide-react"
 
 interface PostCardProps {
     username: string;
@@ -61,9 +62,7 @@ export default function PostCard({ username, content }: PostCardProps) {
                         <Avatar className="w-10 h-10 mr-4">
                             <AvatarImage src="/Logo.png" alt="Avatar" />
                             <AvatarFallback>
-                                <span className="material-symbols-rounded medium">
-                                    account_circle
-                                </span>
+                                <CircleUser />
                             </AvatarFallback>
                         </Avatar>
                     <CardTitle>
@@ -76,11 +75,9 @@ export default function PostCard({ username, content }: PostCardProps) {
                             <HoverCardContent className="w-80">
                                 <div className="flex justify-between space-x-4">
                                 <Avatar>
-                                    <AvatarImage src="/Logo.png" />
+                                    <AvatarImage alt="User" src="/Logo.png" />
                                     <AvatarFallback>
-                                        <span className="material-symbols-rounded medium">
-                                            account_circle
-                                        </span>
+                                        <CircleUser />
                                     </AvatarFallback>
                                 </Avatar>
                                 <div className="space-y-1">
@@ -111,18 +108,15 @@ export default function PostCard({ username, content }: PostCardProps) {
             <CardFooter>
                 <div className="flex items-center">
                     <Toggle onClick={handleLike}>
-                    <span className={`material-symbols-rounded ${isLiked ? 'material-symbols-rounded filled' : ''}`}>
-                            favorite
-                        </span>
+                        <Heart color={isLiked ? "red" : "currentColor"} />
                     </Toggle>
-                    <Button variant="ghost" className="hover-button px-2" onClick={handleComment}>
-                        <span className="material-symbols-rounded">
-                            mode_comment
-                        </span>
+                    <Button variant="ghost" size="icon" className="hover-button" onClick={handleComment}>
+                        <MessageSquare />
                     </Button>
                     <Button
                     variant="ghost"
-                    className="hover-button px-2"
+                    size="icon"
+                    className="hover-button"
                     onClick={() => {
                         navigator.clipboard.writeText(window.location.href).then(() => {
                             toast("Link Copied! 🎉", {
@@ -136,9 +130,7 @@ export default function PostCard({ username, content }: PostCardProps) {
                             console.error('Failed to copy: ', err);
                         });
                     }}>
-                        <span className="material-symbols-rounded">
-                            share
-                        </span>
+                        <ExternalLink />
                     </Button>
                 </div>
             </CardFooter>

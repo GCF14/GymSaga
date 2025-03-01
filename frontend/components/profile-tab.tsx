@@ -11,8 +11,8 @@ import React from "react"
 import PostCard from "@/components/post-card"
 import MealCarousel from "@/components/meal-carousel";
 import EditButton from "@/components/edit-button";
-import { BlurFade } from "./magicui/blur-fade";
-import WorkoutCarousel from "./workout-carousel";
+import { BlurFade } from "@/components/magicui/blur-fade";
+import WorkoutCarousel from "@/components/workout-carousel";
 
 interface ProfileTabProps {
     className?: string;

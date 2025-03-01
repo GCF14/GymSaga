@@ -9,13 +9,14 @@ import {
     DialogTrigger,
   } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
+import { Pen } from "lucide-react"
 
 export default function EditWorkoutDialog() {
     return (
         <Dialog>
             <DialogTrigger asChild>
                 <Button variant="outline" size="icon">
-                    <span className="material-symbols-rounded">edit</span>
+                    <Pen />
                 </Button>
             </DialogTrigger>
             <DialogContent>
