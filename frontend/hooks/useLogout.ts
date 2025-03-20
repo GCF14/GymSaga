@@ -14,7 +14,7 @@ export const useLogout = () => {
 
             if (response.ok) {
                 dispatch({type: 'LOGOUT'})
-                localStorage.removeItem('username')
+                sessionStorage.removeItem('user')
             }
         } catch (error) {
             console.error("Logout failed:", error);

@@ -13,7 +13,7 @@ import {
   import { useDeleteAccount } from "@/hooks/useDeleteAccount" 
   import { useAuthContext } from "@/hooks/useAuthContext" 
   import { useRouter } from "next/navigation";
-
+  import { Input } from "@/components/ui/input";
 
 export default function DeleteAccountButton() {
     const { deleteAccount, isLoading, error } = useDeleteAccount();
@@ -21,11 +21,7 @@ export default function DeleteAccountButton() {
     const router = useRouter();
 
     const handleContinueClick = async () => {
-        if (!user || !user.id) {
-            return;
-        }
-
-        const success = await deleteAccount(user.id); 
+        const success = await deleteAccount(user.userId); 
 
         if (success) {
             localStorage.clear();
@@ -45,9 +41,10 @@ export default function DeleteAccountButton() {
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
                 This action cannot be undone. This will permanently delete your
-                account and remove your data from our servers.
+                account and remove your data from our servers. Enter your password to confirm.
             </AlertDialogDescription>
             </AlertDialogHeader>
+                <Input type="password" placeholder="Password"/>
             <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction className="bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90" onClick={handleContinueClick} disabled={isLoading} >Continue</AlertDialogAction>
