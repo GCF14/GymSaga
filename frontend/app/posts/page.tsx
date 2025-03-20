@@ -13,7 +13,7 @@ const port = process.env.NEXT_PUBLIC_PORT;
 
 export default function Posts() {
   const { workouts, dispatch } = useWorkoutsContext();
-  const { user } = useAuthContext();
+    const { user } = useAuthContext();
 
   useEffect(() => {
     const fetchWorkouts = async () => {
@@ -37,6 +37,7 @@ export default function Posts() {
   
   const workoutList = workouts ?? [];
 
+  console.log("TEST OTHER")
   return (
     <>
       <div className="w-full h-full items-center flex flex-col bg-background p-8 scrollbar-hide">

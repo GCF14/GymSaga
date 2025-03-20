@@ -3,7 +3,6 @@ import { useState } from 'react';
 
 export const useDeleteAccount = () => {
     const [error, setError] = useState<string | null>(null);
-
     const [isLoading, setIsLoading] = useState(false)
     const { dispatch } = useAuthContext()
     const port = process.env.NEXT_PUBLIC_PORT
@@ -11,7 +10,6 @@ export const useDeleteAccount = () => {
 
     const deleteAccount = async (id: string) => {
         console.log(`Attempting to delete user with ID: ${id}`);
-    
         setIsLoading(true);
         setError(null);
     

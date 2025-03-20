@@ -1,16 +1,16 @@
 "use client";
 
-import React from "react";
+import { useEffect, useState } from "react";
 import NavigationBar from "@/components/navigation-bar";
 import ProfileCard from "@/components/profile-card";
 import ProfileTab from "@/components/profile-tab";
 import { useParams } from "next/navigation";
 
 export default function ProfilePage() {
-    const [isOwner, setIsOwner] = React.useState(false)
+    const [isOwner, setIsOwner] = useState(false)
     const { username } = useParams()
 
-    React.useEffect(() => {
+    useEffect(() => {
         const storedUsername = localStorage.getItem("username");
         if (username === storedUsername) {
             setIsOwner(true)

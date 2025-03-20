@@ -1,3 +1,5 @@
+"use client"
+
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import {
@@ -16,12 +18,16 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { useLogout } from "@/hooks/useLogout"
 import { useTheme } from "next-themes"
-
+import { useEffect, useState } from 'react'
 
 export default function SettingsButton() {
   const { logout } = useLogout()
   const { setTheme } = useTheme()
-  const username = localStorage.getItem("username")
+  const [username, setUsername] = useState<string | null>(null);
+
+  useEffect(() => {
+      setUsername(localStorage.getItem("username"))
+  }, [])
 
   const handleLogout = () => {
     logout()

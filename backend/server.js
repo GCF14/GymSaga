@@ -5,6 +5,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const workoutRoutes = require('./routes/workouts')
 const userRoutes = require('./routes/users')
+const postRoutes = require('./routes/posts')
 const cors = require('cors');
 const cookieParser = require('cookie-parser')
 
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
 // API endpoint for workouts
 app.use('/api/workouts', workoutRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/posts', postRoutes);
 
 // Connect to db
 mongoose.connect(process.env.MONGO_URI)

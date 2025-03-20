@@ -13,7 +13,7 @@ import { AnimatedIconBeam } from "./animated-icon-beam"
 import { BlurFade } from "@/components/magicui/blur-fade"
 import DeleteAccountButton from "@/components/delete-account-button";
 import { Input } from "@/components/ui/input";
-import React from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 interface SettingsCardProps {
@@ -22,12 +22,12 @@ interface SettingsCardProps {
 
 export default function SettingsCard({ className }: SettingsCardProps) {
 
-    const [username, setUsername] = React.useState<string | null>(null);
-    const [firstName, setFirstName] = React.useState<string | null>(null);
-    const [lastName, setLastName] = React.useState<string | null>(null);
-    const [email, setEmail] = React.useState<string | null>(null);
+    const [username, setUsername] = useState<string | null>(null);
+    const [firstName, setFirstName] = useState<string | null>(null);
+    const [lastName, setLastName] = useState<string | null>(null);
+    const [email, setEmail] = useState<string | null>(null);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const storedUsername = localStorage.getItem("username");
         setUsername(storedUsername);
         const storedFirstName = localStorage.getItem("firstName");
