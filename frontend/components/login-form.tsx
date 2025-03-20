@@ -51,10 +51,11 @@ export function LoginForm() {
     e.preventDefault()
 
     const success = await login(email, password);
- router.push("/");
+
+    if (success) {
+      router.push("/");
     }
-    if (success) { 
-     
+ 
 
   }
 
