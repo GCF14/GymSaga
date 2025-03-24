@@ -18,11 +18,17 @@ import { RainbowButton } from "@/components/magicui/rainbow-button";
 import AttachmentButton from "@/components/attachment-button";
 
 export default function CreatePostDialog() {
+    const [text, setText] = useState("");
     const [files, setFiles] = useState<File[]>([])
+    const [loading, setLoading] = useState(false); 
 
     const handleFilesChange = (newFiles: File[]) => {
       setFiles(newFiles)
       console.log("Files updated:", newFiles)
+    }
+
+    const handlePost = async () => {
+        
     }
 
     return (

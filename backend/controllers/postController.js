@@ -1,5 +1,7 @@
 const Post = require('../models/postModel')
+const Comment = require('../models/commentModel');
 const mongoose = require('mongoose')
+
 
 async function getAllPosts(req, res) {
     const posts = await Post.find({}).sort({createdAt: -1})
@@ -12,23 +14,24 @@ async function getPost(req, res) {
     if(!mongoose.Types.ObjectId.isValid(id) || !post) {
         return res.status(404).json({error: 'No such post'})
     }
-    const post = await Post.findById(id)
+
+    const post = await Post.findById(id).populate('comments')
+
     res.status(200).json(post)
 }
 
 async function createNewPost(req, res) {
-    const {content, username, dateOfCreation, numOfLikes, likedBy} = req.body
+    const {content, username, numOfLikes, likedBy} = req.body
+    let emptyFields = []
+
     if(!content) {
         emptyFields.push('content')
     }
     if(!username) {
         emptyFields.push('username')
     }
-    if (!numOfLikes) {
+    if (numOfLikes === undefined) {
         emptyFields.push('numOfLikes')
-    }
-    if (!dateOfCreation) {
-        emptyFields.push('dateOfCreation')
     }
     if (!likedBy) {
         emptyFields.push('likedBy')
@@ -39,7 +42,7 @@ async function createNewPost(req, res) {
     }
 
     try {
-        const post = await Posts.create({ content, username, dateOfCreation, numOfLikes, likedBy })
+        const post = await Post.create({ content, username, numOfLikes, likedBy, comments: []})
         res.status(200).json(post)
     } 
     catch(error) {
@@ -81,10 +84,27 @@ async function updatePost(req, res) {
     res.status(200).json(post)
 }
 
+async function addComment(req, res) {
+    const { postId, username, text } = req.body
+
+    if(!mongoose.Types.ObjectId.isValid(postId)){
+        return res.status(400).json({ error: 'Invalid post ID' })
+    }
+
+    try {
+        const comment = await Comment.create({ postId, username, text })
+        await Post.findByIdAndUpdate(postId, {$push: { comments: comment._id } })
+        res.status(200).json(comment)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
 module.exports = {
     getAllPosts,
     getPost,
     deletePost,
     updatePost,
-    createNewPost
+    createNewPost,
+    addComment
 }
