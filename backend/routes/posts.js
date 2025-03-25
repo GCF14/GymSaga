@@ -6,8 +6,7 @@ const {
     getAllPosts,
     getPost,
     deletePost,
-    updatePost,
-    addComment
+    updatePost
 } = require('../controllers/postController')
 
 
@@ -21,6 +20,5 @@ router.delete('/:id', deletePost)
 
 router.patch('/:id', updatePost)
 
-router.post('/:id/comments', addComment)
 
 module.exports = router

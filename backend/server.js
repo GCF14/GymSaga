@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const workoutRoutes = require('./routes/workouts')
 const userRoutes = require('./routes/users')
 const postRoutes = require('./routes/posts')
+const commentRoutes = require('./routes/comments')
 const cors = require('cors');
 const cookieParser = require('cookie-parser')
 
@@ -28,6 +29,7 @@ app.use((req, res, next) => {
 app.use('/api/workouts', workoutRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
+app.use('/api/comments', commentRoutes)
 
 // Connect to db
 mongoose.connect(process.env.MONGO_URI)

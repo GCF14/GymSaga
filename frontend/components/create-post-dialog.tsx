@@ -27,9 +27,6 @@ export default function CreatePostDialog() {
       console.log("Files updated:", newFiles)
     }
 
-    const handlePost = async () => {
-        
-    }
 
     return (
         <Dialog>

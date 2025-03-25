@@ -84,27 +84,11 @@ async function updatePost(req, res) {
     res.status(200).json(post)
 }
 
-async function addComment(req, res) {
-    const { postId, username, text } = req.body
-
-    if(!mongoose.Types.ObjectId.isValid(postId)){
-        return res.status(400).json({ error: 'Invalid post ID' })
-    }
-
-    try {
-        const comment = await Comment.create({ postId, username, text })
-        await Post.findByIdAndUpdate(postId, {$push: { comments: comment._id } })
-        res.status(200).json(comment)
-    } catch (error) {
-        res.status(400).json({ error: error.message })
-    }
-}
 
 module.exports = {
     getAllPosts,
     getPost,
     deletePost,
     updatePost,
-    createNewPost,
-    addComment
+    createNewPost
 }
