@@ -1,4 +1,4 @@
-// @/types/workout.ts
+
 
 export interface Workout {
     _id: string;
