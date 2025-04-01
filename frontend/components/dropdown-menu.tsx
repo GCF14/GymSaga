@@ -12,6 +12,13 @@ import { useState } from "react";
 
 
 export default function MoreMenu() {
+    const handleDeletePost = () => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this post?");
+        if (confirmDelete) {
+            alert("Post deleted successfully!");
+            
+        }
+    }
     const [isEditOpen, setIsEditOpen] = useState(false);
 
 
@@ -30,7 +37,7 @@ export default function MoreMenu() {
                 <DropdownMenuItem onClick={() => {setIsEditOpen(true)}}>
                     Edit
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => {}}>
+                <DropdownMenuItem onClick={handleDeletePost}>
                     Delete
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
