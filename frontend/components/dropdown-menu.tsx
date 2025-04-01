@@ -7,10 +7,17 @@ import {
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"  
 import { Button } from "@/components/ui/button"
+import EditPostDialog from "@/components/edit-post-dialog"; 
+import { useState } from "react";
+
 
 export default function MoreMenu() {
+    const [isEditOpen, setIsEditOpen] = useState(false);
+
+
     return(
-        <DropdownMenu>
+        <>
+            <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="hover-button">
                     <span className="material-symbols-rounded">
@@ -20,7 +27,7 @@ export default function MoreMenu() {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuItem onClick={() => {}}>
+                <DropdownMenuItem onClick={() => {setIsEditOpen(true)}}>
                     Edit
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => {}}>
@@ -32,5 +39,9 @@ export default function MoreMenu() {
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
+
+        <EditPostDialog isOpen={isEditOpen} setIsOpen={setIsEditOpen} />
+        </>
+        
     )
 }

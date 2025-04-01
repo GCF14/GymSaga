@@ -17,7 +17,12 @@ import {
 import { RainbowButton } from "@/components/magicui/rainbow-button";
 import AttachmentButton from "@/components/attachment-button";
 
-export default function CreatePostDialog() {
+interface EditPostDialogProps {
+    isOpen: boolean;
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function EditPostDialog({ isOpen, setIsOpen }: EditPostDialogProps) {
     const [text, setText] = useState("");
     const [files, setFiles] = useState<File[]>([])
     const [loading, setLoading] = useState(false); 
@@ -27,27 +32,13 @@ export default function CreatePostDialog() {
       console.log("Files updated:", newFiles)
     }
 
-    const handPostButton = async () => {
-        
-    }
-
 
     return (
-        <Dialog>
-            <DialogTrigger asChild>
-                <RainbowButton className="rounded-md h-8 w-20 transition hover:scale-105 duration-300">
-                    <span className="material-symbols-rounded">
-                        post_add
-                    </span>
-                    <span className="text-sm ml-2">
-                        Post
-                    </span>
-                </RainbowButton>
-            </DialogTrigger>
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogContent className="min-w-[750px]">
                 <DialogHeader>
                     <DialogTitle>
-                        Create Post
+                        Edit Post
                     </DialogTitle>
                     <DialogDescription>
                         Share your thoughts with others!
