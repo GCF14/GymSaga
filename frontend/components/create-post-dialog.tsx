@@ -29,7 +29,8 @@ export default function CreatePostDialog() {
     }
 
     const handPostButton = async () => {
-        
+        console.log("Post button clicked")
+        setLoading(true)
 
     }
 
