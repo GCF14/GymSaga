@@ -16,20 +16,41 @@ import {
   } from "@/components/ui/dialog"
 import { RainbowButton } from "@/components/magicui/rainbow-button";
 import AttachmentButton from "@/components/attachment-button";
+import axios from 'axios'
 
 export default function CreatePostDialog() {
     const [text, setText] = useState("");
     const [files, setFiles] = useState<File[]>([])
     const [loading, setLoading] = useState(false); 
+    const [tags, setTags] = useState<string[]>([]);
+    const [tagInput, setTagInput] = useState('');
 
     const handleFilesChange = (newFiles: File[]) => {
       setFiles(newFiles)
       console.log("Files updated:", newFiles)
     }
 
-    const handPostButton = async () => {
-        
+    const handPostButton = async (content: string, video: string, photo: string ,tags: string[], e: React.MouseEvent ) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+    
+
     }
+
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter' && tagInput.trim() !== '') {
+            if (!tags.includes(tagInput.trim())) {
+                setTags([...tags, tagInput.trim()]);
+            }
+            setTagInput(''); // Reset input field
+        }
+    };
+
+    const removeTag = (tagToRemove: string) => {
+        const updatedTags = tags.filter(tag => tag !== tagToRemove);
+        setTags(updatedTags);
+    };
 
 
     return (
