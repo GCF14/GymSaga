@@ -28,8 +28,9 @@ export default function CreatePostDialog() {
       console.log("Files updated:", newFiles)
     }
 
-    const handPostButton = async () => {
+    const handlePostButton = async () => {
         console.log("Post button clicked")
+        toast.success("Post created successfully!");
         setLoading(true)
 
     }
@@ -65,7 +66,7 @@ export default function CreatePostDialog() {
                     <div className="w-full flex justify-between">
                         <AttachmentButton onFilesChange={handleFilesChange} maxFiles={5} />
                         <DialogClose asChild className="flex justify-end">
-                            <Button onClick={() => {toast.success("Post created successfully!")}}>
+                            <Button onClick={handlePostButton}>
                                 Post
                             </Button>
                         </DialogClose>
