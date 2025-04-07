@@ -1,0 +1,7 @@
+pr-agent:
+  enabled: true
+  pr-description: true
+  review:
+    on-pr-open: true
+  test:
+    on-pr-open: true
