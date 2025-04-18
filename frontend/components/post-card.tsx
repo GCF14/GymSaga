@@ -25,11 +25,8 @@ import { toast } from "sonner"
 import CommentCard from "@/components/comments-card" 
 import MoreMenu from "@/components/dropdown-menu"
 import Link from "next/link";
+import { PostCardProps } from "@/types/post";
 
-interface PostCardProps {
-    username: string;
-    content: React.ReactNode;
-}
 
 export default function PostCard({ username, content }: PostCardProps) {
     const [isLiked, setIsLiked] = React.useState(false);
@@ -52,6 +49,35 @@ export default function PostCard({ username, content }: PostCardProps) {
         month: "long",
         day: "numeric",
     });
+
+    const renderContent = (item: PostCardProps['content'][0], index: number) => {
+        if (item.type === 'text') {
+            return <p key={index} className="mb-4">{item.data}</p>;
+        } 
+        else if (item.type === 'image') {
+            return (
+                <div key={index} className="mt-2 mb-4 flex justify-center">
+                    <img 
+                        src={item.data} 
+                        alt={`Posted by ${username}`} 
+                        className="rounded-lg max-h-96 w-auto" 
+                    />
+                </div>
+            );
+        }
+        else if (item.type === 'video') {
+            return (
+                <div key={index} className="mt-2 mb-4 flex justify-center">
+                    <video 
+                        src={item.data} 
+                        controls
+                        className="rounded-lg max-h-96 w-auto" 
+                    />
+                </div>
+            );
+        }
+        return null;
+    };
 
     return (
         <Card className="w-full">
@@ -106,7 +132,7 @@ export default function PostCard({ username, content }: PostCardProps) {
                 <CardDescription>{date}</CardDescription>
             </CardHeader>
             <CardContent>
-                {content}
+                {content.map((item, index) => renderContent(item, index))}
             </CardContent>
             <CardFooter>
                 <div className="flex items-center">
