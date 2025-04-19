@@ -132,7 +132,8 @@ export default function PostCard({ username, content }: PostCardProps) {
                 <CardDescription>{date}</CardDescription>
             </CardHeader>
             <CardContent>
-                {content.map((item, index) => renderContent(item, index))}
+            {Array.isArray(content) ? content.map((item, index) => renderContent(item, index)) : null}
+
             </CardContent>
             <CardFooter>
                 <div className="flex items-center">

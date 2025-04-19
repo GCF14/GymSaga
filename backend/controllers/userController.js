@@ -116,5 +116,63 @@ const deleteUser = async(req, res) => {
     res.status(200).json({message: 'Deleted account successfully'})
 }
 
+const updateUser = async (req, res) => {
 
-module.exports = { signUpUser, loginUser, logoutUser, getUser, deleteUser }
+    try {
+        const { id } = req.params
+        const { email, profilePicture, bio, password, username, firstName, lastName } = req.body
+
+        // Check if valid id
+        if(!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({error:'No such user'})
+        }
+
+        // Check which fields are being updated
+        const updateFields = Object.fromEntries(
+            Object.entries({ email, profilePicture, bio, password, username, firstName, lastName }).filter(([_, v]) => v != null)
+        );
+
+        // check if username already exists
+        if (username) {  
+            const exists = await User.findOne({ username: { $regex: `^${username}$`, $options: 'i' } });
+
+            if (exists && exists._id.toString() !== id) { 
+                return res.status(409).json({ message: 'Username already in use' }); 
+            }
+        }
+
+        // Update the fields available
+        if(Object.keys(updateFields).length > 0) {
+            const editedUser = await User.findByIdAndUpdate(id, updateFields, { new: true });
+            return res.json({ message: 'User edited successfully', user: editedUser })
+        }
+
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
+    }
+    
+}
+
+const getUserbyId = async (req, res) => {
+    const { id } = req.params
+
+    // Check if valid id
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ error: 'Invalid user ID' });
+    }
+
+    try {
+        const user = await User.findById(id).select('username profilePicture bio'); 
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        } else {
+            return res.status(200).json({ userId: id, username: user.username, profilePicture: user.profilePicture, bio: user.bio });
+        }
+    } catch (error) {
+        return res.status(500).json({ error: 'Server error' });
+    }
+}
+
+
+module.exports = { signUpUser, loginUser, logoutUser, getUser, deleteUser, updateUser, getUserbyId }

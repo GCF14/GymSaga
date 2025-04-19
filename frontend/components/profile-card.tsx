@@ -24,6 +24,8 @@ import { BoxReveal } from "@/components/magicui/box-reveal"
 import EditButton from "@/components/edit-button"
 import { BlurFade } from "@/components/magicui/blur-fade"
 import BadgeRow from "@/components/badge-row"
+import { useAuthContext } from "@/hooks/useAuthContext"
+import { useEffect, useState } from "react"
 
 interface ProfileCardProps {
     className?: string;
@@ -31,6 +33,34 @@ interface ProfileCardProps {
 }
 
 const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner }) => {
+    const { user } = useAuthContext();
+    const username = user?.username || "Guest";
+    const [bio, setBio] = useState("Loading...");
+
+    useEffect(() => {
+        const fetchUserBio = async () => {
+            if (!user) return;
+
+            try {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/${user.userId}`)
+                const data = await res.json();
+
+                if (res.ok) {
+                    setBio(data.bio || "No bio available.");
+                } else {
+                    setBio("Failed to load bio.");
+                }
+            } catch (error) {
+                console.error("Error fetching user bio:", error);
+                setBio("Error loading bio.");
+            }
+
+        };
+        fetchUserBio();
+
+    }, [user]);
+    
+
     return (
         <BlurFade direction="up" className="flex flex-col overflow-hidden">
             <Card className={`h-[calc(100vh-8rem)] ${className}`}>
@@ -59,7 +89,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner }) => {
                         <CardTitle className="">
                             <BoxReveal boxColor="hsl(var(--primary))" duration={0.50}>
                                 <p className="py-2">
-                                    @MatthewRiley05
+                                    {username}
                                 </p>
                             </BoxReveal>
                         </CardTitle>
@@ -82,7 +112,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner }) => {
                 <CardContent className="grow overflow-hidden">
                     <BlurFade>
                         <p>
-                            [JCA '23 🇵🇭|PolyU '27 🇭🇰]
+                            {bio}
                         </p>
                     </BlurFade>
                 </CardContent>

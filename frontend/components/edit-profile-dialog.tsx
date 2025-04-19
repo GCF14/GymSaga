@@ -15,9 +15,61 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "./ui/textarea"
 import { toast } from "sonner"
+import { useAuthContext } from "@/hooks/useAuthContext"
+import { useState } from "react"
+
 
 export default function EditProfileDialog() {
-    const username = "MatthewRiley05"
+    const { user } = useAuthContext();
+    const userId = user?.userId;
+    const [username, setUsername] = useState(user?.username || "")
+    const [bio, setBio] = useState(user?.bio || "")
+    const { dispatch } = useAuthContext(); 
+
+    const handleUpdate = async () => {
+        if (!userId) {
+            toast.error("User ID not found.")
+            return;
+        }
+    
+        const bodyData: Partial<{
+            username: string;
+            bio: string;
+        }> = {};
+    
+        if (username.trim() !== "") {
+            bodyData.username = username.startsWith("@") ? username : `@${username}`;
+        }
+    
+        if (bio.trim() !== "") {
+            bodyData.bio = bio;
+        }
+    
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/update/${userId}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(bodyData),
+            });
+    
+            const data = await res.json();
+    
+            if (!res.ok) {
+                toast.error(data.message || data.error || "Failed to update profile.");
+            } else {
+                toast.success("Profile successfully updated!");
+                dispatch({
+                    type: "LOGIN",
+                    payload: { ...user, ...bodyData }, 
+                });
+            }
+        } catch (error) {
+            console.error("Error updating profile:", error);
+            toast.error("An error occurred while updating the profile.");
+        }
+    };
 
     return (
         <Dialog>
@@ -35,27 +87,31 @@ export default function EditProfileDialog() {
                         Update your profile information here!
                     </DialogDescription>
                 </DialogHeader>
-                <div className="grid gap-4">
-                    <div className="flex flex-row ml-2 items-center gap-4">
+                <div className="grid gap-4 py-4">
+                    <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="name">Username</Label>
-                        <Input type="text" className="w-full" placeholder={username} />
+                        <Input 
+                            id="username"
+                            value={username}
+                            className="col-span-3" 
+                            placeholder={username} 
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
                     </div>
-                    <Textarea placeholder="Write something about yourself..." rows={10}></Textarea>
+                    <div className="space-y-2">
+                        <Label htmlFor="bio">Bio</Label>
+                        <Textarea 
+                            id="bio"
+                            placeholder="Write something about yourself..." 
+                            rows={10}
+                            onChange={(e) => setBio(e.target.value)}
+                        />
+
+                    </div>
                 </div>
                 <DialogFooter>
                     <DialogClose asChild className="flex justify-end">
-                    <Button 
-                        onClick={() => {
-                            toast.success("Profile successfully updated!", {
-                                style: {
-                                    color: "#ffffff",
-                                    borderColor: "#16a34a",
-                                    backgroundColor: "#16a34a",
-                                }
-                            })
-                        }}>
-                        Save
-                    </Button>
+                    <Button onClick={handleUpdate}>Save</Button>
                     </DialogClose>
                 </DialogFooter>
             </DialogContent>

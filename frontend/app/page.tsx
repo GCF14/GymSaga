@@ -8,10 +8,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Post } from "@/types/post";
 
-// export const metadata: Metadata = {
-//   title: "GymSaga Home",
-//   description: "GymSaga Home Page",
-// }
+
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);

@@ -59,7 +59,7 @@ export default function CreatePostDialog() {
         } 
     }
 
-    
+
     return (
         <Dialog>
             <DialogTrigger asChild>
