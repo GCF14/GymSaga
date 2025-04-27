@@ -26,7 +26,7 @@ app.use((req, res, next) => {
     next();
 });
 
-// API endpoint for workouts
+// API endpoints
 app.use('/api/workouts', workoutRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);

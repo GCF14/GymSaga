@@ -12,9 +12,17 @@ export default function ProfilePage() {
 
     useEffect(() => {
         const storedUsername = localStorage.getItem("username");
-        if (username === storedUsername) {
-            setIsOwner(true)
+
+        if (typeof username === "string") {
+            const decodedUsername = decodeURIComponent(username);
+            const normalizedUsername = decodedUsername.startsWith("@") ? decodedUsername : `@${decodedUsername}`;
+    
+            if (normalizedUsername === storedUsername) {
+                setIsOwner(true);
+            }
         }
+
+    
     }, [username])
 
     return (

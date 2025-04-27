@@ -17,7 +17,12 @@ export default function Home() {
     const fetchPosts = async () => {
       try {
         const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/posts`);
-        setPosts(data);
+        const sortedPosts = data.sort((a: Post, b: Post) => {
+          const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;  
+          const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;  
+          return dateB - dateA;
+        });
+        setPosts(sortedPosts);
       } catch (error) {
         console.error("Error fetching posts:", error instanceof Error ? error.message : "Unknown error");
       }
