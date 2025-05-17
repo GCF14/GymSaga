@@ -44,7 +44,7 @@ interface ProfileCardProps {
 
 const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner }) => {
     const { user } = useAuthContext();
-    const username = user?.username || "Guest";
+    const username = (user?.username || "Guest").replace(/^@/, "");
     const [bio, setBio] = useState("Loading...");
     const [openProfilePicture, setOpenProfilePicture] = useState(false);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);

@@ -2,15 +2,51 @@ const Post = require('../models/postModel')
 const Comment = require('../models/commentModel');
 const mongoose = require('mongoose')
 const cloudinary = require('../utils/cloudinary')
+const User = require('../models/userModel')
 
 async function getAllPosts(req, res) {
-    try {
-      const posts = await Post.find(); 
-      res.status(200).json(posts); 
-    } catch (error) {
-      res.status(500).json({ error: 'Error fetching posts' });
-    }
+  try {
+    // Find all posts
+    const posts = await Post.find();
+    
+    // Get all unique usernames from posts
+    const usernames = [...new Set(posts.map(post => post.username))];
+    
+    // Fetch user details for all relevant usernames in one query
+    const users = await User.find({ username: { $in: usernames } });
+    
+    // Create a username to user details map for quick lookup
+    const userMap = {};
+    users.forEach(user => {
+      userMap[user.username] = {
+        profilePicture: user.profilePicture,
+        bio: user.bio
+      };
+    });
+    
+    // Enrich post data with user details
+    const enrichedPosts = posts.map(post => {
+      const postObject = post.toObject();
+      const userDetails = userMap[post.username] || {};
+      
+      return {
+        ...postObject,
+        profilePicture: userDetails.profilePicture || '',
+        bio: userDetails.bio || '',
+        date: post.createdAt.toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        }),
+      };
+    });
+    
+    res.status(200).json(enrichedPosts);
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    res.status(500).json({ error: 'Error fetching posts' });
   }
+}
 
 async function getPost(req, res) {
     const { id } = req.params
@@ -19,13 +55,26 @@ async function getPost(req, res) {
         return res.status(404).json({error: 'Invalid post ID'})
     }
 
-    const post = await Post.findById(id).populate('comments')
+    try {
+        const post = await Post.findById(id).populate('comments')
 
-    if(!post) {
-        return res.status(404).json({error: 'No such post'})
+        if(!post) {
+            return res.status(404).json({error: 'No such post'})
+        }
+
+
+        const user = await User.findOne({ username: post.username });
+        
+        const enrichedPost = post.toObject();
+        if (user) {
+            enrichedPost.profilePicture = user.profilePicture;
+            enrichedPost.bio = user.bio;
+        }
+
+        res.status(200).json(enrichedPost)
+    } catch (error) {
+        res.status(500).json({ error: error.message })
     }
-
-    res.status(200).json(post)
 }
 
 async function createNewPost(req, res) {
@@ -66,8 +115,17 @@ async function createNewPost(req, res) {
         likedBy: JSON.parse(likedBy),
         comments: [],
       });
+      
+
+      const user = await User.findOne({ username });
+      const enrichedPost = post.toObject();
+      
+      if (user) {
+        enrichedPost.profilePicture = user.profilePicture;
+        enrichedPost.bio = user.bio;
+      }
   
-      res.status(200).json(post);
+      res.status(200).json(enrichedPost);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }

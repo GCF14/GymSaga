@@ -7,9 +7,10 @@ const workoutRoutes = require('./routes/workouts')
 const userRoutes = require('./routes/users')
 const postRoutes = require('./routes/posts')
 const commentRoutes = require('./routes/comments')
+const uploadRoutes = require('./routes/uploadRoutes'); 
 const cors = require('cors');
 const cookieParser = require('cookie-parser')
-const uploadRoutes = require('./routes/uploadRoutes'); 
+
 
 const app = express();
 
