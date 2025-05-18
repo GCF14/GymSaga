@@ -109,6 +109,8 @@ export default function ProfileTab({ className, isOwner, username }: ProfileTabP
                                         <PostCard 
                                             key={`${post._id}-${refreshKey}`} 
                                             username={username} 
+                                            bio={post.bio}
+                                            profilePicture={post.profilePicture}
                                             content={post.content} 
                                             date={post.date}
                                             postId={post._id}
