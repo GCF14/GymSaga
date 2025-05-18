@@ -165,11 +165,31 @@ async function updatePost(req, res) {
     res.status(200).json(post)
 }
 
+const getPostsByUsername = async (req, res) => {
+
+    const { username } = req.params;
+
+    try {
+        const user = await User.findOne({ username: { $regex: `^${username}$`, $options: 'i' } });
+
+        if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+        }
+
+        const posts = await Post.find({ userId: user._id }).sort({ createdAt: -1 });
+
+        res.status(200).json(posts);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+  }
+};
+
 
 module.exports = {
     getAllPosts,
     getPost,
     deletePost,
     updatePost,
-    createNewPost
+    createNewPost,
+    getPostsByUsername
 }

@@ -38,7 +38,7 @@ export default function EditProfileDialog() {
         }> = {};
     
         if (username.trim() !== "") {
-            bodyData.username = username.startsWith("@") ? username : `@${username}`;
+            bodyData.username = username;
         }
     
         if (bio.trim() !== "") {
@@ -59,6 +59,7 @@ export default function EditProfileDialog() {
             if (!res.ok) {
                 toast.error(data.message || data.error || "Failed to update profile.");
             } else {
+                localStorage.setItem('username', username);
                 toast.success("Profile successfully updated!");
                 dispatch({
                     type: "LOGIN",

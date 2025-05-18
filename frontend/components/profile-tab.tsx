@@ -13,13 +13,42 @@ import MealCarousel from "@/components/meal-carousel";
 import EditButton from "@/components/edit-button";
 import { BlurFade } from "./magicui/blur-fade";
 import WorkoutCarousel from "./workout-carousel";
+import { useState, useEffect } from "react";
+import { Post } from "@/types/post"
 
 interface ProfileTabProps {
     className?: string;
     isOwner: boolean;
+    username: string;
 }
 
-export default function ProfileTab({ className, isOwner }: ProfileTabProps) {
+export default function ProfileTab({ className, isOwner, username }: ProfileTabProps) {
+    const [posts, setPosts] = useState<Post[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchPosts = async () => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/posts/user/${username}`);
+                if (!res.ok) throw new Error("Failed to fetch posts");
+
+                const data = await res.json();
+                setPosts(data);
+            } catch (error) {
+                console.error("Error fetching posts:", error instanceof Error ? error.message : "Unknown error")
+                setError("Could not load posts. Please try again later.")
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchPosts();
+    }, [username]);
+
     return (
         <Tabs defaultValue="posts" className={`flex flex-col h-[calc(100vh-8rem)] ${className}`}>
             <BlurFade direction="left" className="flex flex-col overflow-hidden">
@@ -52,8 +81,12 @@ export default function ProfileTab({ className, isOwner }: ProfileTabProps) {
                                 <CardDescription>Look back on your previous posts!</CardDescription>
                             </CardHeader>
                                 <CardContent className="flex flex-col h-full overflow-y-auto gap-4">
-                                    <PostCard username={"Matthew Raymundo"} content={"This is the post template of our app!"} />
-                                    <PostCard username={"Matthew Raymundo"} content={"Di ko alam ano lalagay sa page na toh"} />
+                                    {loading && <p>Loading posts...</p>}
+                                    {error && <p className="text-red-500">{error}</p>}
+                                    {!loading && posts.length === 0 && <p>No posts yet.</p>}
+                                    {!loading && posts.map((post) => (
+                                        <PostCard key={post.id} username={username} content={post.content} date={post.date}/>
+                                    ))}
                                 </CardContent>
                         </Card>
                     </TabsContent>

@@ -7,7 +7,8 @@ const {
     getAllPosts,
     getPost,
     deletePost,
-    updatePost
+    updatePost,
+    getPostsByUsername
 } = require('../controllers/postController')
 
 
@@ -20,6 +21,9 @@ router.post('/', upload.array('files'), createNewPost)
 router.delete('/:id', deletePost)
 
 router.patch('/:id', updatePost)
+
+// get user by username
+router.get('/user/:username', getPostsByUsername);
 
 
 module.exports = router
