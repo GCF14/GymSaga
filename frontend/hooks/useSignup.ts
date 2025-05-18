@@ -5,14 +5,13 @@ export const useSignup = () => {
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     const { dispatch } = useAuthContext()
-    const port = process.env.NEXT_PUBLIC_PORT
 
 
     const signup = async (email: string, password: string, username: string, firstName: string, lastName: string) => {
         setIsLoading(true)
         setError(null)
 
-        const response = await fetch(`http://localhost:${port}/api/users/signup`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/signup`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({email, password, username, firstName, lastName}),

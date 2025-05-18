@@ -98,6 +98,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner }) => {
             }
 
             setProfileImage(uploadData.data.secure_url);
+            
             handleClose();
 
         } catch (error) {

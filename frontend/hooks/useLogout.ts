@@ -2,12 +2,11 @@ import { useAuthContext } from '@/hooks/useAuthContext';
 
 export const useLogout = () => {
     const { dispatch } = useAuthContext()
-    const port = process.env.NEXT_PUBLIC_PORT
 
     const logout = async () => {
 
         try {
-            const response = await fetch(`http://localhost:${port}/api/users/logout`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/logout`, {
                 method: 'POST',
                 credentials: 'include'  // Allow cookies
             })
