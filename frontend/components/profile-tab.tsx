@@ -102,7 +102,11 @@ export default function ProfileTab({ className, isOwner, username }: ProfileTabP
                                 <CardDescription>Look back on your previous posts!</CardDescription>
                             </CardHeader>
                                 <CardContent className="flex flex-col h-full overflow-y-auto gap-4">
-                                    {loading && <p>Loading posts...</p>}
+                                    {loading && 
+                                    <div className="flex justify-center items-center h-64">
+                                        <div className="w-10 h-10 border-4 border-t-transparent border-blue-500 rounded-full animate-spin"></div>
+                                    </div>
+                                    }
                                     {error && <p className="text-red-500">{error}</p>}
                                     {!loading && posts.length === 0 && <p>No posts yet.</p>}
                                     {!loading && posts.map((post) => (
