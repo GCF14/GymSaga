@@ -52,12 +52,13 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner, username 
     const [uploadError, setUploadError] = useState<string | null>(null);
     const [profileImage, setProfileImage] = useState("/Logo.png");
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const [openProfilePictureModal, setOpenProfilePictureModal] = useState(false);
 
     const handleProfilePictureClick = async () => {
         if(isOwner) {
             setOpenProfilePicture(true);
         } else {
-
+            setOpenProfilePictureModal(true);
         }
     }
 
@@ -282,6 +283,29 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner, username 
                     >
                         {isUploading ? "Uploading..." : "Upload"}
                     </Button>
+                    </div>
+                </DialogContent>
+            </Dialog>
+
+            <Dialog open={openProfilePictureModal} onOpenChange={setOpenProfilePictureModal}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Profile Picture</DialogTitle>
+                    </DialogHeader>
+                    <div className="flex flex-col gap-4">
+                        <Image
+                            src={profileImage}
+                            alt="Profile Picture"
+                            width={160} 
+                            height={160} 
+                            className="mt-2 max-h-40 mx-auto rounded-full object-cover aspect-square"
+                            style={{ objectFit: 'cover' }}
+                        />
+                    </div>
+                    <div className="flex justify-end gap-2">
+                        <Button variant="outline" onClick={() => setOpenProfilePictureModal(false)}>
+                            Close
+                        </Button>
                     </div>
                 </DialogContent>
             </Dialog>
