@@ -6,14 +6,13 @@ import { BlurFade } from "@/components/magicui/blur-fade"
 import { useEffect, useState, useCallback } from "react"
 import axios from "axios"
 import { Post } from "@/types/post"
-import { useRouter } from "next/navigation"
+
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [lastUpdate, setLastUpdate] = useState<number>(Date.now())
-  const router = useRouter()
 
   // Function to fetch posts - extracted so we can call it when needed
   const fetchPosts = useCallback(async () => {

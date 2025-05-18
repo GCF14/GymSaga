@@ -288,7 +288,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner, username 
             </Dialog>
 
             <Dialog open={openProfilePictureModal} onOpenChange={setOpenProfilePictureModal}>
-                <DialogContent>
+                <DialogContent className="max-w-2xl h-auto">
                     <DialogHeader>
                         <DialogTitle>Profile Picture</DialogTitle>
                     </DialogHeader>
@@ -296,10 +296,10 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner, username 
                         <Image
                             src={profileImage}
                             alt="Profile Picture"
-                            width={160} 
-                            height={160} 
-                            className="mt-2 max-h-40 mx-auto rounded-full object-cover aspect-square"
-                            style={{ objectFit: 'cover' }}
+                            width={240}
+                            height={240}
+                            className="mt-2 mx-auto rounded-full object-cover"
+                            style={{ width: "240px", height: "240px", objectFit: "cover" }}
                         />
                     </div>
                     <div className="flex justify-end gap-2">
