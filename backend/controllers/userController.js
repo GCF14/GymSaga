@@ -194,4 +194,34 @@ const getUserbyId = async (req, res) => {
     }
 }
 
-module.exports = { signUpUser, loginUser, logoutUser, getUser, deleteUser, updateUser, getUserbyId }
+const getUserByUsername = async (req, res) => {
+    const { username } = req.params;
+
+    if (!username) {
+        return res.status(400).json({ error: 'Username is required' });
+    }
+
+    try {
+        // Find user by username (case insensitive)
+        const user = await User.findOne({ 
+            username: { $regex: `^${username}$`, $options: 'i' } 
+        }).select('username profilePicture bio _id');
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        return res.status(200).json({
+            _id: user._id,
+            userId: user._id,
+            username: user.username,
+            profilePicture: user.profilePicture || null,
+            bio: user.bio || null
+        });
+    } catch (error) {
+        console.error('Error in getUserByUsername:', error);
+        return res.status(500).json({ error: 'Server error' });
+    }
+};
+
+module.exports = { signUpUser, loginUser, logoutUser, getUser, deleteUser, updateUser, getUserbyId, getUserByUsername }

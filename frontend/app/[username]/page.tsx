@@ -67,6 +67,7 @@ export default function ProfilePage() {
                     isOwner={isOwner} 
                     className="col-span-1 flex flex-col" 
                     key={`profile-card-${decodedUsername}-${Date.now()}`} 
+                    username={decodedUsername}
                 />
                 <ProfileTab 
                     isOwner={isOwner} 

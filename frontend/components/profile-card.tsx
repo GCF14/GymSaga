@@ -39,12 +39,11 @@ import Image from "next/image";
 interface ProfileCardProps {
     className?: string;
     isOwner: boolean;
+    username: string; // Add username prop
 }
 
-
-const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner }) => {
+const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner, username }) => {
     const { user } = useAuthContext();
-    const username = (user?.username || "Guest").replace(/^@/, "");
     const [bio, setBio] = useState("Loading...");
     const [openProfilePicture, setOpenProfilePicture] = useState(false);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -57,13 +56,13 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner }) => {
     const handleProfilePictureClick = async () => {
         if(isOwner) {
             setOpenProfilePicture(true);
-        }
+        } else {
 
+        }
     }
 
     const handleUpload = async () => {
-        if(!selectedFile) return;
-
+        if(!selectedFile || !user) return;
 
         setIsUploading(true);
         setUploadError(null);
@@ -99,15 +98,20 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner }) => {
 
             setProfileImage(uploadData.data.secure_url);
             
+            // Dispatch a custom event to notify other components
+            const updateEvent = new CustomEvent('profileUpdated', {
+                detail: { profilePicture: uploadData.data.secure_url }
+            });
+            window.dispatchEvent(updateEvent);
+            
             handleClose();
 
         } catch (error) {
             console.error('Error during upload:', error);
             setUploadError('Failed to upload image. Please try again.');
-
+        } finally {
+            setIsUploading(false);
         }
-
-
     }
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -127,9 +131,6 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner }) => {
             setSelectedFile(file);
             setPreviewUrl(URL.createObjectURL(file));
             setUploadError(null);
-
-
-
         }
     };
 
@@ -140,33 +141,33 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner }) => {
         setUploadError(null);
     }
 
-
     useEffect(() => {
-        const fetchUserBio = async () => {
-            if (!user) return;
-
+        const fetchUserData = async () => {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/${user.userId}`)
-                const data = await res.json();
-
-                if (res.ok) {
-                    setBio(data.bio || "No bio available.");
-                    if (data.profilePicture) {
-                        setProfileImage(data.profilePicture);
-                    }
-                } else {
-                    setBio("Failed to load bio.");
+                // Try to get user by username first
+                const userResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/byUsername/${username}`);
+                
+                if (!userResponse.ok) {
+                    throw new Error("Failed to fetch user data");
+                }
+                
+                const userData = await userResponse.json();
+                
+                // Set bio and profile picture from user data
+                setBio(userData.bio || "No bio available.");
+                if (userData.profilePicture) {
+                    setProfileImage(userData.profilePicture);
                 }
             } catch (error) {
-                console.error("Error fetching user bio:", error);
-                setBio("Error loading bio.");
+                console.error("Error fetching user data:", error);
+                setBio("Error loading profile data.");
             }
-
         };
-        fetchUserBio();
-
-    }, [user]);
-    
+        
+        if (username) {
+            fetchUserData();
+        }
+    }, [username]);
 
     return (
         <BlurFade direction="up" className="flex flex-col overflow-hidden">
@@ -193,13 +194,13 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner }) => {
                             </Tooltip>
                         </TooltipProvider>
                     </div>
-                        <CardTitle className="">
-                            <BoxReveal boxColor="hsl(var(--primary))" duration={0.50}>
-                                <p className="py-2">
-                                    {username}
-                                </p>
-                            </BoxReveal>
-                        </CardTitle>
+                    <CardTitle className="">
+                        <BoxReveal boxColor="hsl(var(--primary))" duration={0.50}>
+                            <p className="py-2">
+                                {username}
+                            </p>
+                        </BoxReveal>
+                    </CardTitle>
                     <CardDescription className="flex flex-col">
                         <BoxReveal boxColor="hsl(var(--primary))" duration={0.50}>
                             <div>
@@ -246,7 +247,6 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner }) => {
                                 className="hidden"
                                 accept="image/*"
                                 onChange={handleFileChange}
-                            
                             />
                             {previewUrl ? (
                                 <div>
@@ -265,7 +265,6 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner }) => {
                                     <Upload className="mx-auto h-12 w-12 text-gray-400" />
                                     <p className="mt-2">Click to select an image</p>
                                 </div>
-
                             )}
                         </div>
                     </div>
@@ -284,9 +283,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner }) => {
                         {isUploading ? "Uploading..." : "Upload"}
                     </Button>
                     </div>
-                    
                 </DialogContent>
-
             </Dialog>
         </BlurFade>
     );
