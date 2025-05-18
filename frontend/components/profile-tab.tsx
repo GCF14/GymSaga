@@ -1,12 +1,12 @@
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
     Card,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
-  } from "@/components/ui/card"
+} from "@/components/ui/card"
 import React from "react"
 import PostCard from "@/components/post-card"
 import MealCarousel from "@/components/meal-carousel";
@@ -26,6 +26,22 @@ export default function ProfileTab({ className, isOwner, username }: ProfileTabP
     const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [refreshKey, setRefreshKey] = useState<number>(Date.now());
+
+    useEffect(() => {
+        // Listen for profile updates to refresh data
+        const handleProfileUpdate = (event: Event) => {
+            const customEvent = event as CustomEvent;
+            console.log('Profile updated event received in ProfileTab', customEvent.detail);
+            setRefreshKey(Date.now());
+        };
+
+        window.addEventListener('profileUpdated', handleProfileUpdate);
+        
+        return () => {
+            window.removeEventListener('profileUpdated', handleProfileUpdate);
+        };
+    }, []);
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -33,7 +49,12 @@ export default function ProfileTab({ className, isOwner, username }: ProfileTabP
             setError(null);
 
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/posts/user/${username}`);
+                // Add cache-busting parameter
+                const res = await fetch(
+                    `${process.env.NEXT_PUBLIC_API_URL}/api/posts/user/${username}?t=${Date.now()}`, 
+                    { cache: 'no-store' }
+                );
+                
                 if (!res.ok) throw new Error("Failed to fetch posts");
 
                 const data = await res.json();
@@ -47,7 +68,7 @@ export default function ProfileTab({ className, isOwner, username }: ProfileTabP
         };
 
         fetchPosts();
-    }, [username]);
+    }, [username, refreshKey]);
 
     return (
         <Tabs defaultValue="posts" className={`flex flex-col h-[calc(100vh-8rem)] ${className}`}>
@@ -85,7 +106,13 @@ export default function ProfileTab({ className, isOwner, username }: ProfileTabP
                                     {error && <p className="text-red-500">{error}</p>}
                                     {!loading && posts.length === 0 && <p>No posts yet.</p>}
                                     {!loading && posts.map((post) => (
-                                        <PostCard key={post.id} username={username} content={post.content} date={post.date}/>
+                                        <PostCard 
+                                            key={`${post._id}-${refreshKey}`} 
+                                            username={username} 
+                                            content={post.content} 
+                                            date={post.date}
+                                            postId={post._id}
+                                        />
                                     ))}
                                 </CardContent>
                         </Card>

@@ -1,13 +1,12 @@
 const User = require('../models/userModel')
+const Post = require('../models/postModel') // Add the Post model import
 const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
 
-
-
 const createToken = (_id) => {
     return jwt.sign({_id}, process.env.SECRET, { expiresIn: '7d' })
-
 }
+
 // login the user
 const loginUser = async (req, res) => {
     const {email, password} = req.body
@@ -24,12 +23,10 @@ const loginUser = async (req, res) => {
             maxAge: 2592000000 // 30 days
         });
 
-
         res.status(200).json({email: user.email, username: user.username, token})
     } catch (error) {
         res.status(400).json({error: error.message})
     }
-
 }
 
 // signup the user 
@@ -49,13 +46,10 @@ const signUpUser = async (req, res) => {
             maxAge: 2592000000 // 30 days
         });
 
-
         res.status(200).json({email, token})
     } catch (error) {
         res.status(400).json({error: error.message})
     }
-  
-    
 }
 
 // logout the user
@@ -67,10 +61,8 @@ const logoutUser = async (req, res) => {
         expires: new Date(0)
     })
 
-
     res.status(200).json({message: 'Logged out successfully'})
 }
-
 
 const getUser = async (req, res) => {
   // Get token from cookies
@@ -117,7 +109,6 @@ const deleteUser = async(req, res) => {
 }
 
 const updateUser = async (req, res) => {
-
     try {
         const { id } = req.params
         const { email, profilePicture, bio, password, username, firstName, lastName } = req.body
@@ -132,8 +123,15 @@ const updateUser = async (req, res) => {
             Object.entries({ email, profilePicture, bio, password, username, firstName, lastName }).filter(([_, v]) => v != null)
         );
 
-        // check if username already exists
+        // Store old username if we're updating username
+        let oldUsername = null;
         if (username) {  
+            const existingUser = await User.findById(id);
+            if (existingUser) {
+                oldUsername = existingUser.username;
+            }
+            
+            // check if new username already exists for another user
             const exists = await User.findOne({ username: { $regex: `^${username}$`, $options: 'i' } });
 
             if (exists && exists._id.toString() !== id) { 
@@ -144,13 +142,35 @@ const updateUser = async (req, res) => {
         // Update the fields available
         if(Object.keys(updateFields).length > 0) {
             const editedUser = await User.findByIdAndUpdate(id, updateFields, { new: true });
-            return res.json({ message: 'User edited successfully', user: editedUser })
+            
+            // If username was updated, we need to update any posts by this user
+            if (username && oldUsername && username !== oldUsername) {
+                console.log(`Updating posts from username ${oldUsername} to ${username}`);
+                try {
+                    // Update all posts with the old username
+                    const updateResult = await Post.updateMany(
+                        { username: oldUsername },
+                        { username: username }
+                    );
+                    console.log(`Updated ${updateResult.modifiedCount} posts`);
+                } catch (postUpdateError) {
+                    console.error('Error updating posts:', postUpdateError);
+                    // Continue execution - don't fail the user update if post updates fail
+                }
+            }
+            
+            return res.json({ 
+                message: 'User edited successfully', 
+                user: editedUser,
+                usernameChanged: username && oldUsername && username !== oldUsername,
+                oldUsername: oldUsername 
+            })
         }
 
     } catch (error) {
+        console.error('Error in updateUser:', error);
         return res.status(400).json({ error: error.message });
     }
-    
 }
 
 const getUserbyId = async (req, res) => {
@@ -173,7 +193,5 @@ const getUserbyId = async (req, res) => {
         return res.status(500).json({ error: 'Server error' });
     }
 }
-
-
 
 module.exports = { signUpUser, loginUser, logoutUser, getUser, deleteUser, updateUser, getUserbyId }

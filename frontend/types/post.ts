@@ -39,4 +39,5 @@ export interface PostCardProps {
   profilePicture?: string;
   bio?: string;
   date: string;
+  postId?: string; // Added postId as an optional prop
 }

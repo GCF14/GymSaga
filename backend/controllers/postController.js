@@ -7,20 +7,21 @@ const User = require('../models/userModel')
 async function getAllPosts(req, res) {
   try {
     // Find all posts
-    const posts = await Post.find();
+    const posts = await Post.find().sort({ createdAt: -1 });
     
     // Get all unique usernames from posts
     const usernames = [...new Set(posts.map(post => post.username))];
     
     // Fetch user details for all relevant usernames in one query
-    const users = await User.find({ username: { $in: usernames } });
+    // IMPORTANT: Always fetch fresh user data - don't use cached data
+    const users = await User.find({ username: { $in: usernames } }).lean();
     
     // Create a username to user details map for quick lookup
     const userMap = {};
     users.forEach(user => {
       userMap[user.username] = {
-        profilePicture: user.profilePicture,
-        bio: user.bio
+        profilePicture: user.profilePicture || '',
+        bio: user.bio || ''
       };
     });
     
@@ -62,13 +63,14 @@ async function getPost(req, res) {
             return res.status(404).json({error: 'No such post'})
         }
 
-
-        const user = await User.findOne({ username: post.username });
+        // Always fetch fresh user data
+        const user = await User.findOne({ username: post.username }).lean();
         
         const enrichedPost = post.toObject();
         if (user) {
-            enrichedPost.profilePicture = user.profilePicture;
-            enrichedPost.bio = user.bio;
+            // Use the latest user data
+            enrichedPost.profilePicture = user.profilePicture || '';
+            enrichedPost.bio = user.bio || '';
         }
 
         res.status(200).json(enrichedPost)
@@ -108,6 +110,7 @@ async function createNewPost(req, res) {
         }
       }
   
+      // Create post with only essential data (no duplicated user info)
       const post = await Post.create({
         content,
         username,
@@ -116,15 +119,16 @@ async function createNewPost(req, res) {
         comments: [],
       });
       
-
-      const user = await User.findOne({ username });
+      // Fetch user data for the response
+      const user = await User.findOne({ username }).lean();
       const enrichedPost = post.toObject();
       
       if (user) {
-        enrichedPost.profilePicture = user.profilePicture;
-        enrichedPost.bio = user.bio;
+        enrichedPost.profilePicture = user.profilePicture || '';
+        enrichedPost.bio = user.bio || '';
       }
   
+      // The response includes user data, but the database doesn't store it
       res.status(200).json(enrichedPost);
     } catch (error) {
       res.status(400).json({ error: error.message });
@@ -166,24 +170,39 @@ async function updatePost(req, res) {
 }
 
 const getPostsByUsername = async (req, res) => {
-
     const { username } = req.params;
 
     try {
-        const user = await User.findOne({ username: { $regex: `^${username}$`, $options: 'i' } });
+        // Case-insensitive username search
+        const user = await User.findOne({ username: { $regex: `^${username}$`, $options: 'i' } }).lean();
 
         if (!user) {
-        return res.status(404).json({ error: 'User not found' });
+            return res.status(404).json({ error: 'User not found' });
         }
 
-        const posts = await Post.find({ userId: user._id }).sort({ createdAt: -1 });
+        // Find posts by username
+        const posts = await Post.find({ username: user.username }).sort({ createdAt: -1 });
 
-        res.status(200).json(posts);
+        // Enrich with user data
+        const enrichedPosts = posts.map(post => {
+            const postObject = post.toObject();
+            return {
+                ...postObject,
+                profilePicture: user.profilePicture || '',
+                bio: user.bio || '',
+                date: post.createdAt.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                }),
+            };
+        });
+
+        res.status(200).json(enrichedPosts);
     } catch (error) {
         res.status(500).json({ error: error.message });
-  }
+    }
 };
-
 
 module.exports = {
     getAllPosts,

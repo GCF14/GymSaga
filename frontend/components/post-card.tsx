@@ -28,7 +28,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { PostCardProps } from "@/types/post"
 
-export default function PostCard({ username, content, profilePicture, bio, date }: PostCardProps) {
+export default function PostCard({ username, content, profilePicture, bio, date, postId }: PostCardProps) {
     const [isLiked, setIsLiked] = React.useState(false)
     const [showCommentCard, setShowCommentCard] = React.useState(false)
 
@@ -48,12 +48,12 @@ export default function PostCard({ username, content, profilePicture, bio, date 
     }
 
     const renderContent = (item: PostCardProps['content'][0], index: number) => {
-        if (item.type === 'text') {
-            return <p key={index} className="mb-4">{item.data}</p>
+        if (item.type === 'text' && item.data) {
+            return <p key={`${postId || ''}-${index}`} className="mb-4">{item.data}</p>
         } 
         else if (item.type === 'image' && item.data) {
             return (
-                <div key={index} className="mt-2 mb-4 flex justify-center">
+                <div key={`${postId || ''}-${index}`} className="mt-2 mb-4 flex justify-center">
                     <Image
                         src={item.data} 
                         alt={`Posted by ${displayUsername || 'user'}`}
@@ -67,7 +67,7 @@ export default function PostCard({ username, content, profilePicture, bio, date 
         }
         else if (item.type === 'video' && item.data) {
             return (
-                <div key={index} className="mt-2 mb-4 flex justify-center">
+                <div key={`${postId || ''}-${index}`} className="mt-2 mb-4 flex justify-center">
                     <video 
                         src={item.data} 
                         controls
@@ -86,7 +86,7 @@ export default function PostCard({ username, content, profilePicture, bio, date 
                     <div className="flex items-center h-full w-full">
                         <Avatar className="w-10 h-10 mr-4">
                             <AvatarImage 
-                                src={profilePicture || "/Logo.png"} 
+                                src={profilePicture} 
                                 alt={`${displayUsername}'s avatar`} 
                             />
                             <AvatarFallback>
@@ -96,7 +96,7 @@ export default function PostCard({ username, content, profilePicture, bio, date 
                         <CardTitle>
                             <HoverCard>
                                 <HoverCardTrigger asChild className="hover-underline">
-                                    <Link href={`/${displayUsername}`}>
+                                    <Link href={`/${encodeURIComponent(displayUsername)}`}>
                                         {displayUsername}
                                     </Link>
                                 </HoverCardTrigger>
