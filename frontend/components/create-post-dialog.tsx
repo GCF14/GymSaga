@@ -56,7 +56,11 @@ export default function CreatePostDialog() {
             } else {
                 toast.error("An unknown error occurred.");
             }
-        } 
+        } finally {
+            setLoading(false)
+            setText('');
+            setFiles([]);
+        }
     }
 
 

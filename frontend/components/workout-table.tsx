@@ -16,13 +16,12 @@ import { Workout } from "@/types/workout";
 import { useAuthContext } from "@/hooks/useAuthContext";
 
 export default function WorkoutTable() {
-    const port = process.env.NEXT_PUBLIC_PORT
     const { workouts, dispatch } = useWorkoutsContext();
     const { user } = useAuthContext();
 
     useEffect(() => {
         const fetchWorkouts = async () => {
-        const response = await fetch(`http://localhost:${port}/api/workouts`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/workouts`, {
             credentials: "include",
         });
         const json = await response.json();
@@ -33,7 +32,7 @@ export default function WorkoutTable() {
         };
 
         if (user) {
-        fetchWorkouts();
+            fetchWorkouts();
         }
 
         

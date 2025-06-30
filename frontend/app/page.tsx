@@ -6,13 +6,13 @@ import { BlurFade } from "@/components/magicui/blur-fade"
 import { useEffect, useState, useCallback } from "react"
 import axios from "axios"
 import { Post } from "@/types/post"
-
+import { io } from "socket.io-client"
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [lastUpdate, setLastUpdate] = useState<number>(Date.now())
+  const [lastUpdate, setLastUpdate] = useState(Date.now())
 
   // Function to fetch posts - extracted so we can call it when needed
   const fetchPosts = useCallback(async () => {
@@ -24,8 +24,8 @@ export default function Home() {
         { headers: { 'Cache-Control': 'no-cache' } }
       )
       const sortedPosts = data.sort((a: Post, b: Post) => {
-        const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0  
-        const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0  
+        const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0
+        const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0
         return dateB - dateA
       })
       setPosts(sortedPosts)
@@ -38,40 +38,100 @@ export default function Home() {
     }
   }, [])
 
-  // Add this custom event listener for profile updates
+
   useEffect(() => {
-    // Create a listener for profile updates
+    // Initialize socket connection
+    const newSocket = io(process.env.NEXT_PUBLIC_API_URL, {
+      withCredentials: true,
+      transports: ['websocket', 'polling']
+    })
+
+    // Connection event handlers
+    newSocket.on('connect', () => {
+      console.log('Connected to server:', newSocket.id)
+    })
+
+    newSocket.on('disconnect', () => {
+      console.log('Disconnected from server')
+    })
+
+    newSocket.on('connect_error', (error) => {
+      console.error('Connection error:', error)
+    })
+
+    newSocket.on('newPost', (data) => {
+      console.log('New post received:', data)
+      
+      setPosts(currentPosts => {
+        const postExists = currentPosts.some(post => post._id === data.post._id)
+        if (postExists) {
+          return currentPosts
+        }
+        
+        const updatedPosts = [data.post, ...currentPosts]
+        return updatedPosts.sort((a: Post, b: Post) => {
+          const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0
+          const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0
+          return dateB - dateA
+        })
+      })
+      
+      console.log(`${data.message}`)
+    })
+
+    newSocket.on('postUpdated', (data) => {
+      console.log('Post updated:', data)
+      
+      setPosts(currentPosts => 
+        currentPosts.map(post => 
+          post._id === data.post._id ? { ...data.post } : post
+        )
+      )
+      
+      console.log(`${data.message}`)
+    })
+
+    newSocket.on('postDeleted', (data) => {
+      console.log('Post deleted:', data)
+      
+      setPosts(currentPosts => 
+        currentPosts.filter(post => post._id !== data.postId)
+      )
+      
+      console.log(`${data.message}`)
+    })
+
+    return () => {
+      console.log('Cleaning up socket connection')
+      newSocket.disconnect()
+    }
+  }, []) 
+
+  useEffect(() => {
     const handleProfileUpdate = (event: Event) => {
-      // Get details if available
       const customEvent = event as CustomEvent
       const details = customEvent.detail
       
       console.log('Profile updated event received in Home page', details)
       
-      // Force a refresh of posts when profile is updated
       setLastUpdate(Date.now())
       
-      // If it was a username change, we need to give the backend time to update
       if (details?.usernameChanged) {
         setTimeout(() => {
           fetchPosts()
-        }, 500) // Half-second delay to let backend update posts
+        }, 500) 
       } else {
-        // Otherwise refresh immediately
         fetchPosts()
       }
     }
 
-    // Listen for custom profile update events
     window.addEventListener('profileUpdated', handleProfileUpdate)
 
-    // Clean up
     return () => {
       window.removeEventListener('profileUpdated', handleProfileUpdate)
     }
   }, [fetchPosts])
 
-  // Fetch posts initially and when lastUpdate changes
   useEffect(() => {
     fetchPosts()
   }, [lastUpdate, fetchPosts])

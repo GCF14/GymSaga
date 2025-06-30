@@ -1,6 +1,8 @@
 require('dotenv').config();
 
 const express = require('express');
+const http = require('http');
+const socketIo = require('socket.io');
 const path = require('path');
 const mongoose = require('mongoose');
 const workoutRoutes = require('./routes/workouts')
@@ -13,6 +15,17 @@ const cookieParser = require('cookie-parser')
 
 
 const app = express();
+const server = http.createServer(app);
+
+const io = socketIo(server, {
+    cors: {
+        origin: process.env.FRONTEND_URL,
+        methods: ["GET", "POST"],
+        credentials: true
+    }
+})
+
+app.set('io', io);
 
 // middlewear
 app.use(express.json())
@@ -27,6 +40,20 @@ app.use((req, res, next) => {
     next();
 });
 
+// Socket.IO connection handling
+io.on('connection', (socket) => {
+    console.log('User connected: ', socket.id);
+
+    // All users join general_feed room
+    socket.join('general_feed');
+    console.log(`User ${socket.id} joined general_feed room`);
+
+    // Handle disconnection
+    socket.on('disconnect', () => {
+        console.log('User disconnected: ', socket.id);
+    });
+})
+
 // API endpoints
 app.use('/api/workouts', workoutRoutes);
 app.use('/api/users', userRoutes);
@@ -39,7 +66,7 @@ app.use("/api", uploadRoutes);
 // Connect to db
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
-        app.listen(process.env.PORT, () => {
+        server.listen(process.env.PORT, () => {
             console.log("Connected to db and Server started")
         });
     })

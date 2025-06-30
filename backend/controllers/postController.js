@@ -127,6 +127,20 @@ async function createNewPost(req, res) {
         enrichedPost.profilePicture = user.profilePicture || '';
         enrichedPost.bio = user.bio || '';
       }
+
+
+      const io = req.app.get('io');
+
+      if(io) {
+        io.to('general_feed').emit('newPost', {
+          post: enrichedPost,
+          message: `${username} has created a new post!`,
+          timestamp: new Date()
+        });
+
+        console.log(`New post by ${username} broadcasted to general_feed`);
+      }
+
   
       // The response includes user data, but the database doesn't store it
       res.status(200).json(enrichedPost);
@@ -148,6 +162,19 @@ async function deletePost(req, res) {
         return res.status(400).json({error:'No such post'})
     }
 
+    // Emit post deletion to all users
+    const io = req.app.get('io');
+    if (io) {
+      io.to('general_feed').emit('postDeleted', {
+        postId: id,
+        username: post.username,
+        message: 'A post has been deleted',
+        timestamp: new Date()
+      });
+      
+      console.log(`Post ${id} deletion broadcasted to general_feed`);
+    }
+
     res.status(200).json(post)    
 }
 
@@ -160,13 +187,39 @@ async function updatePost(req, res) {
 
     const post = await Post.findOneAndUpdate({_id: id}, {
         ...req.body
-    })
+    }, { new: true }) // Return the updated document
 
     if(!post) {
         return res.status(400).json({error:'No such post'})
     }
 
-    res.status(200).json(post)
+    // Fetch user data for the updated post
+    const user = await User.findOne({ username: post.username }).lean();
+    const enrichedPost = post.toObject();
+    
+    if (user) {
+      enrichedPost.profilePicture = user.profilePicture || '';
+      enrichedPost.bio = user.bio || '';
+      enrichedPost.date = post.createdAt.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
+    }
+
+    // Emit post update to all users
+    const io = req.app.get('io');
+    if (io) {
+      io.to('general_feed').emit('postUpdated', {
+        post: enrichedPost,
+        message: 'A post has been updated',
+        timestamp: new Date()
+      });
+      
+      console.log(`Post ${id} update broadcasted to general_feed`);
+    }
+
+    res.status(200).json(enrichedPost)
 }
 
 const getPostsByUsername = async (req, res) => {
