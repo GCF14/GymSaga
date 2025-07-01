@@ -257,11 +257,92 @@ const getPostsByUsername = async (req, res) => {
     }
 };
 
+async function likePost(req, res) {
+    const { id } = req.params;
+    const { username, action } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ error: 'Invalid post ID' });
+    }
+
+    if (!username || !action || !['like', 'unlike'].includes(action)) {
+        return res.status(400).json({ error: 'Invalid request data' });
+    }
+
+    try {
+        const post = await Post.findById(id);
+
+        if (!post) {
+            return res.status(404).json({ error: 'Post not found' });
+        }
+
+        let updatedPost;
+
+        if (action === 'like') {
+            if (!post.likedBy.includes(username)) {
+                updatedPost = await Post.findByIdAndUpdate(
+                    id,
+                    {
+                        $inc: { numOfLikes: 1 },
+                        $addToSet: { likedBy: username }
+                    },
+                    { new: true }
+                );
+            } else {
+                return res.status(400).json({ error: 'Post already liked by this user' });
+            }
+        } else {
+            if (post.likedBy.includes(username)) {
+                updatedPost = await Post.findByIdAndUpdate(
+                    id,
+                    {
+                        $inc: { numOfLikes: -1 },
+                        $pull: { likedBy: username }
+                    },
+                    { new: true }
+                );
+            } else {
+                return res.status(400).json({ error: 'Post not liked by this user' });
+            }
+        }
+
+        const user = await User.findOne({ username: updatedPost.username }).lean();
+        const enrichedPost = updatedPost.toObject();
+        
+        if (user) {
+            enrichedPost.profilePicture = user.profilePicture || '';
+            enrichedPost.bio = user.bio || '';
+            enrichedPost.date = updatedPost.createdAt.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+            });
+        }
+
+        const io = req.app.get('io');
+        if (io) {
+            io.to('general_feed').emit('postLikeUpdated', {
+                post: enrichedPost,
+                action,
+                username,
+                message: `Post ${action}d by ${username}`,
+                timestamp: new Date()
+            });
+        }
+
+        res.status(200).json(enrichedPost);
+    } catch (error) {
+        console.error('Error updating post like:', error);
+        res.status(500).json({ error: 'Error updating post like' });
+    }
+}
+
 module.exports = {
     getAllPosts,
     getPost,
     deletePost,
     updatePost,
     createNewPost,
-    getPostsByUsername
+    getPostsByUsername,
+    likePost
 }

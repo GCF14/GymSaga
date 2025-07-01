@@ -8,7 +8,8 @@ const {
     getPost,
     deletePost,
     updatePost,
-    getPostsByUsername
+    getPostsByUsername,
+    likePost
 } = require('../controllers/postController')
 
 
@@ -22,8 +23,9 @@ router.delete('/:id', deletePost)
 
 router.patch('/:id', updatePost)
 
-// get user by username
 router.get('/user/:username', getPostsByUsername);
+
+router.patch('/:id/like', likePost)
 
 
 module.exports = router

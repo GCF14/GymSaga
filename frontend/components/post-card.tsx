@@ -19,20 +19,26 @@ import {
     HoverCardTrigger,
 } from "@/components/ui/hover-card"
 import React from "react"
-import { Toggle } from "@/components/ui/toggle"
-import { Button } from "@/components/ui/button"
-import { toast } from "sonner"
 import CommentCard from "@/components/comments-card" 
 import MoreMenu from "@/components/dropdown-menu"
+import LikeCommentShareBar from "@/components/like-comment-share-bar"
 import Link from "next/link"
 import Image from "next/image"
 import { PostCardProps } from "@/types/post"
 
-export default function PostCard({ username, content, profilePicture, bio, date, postId }: PostCardProps) {
-    const [isLiked, setIsLiked] = React.useState(false)
+export default function PostCard({ 
+    username, 
+    content, 
+    profilePicture, 
+    bio, 
+    date, 
+    postId,
+    numOfLikes,
+    likedBy,
+    currentUser
+}: PostCardProps) {
     const [showCommentCard, setShowCommentCard] = React.useState(false)
 
-    // Remove @ from username if present
     const displayUsername = username ? (username.startsWith('@') ? username.slice(1) : username) : ''
 
     const handleComment = () => {
@@ -41,10 +47,6 @@ export default function PostCard({ username, content, profilePicture, bio, date,
 
     const handleCloseCommentCard = () => {
         setShowCommentCard(false)
-    }
-
-    const handleLike = () => {
-        setIsLiked(!isLiked)
     }
 
     const renderContent = (item: PostCardProps['content'][0], index: number) => {
@@ -137,39 +139,13 @@ export default function PostCard({ username, content, profilePicture, bio, date,
                 {Array.isArray(content) ? content.map((item, index) => renderContent(item, index)) : null}
             </CardContent>
             <CardFooter>
-                <div className="flex items-center">
-                    <Toggle onClick={handleLike}>
-                        <span className={`material-symbols-rounded ${isLiked ? 'material-symbols-rounded filled' : ''}`}>
-                            favorite
-                        </span>
-                    </Toggle>
-                    <Button variant="ghost" className="hover-button px-2" onClick={handleComment}>
-                        <span className="material-symbols-rounded">
-                            mode_comment
-                        </span>
-                    </Button>
-                    <Button
-                        variant="ghost"
-                        className="hover-button px-2"
-                        onClick={() => {
-                            navigator.clipboard.writeText(window.location.href).then(() => {
-                                toast("Link Copied! 🎉", {
-                                    description: "Share it with your friends and let them join the fun!",
-                                    action: {
-                                        label: "Close",
-                                        onClick: () => toast.dismiss(),
-                                    },
-                                });
-                            }).catch(err => {
-                                console.error('Failed to copy: ', err);
-                            });
-                        }}
-                    >
-                        <span className="material-symbols-rounded">
-                            share
-                        </span>
-                    </Button>
-                </div>
+                <LikeCommentShareBar
+                    postId={postId || ''}
+                    initialLikeCount={numOfLikes || 0}
+                    initialLikedBy={likedBy || []}
+                    currentUsername={currentUser?.username || ''}
+                    onCommentClick={handleComment}
+                />
             </CardFooter>
             {showCommentCard && <CommentCard onClose={handleCloseCommentCard} />}
         </Card>

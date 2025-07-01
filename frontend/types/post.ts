@@ -39,5 +39,10 @@ export interface PostCardProps {
   profilePicture?: string;
   bio?: string;
   date: string;
-  postId?: string; // Added postId as an optional prop
+  postId?: string;
+  numOfLikes?: number;        
+  likedBy?: string[];         
+  currentUser?: {             
+      username: string;
+  };
 }

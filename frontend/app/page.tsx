@@ -7,12 +7,14 @@ import { useEffect, useState, useCallback } from "react"
 import axios from "axios"
 import { Post } from "@/types/post"
 import { io } from "socket.io-client"
+import { useAuthContext } from "@/hooks/useAuthContext";
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [lastUpdate, setLastUpdate] = useState(Date.now())
+  const { user } = useAuthContext();
 
   // Function to fetch posts - extracted so we can call it when needed
   const fetchPosts = useCallback(async () => {
@@ -101,6 +103,19 @@ export default function Home() {
       console.log(`${data.message}`)
     })
 
+    newSocket.on('postLikeUpdated', (data) => {
+      console.log('Post like updated:', data)
+      
+      setPosts(currentPosts => 
+        currentPosts.map(post => 
+          post._id === data.post._id ? { ...data.post } : post
+        )
+      )
+      
+      console.log(`${data.message}`)
+
+    })
+
     return () => {
       console.log('Cleaning up socket connection')
       newSocket.disconnect()
@@ -159,6 +174,9 @@ export default function Home() {
                   bio={post.bio}
                   date={post.date}
                   postId={post._id}
+                  numOfLikes={post.numOfLikes}
+                  likedBy={post.likedBy}
+                  currentUser={user.username ? { username: user.username } : undefined}
                 />
               </BlurFade>
             ))
