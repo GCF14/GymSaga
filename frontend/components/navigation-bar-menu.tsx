@@ -2,13 +2,9 @@
 
 import {
     NavigationMenu,
-    NavigationMenuContent,
-    NavigationMenuIndicator,
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
-    NavigationMenuTrigger,
-    NavigationMenuViewport,
     navigationMenuTriggerStyle,
   } from "@/components/ui/navigation-menu"
 import Link from "next/link"
@@ -24,9 +20,6 @@ export default function NavbarMenu() {
     return (
         <NavigationMenu>
         <NavigationMenuList>
-            <NavigationMenuItem>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()} href="/posts">Posts</NavigationMenuLink>
-            </NavigationMenuItem>
             <NavigationMenuItem>
                 <Link href="/" legacyBehavior passHref>
                     <NavigationMenuLink className={navigationMenuTriggerStyle()}>Home</NavigationMenuLink>
