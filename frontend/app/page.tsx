@@ -1,6 +1,5 @@
 'use client'
 
-import NavigationBar from "@/components/navigation-bar"
 import PostCard from "@/components/post-card"
 import { BlurFade } from "@/components/magicui/blur-fade"
 import { useEffect, useState, useCallback } from "react"
@@ -152,37 +151,34 @@ export default function Home() {
   }, [lastUpdate, fetchPosts])
 
   return (
-    <>
-      <div className="w-full h-full items-center flex flex-col bg-background p-8 scrollbar-hide">
-        <NavigationBar />
-        <div className="flex-col w-full md:w-1/2 mt-16 space-y-4">
-          {loading ? (
-            <div className="flex justify-center items-center h-64">
-              <div className="w-10 h-10 border-4 border-t-transparent border-blue-500 rounded-full animate-spin"></div>
-            </div>
-          ) : error ? (
-            <div className="text-center text-red-500 p-4">{error}</div>
-          ) : posts.length === 0 ? (
-            <div className="text-center p-4">No posts yet</div>
-          ) : (
-            posts.map((post) => (
-              <BlurFade key={`${post._id}-${lastUpdate}`} inView>
-                <PostCard 
-                  username={post.username} 
-                  content={post.content} 
-                  profilePicture={post.profilePicture}
-                  bio={post.bio}
-                  date={post.date}
-                  postId={post._id}
-                  numOfLikes={post.numOfLikes}
-                  likedBy={post.likedBy}
-                  currentUser={user.username ? { username: user.username } : undefined}
-                />
-              </BlurFade>
-            ))
-          )}
-        </div>
+    <div className="w-full py-6">
+      <div className="w-full max-w-3xl mx-auto space-y-4 transform -translate-x-28">
+        {loading ? (
+          <div className="flex justify-center items-center h-screen">
+            <div className="w-10 h-10 border-4 border-t-transparent border-blue-500 rounded-full animate-spin"></div>
+          </div>
+        ) : error ? (
+          <div className="text-center text-red-500 p-4">{error}</div>
+        ) : posts.length === 0 ? (
+          <div className="text-center p-4">No posts yet</div>
+        ) : (
+          posts.map((post) => (
+            <BlurFade key={`${post._id}-${lastUpdate}`} inView>
+              <PostCard 
+                username={post.username} 
+                content={post.content} 
+                profilePicture={post.profilePicture}
+                bio={post.bio}
+                date={post.date}
+                postId={post._id}
+                numOfLikes={post.numOfLikes}
+                likedBy={post.likedBy}
+                currentUser={user.username ? { username: user.username } : undefined}
+              />
+            </BlurFade>
+          ))
+        )}
       </div>
-    </>
+    </div>
   )
 }

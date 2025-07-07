@@ -5,6 +5,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { WorkoutsContextProvider } from '@/context/WorkoutsContext';
 import { AuthContextProvider } from '@/context/AuthContext';
 import { Toaster } from "@/components/ui/sonner";
+import NavigationBar from "@/components/navigation-bar"
+import { SidebarOverlay } from "@/components/sidebar-overlay"
 
 // Using local fonts as originally intended
 const geistSans = localFont({
@@ -98,7 +100,16 @@ export default function RootLayout({
         >
           <AuthContextProvider>
             <WorkoutsContextProvider>
-              {children}
+              <div className="flex flex-col min-h-screen max-w-full overflow-x-hidden">
+                <NavigationBar />
+                
+                
+                <SidebarOverlay />
+                
+                <main className="w-full flex-1 pt-14 px-8 md:pl-72 max-w-full">
+                  {children}
+                </main>
+              </div>
               <Toaster />
             </WorkoutsContextProvider>
           </AuthContextProvider>
