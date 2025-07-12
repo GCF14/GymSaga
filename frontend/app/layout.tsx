@@ -2,11 +2,10 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { WorkoutsContextProvider } from '@/context/WorkoutsContext';
-import { AuthContextProvider } from '@/context/AuthContext';
+import { WorkoutsContextProvider } from "@/context/WorkoutsContext";
+import { AuthContextProvider } from "@/context/AuthContext";
 import { Toaster } from "@/components/ui/sonner";
-import NavigationBar from "@/components/navigation-bar"
-import { SidebarOverlay } from "@/components/sidebar-overlay"
+import { ConditionalLayout } from "@/components/conditional-layout";
 
 // Using local fonts as originally intended
 const geistSans = localFont({
@@ -42,9 +41,17 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         {/* Put stylesheets in the head rather than body */}
-        <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
-        <style dangerouslySetInnerHTML={{ __html: `
+        <link
+          rel="stylesheet"
+          href="https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+        />
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
           .material-symbols-rounded {
             font-variation-settings:
             'FILL' 0,
@@ -89,9 +96,13 @@ export default function RootLayout({
           .hover-underline:hover {
             text-decoration: underline;
           }
-        `}} />
+        `,
+          }}
+        />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -101,14 +112,7 @@ export default function RootLayout({
           <AuthContextProvider>
             <WorkoutsContextProvider>
               <div className="flex flex-col min-h-screen max-w-full overflow-x-hidden">
-                <NavigationBar />
-                
-                
-                <SidebarOverlay />
-                
-                <main className="w-full flex-1 pt-14 px-8 md:pl-72 max-w-full">
-                  {children}
-                </main>
+                <ConditionalLayout>{children}</ConditionalLayout>
               </div>
               <Toaster />
             </WorkoutsContextProvider>
