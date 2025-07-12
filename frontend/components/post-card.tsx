@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import {
     Card,
     CardContent,
@@ -13,6 +14,13 @@ import {
     AvatarFallback,
     AvatarImage,
 } from "@/components/ui/avatar"
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
 import {
     HoverCard,
     HoverCardContent,
@@ -37,7 +45,8 @@ export default function PostCard({
     likedBy,
     currentUser
 }: PostCardProps) {
-    const [showCommentCard, setShowCommentCard] = React.useState(false)
+    const [showCommentCard, setShowCommentCard] = useState(false)
+    const [isDialogOpen, setIsDialogOpen] = useState(false)
 
     const displayUsername = username ? (username.startsWith('@') ? username.slice(1) : username) : ''
 
@@ -47,6 +56,11 @@ export default function PostCard({
 
     const handleCloseCommentCard = () => {
         setShowCommentCard(false)
+    }
+
+    const handleCardClick = () => {
+        setIsDialogOpen(true)
+
     }
 
     const renderContent = (item: PostCardProps['content'][0], index: number) => {
@@ -82,72 +96,92 @@ export default function PostCard({
     }
 
     return (
-        <Card className="w-full">
-            <CardHeader>
-                <div className="flex justify-between">
-                    <div className="flex items-center h-full w-full">
-                        <Avatar className="w-10 h-10 mr-4">
-                            <AvatarImage 
-                                src={profilePicture} 
-                                alt={`${displayUsername}'s avatar`} 
-                            />
-                            <AvatarFallback>
-                                {displayUsername ? displayUsername.charAt(0).toUpperCase() : "U"}
-                            </AvatarFallback>
-                        </Avatar>
-                        <CardTitle>
-                            <HoverCard>
-                                <HoverCardTrigger asChild className="hover-underline">
-                                    <Link href={`/${encodeURIComponent(displayUsername)}`}>
-                                        {displayUsername}
-                                    </Link>
-                                </HoverCardTrigger>
-                                <HoverCardContent className="w-80">
-                                    <div className="flex justify-between space-x-4">
-                                        <Avatar>
-                                            <AvatarImage 
-                                                src={profilePicture} 
-                                                alt={`${displayUsername}'s avatar`} 
-                                            />
-                                            <AvatarFallback>
-                                                {displayUsername ? displayUsername.charAt(0).toUpperCase() : "U"}
-                                            </AvatarFallback>
-                                        </Avatar>
-                                        <div className="space-y-1">
-                                            <h4 className="text-sm font-semibold">
-                                                {username}
-                                            </h4>
-                                            <p className="text-sm">
-                                                {bio || "No bio available"}
-                                            </p>
-                                            <div className="flex items-center pt-2">
-                                                <span className="text-xs text-muted-foreground">
-                                                    {date}
-                                                </span>
+        <>
+
+            <Card className="w-full">
+                <CardHeader>
+                    <div className="flex justify-between">
+                        <div className="flex items-center h-full w-full">
+                            <Avatar className="w-10 h-10 mr-4">
+                                <AvatarImage 
+                                    src={profilePicture} 
+                                    alt={`${displayUsername}'s avatar`} 
+                                />
+                                <AvatarFallback>
+                                    {displayUsername ? displayUsername.charAt(0).toUpperCase() : "U"}
+                                </AvatarFallback>
+                            </Avatar>
+                            <CardTitle>
+                                <HoverCard>
+                                    <HoverCardTrigger asChild className="hover-underline">
+                                        <Link href={`/${encodeURIComponent(displayUsername)}`}>
+                                            {displayUsername}
+                                        </Link>
+                                    </HoverCardTrigger>
+                                    <HoverCardContent className="w-80">
+                                        <div className="flex justify-between space-x-4">
+                                            <Avatar>
+                                                <AvatarImage 
+                                                    src={profilePicture} 
+                                                    alt={`${displayUsername}'s avatar`} 
+                                                />
+                                                <AvatarFallback>
+                                                    {displayUsername ? displayUsername.charAt(0).toUpperCase() : "U"}
+                                                </AvatarFallback>
+                                            </Avatar>
+                                            <div className="space-y-1">
+                                                <h4 className="text-sm font-semibold">
+                                                    {username}
+                                                </h4>
+                                                <p className="text-sm">
+                                                    {bio || "No bio available"}
+                                                </p>
+                                                <div className="flex items-center pt-2">
+                                                    <span className="text-xs text-muted-foreground">
+                                                        {date}
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </HoverCardContent>
-                            </HoverCard>
-                        </CardTitle>
+                                    </HoverCardContent>
+                                </HoverCard>
+                            </CardTitle>
+                        </div>
+                        <MoreMenu />
                     </div>
-                    <MoreMenu />
+                    <CardDescription>{date}</CardDescription>
+                </CardHeader>
+                <div 
+                    className="cursor-pointer hover:bg-accent/5 transition-colors"
+                    onClick={handleCardClick}
+                >
+                    <CardContent>
+                        {Array.isArray(content) ? content.map((item, index) => renderContent(item, index)) : null}
+                    </CardContent>
                 </div>
-                <CardDescription>{date}</CardDescription>
-            </CardHeader>
-            <CardContent>
-                {Array.isArray(content) ? content.map((item, index) => renderContent(item, index)) : null}
-            </CardContent>
-            <CardFooter>
-                <LikeCommentShareBar
-                    postId={postId || ''}
-                    initialLikeCount={numOfLikes || 0}
-                    initialLikedBy={likedBy || []}
-                    currentUsername={currentUser?.username || ''}
-                    onCommentClick={handleComment}
-                />
-            </CardFooter>
-            {showCommentCard && <CommentCard onClose={handleCloseCommentCard} />}
-        </Card>
+                <CardFooter>
+                    <LikeCommentShareBar
+                        postId={postId || ''}
+                        initialLikeCount={numOfLikes || 0}
+                        initialLikedBy={likedBy || []}
+                        currentUsername={currentUser?.username || ''}
+                        onCommentClick={handleComment}
+                    />
+                </CardFooter>
+                {showCommentCard && <CommentCard onClose={handleCloseCommentCard} />}
+            </Card>
+
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Post Details</DialogTitle>
+                    </DialogHeader>
+                </DialogContent>
+
+            </Dialog>
+
+        </>
+        
+
     )
 }
