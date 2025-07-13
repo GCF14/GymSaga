@@ -1,7 +1,8 @@
 {
   "scripts": {
-    "lint": "eslint . --ext .js,.ts,.tsx",
-    "format": "prettier --write ."
+    "lint": "eslint . --ext .js,.ts,.tsx --fix",
+    "format": "prettier --write .",
+    "prepare": "husky"
   },
   "dependencies": {
     "date-fns": "^4.1.0",
@@ -11,6 +12,11 @@
     "eslint": "^9.31.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.5.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
     "prettier": "^3.6.2"
+  },
+  "lint-staged": {
+    "frontend/**/*.{js,jsx,ts,tsx}": "npm --prefix frontend run lint"
   }
 }
