@@ -4,7 +4,7 @@ import React, { forwardRef, useRef } from "react";
 
 import { cn } from "@/lib/utils";
 import { AnimatedBeam } from "@/components/magicui/animated-beam";
-import ShadcnIcons from "@/public/shadcn"
+import ShadcnIcons from "@/public/shadcn";
 import GymSaga from "@/public/GymSaga";
 import Image from "next/image";
 import Nodejs from "@/public/Nodejs";
@@ -20,7 +20,7 @@ const Circle = forwardRef<
       ref={ref}
       className={cn(
         "z-10 flex size-12 items-center justify-center rounded-full border-2 bg-white p-3 shadow-xs",
-        className,
+        className
       )}
     >
       {children}
@@ -48,25 +48,39 @@ export function AnimatedIconBeam() {
       <div className="flex size-full max-h-[200px] w-4/5 flex-col items-stretch justify-between gap-10">
         <div className="flex flex-row items-center justify-between">
           <div className="flex flex-row items-center justify-between">
-          <span className="mr-2 text-xl hidden font-bold lg:inline-block">MagicUI</span>
+            <span className="mr-2 text-xl hidden font-bold lg:inline-block">
+              MagicUI
+            </span>
             <Circle ref={div1Ref}>
-                <Image src="/MagicUI.png" width="24" height="24" alt="MagicUI" />
+              <Image src="/MagicUI.png" width="24" height="24" alt="MagicUI" />
             </Circle>
           </div>
           <div className="flex flex-row items-center justify-between">
             <Circle ref={div5Ref}>
-                <ShadcnIcons.logo />
+              <ShadcnIcons.logo />
             </Circle>
-            <span className="ml-2 text-xl hidden font-bold lg:inline-block">shadcn/ui</span>
+            <span className="ml-2 text-xl hidden font-bold lg:inline-block">
+              shadcn/ui
+            </span>
           </div>
         </div>
         <div className="flex flex-row items-center justify-between">
           <div className="flex flex-row items-center justify-between">
-            <span className="mr-2 text-xl hidden font-bold lg:inline-block">Next.js</span>
+            <span className="mr-2 text-xl hidden font-bold lg:inline-block">
+              Next.js
+            </span>
             <Circle ref={div2Ref}>
-                <svg height="22" role="img" style={{ width: 'auto', overflow: 'visible' }} viewBox="0 0 74 74">
-                    <path d="M37.5896 0.25L74.5396 64.25H0.639648L37.5896 0.25Z" fill="black"></path>
-                </svg>
+              <svg
+                height="22"
+                role="img"
+                style={{ width: "auto", overflow: "visible" }}
+                viewBox="0 0 74 74"
+              >
+                <path
+                  d="M37.5896 0.25L74.5396 64.25H0.639648L37.5896 0.25Z"
+                  fill="black"
+                ></path>
+              </svg>
             </Circle>
           </div>
           <Circle ref={div4Ref}>
@@ -74,24 +88,30 @@ export function AnimatedIconBeam() {
           </Circle>
           <div className="flex flex-row items-center justify-between">
             <Circle ref={div6Ref}>
-                <Nodejs />
+              <Nodejs />
             </Circle>
-            <span className="ml-2 text-xl hidden font-bold lg:inline-block">Node.js</span>
+            <span className="ml-2 text-xl hidden font-bold lg:inline-block">
+              Node.js
+            </span>
           </div>
         </div>
         <div className="flex flex-row items-center justify-between">
-            <div className="flex flex-row items-center justify-between">
-                <span className="mr-2 text-xl hidden font-bold lg:inline-block">MongoDB</span>
-                <Circle ref={div3Ref}>
-                    <MongoDB className="w-8 h-8" />
-                </Circle>
-            </div>
-            <div className="flex flex-row items-center justify-between">
-                <Circle ref={div7Ref}>
-                    <Express className="w-8 h-8" />
-                </Circle>
-                <span className="ml-2 text-xl hidden font-bold lg:inline-block">Express.js</span>
-            </div>
+          <div className="flex flex-row items-center justify-between">
+            <span className="mr-2 text-xl hidden font-bold lg:inline-block">
+              MongoDB
+            </span>
+            <Circle ref={div3Ref}>
+              <MongoDB className="w-8 h-8" />
+            </Circle>
+          </div>
+          <div className="flex flex-row items-center justify-between">
+            <Circle ref={div7Ref}>
+              <Express className="w-8 h-8" />
+            </Circle>
+            <span className="ml-2 text-xl hidden font-bold lg:inline-block">
+              Express.js
+            </span>
+          </div>
         </div>
       </div>
 

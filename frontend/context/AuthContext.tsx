@@ -1,25 +1,24 @@
-'use client'
+"use client";
 
 import { createContext, useReducer, ReactNode, useEffect } from "react";
 
 // set state to null
 interface AuthState {
-  user: any | null; 
+  user: any | null;
 }
 
 // set action types
-type AuthAction = 
-  | { type: "LOGIN"; payload: any } 
-  | { type: "LOGOUT" };
-
+type AuthAction = { type: "LOGIN"; payload: any } | { type: "LOGOUT" };
 
 export const AuthContext = createContext<{
-  user: any | null; 
+  user: any | null;
   dispatch: React.Dispatch<AuthAction>;
 } | null>(null);
 
-
-export const authReducer = (state: AuthState, action: AuthAction): AuthState => {
+export const authReducer = (
+  state: AuthState,
+  action: AuthAction
+): AuthState => {
   switch (action.type) {
     case "LOGIN":
       return { user: action.payload };
@@ -30,14 +29,13 @@ export const authReducer = (state: AuthState, action: AuthAction): AuthState => 
   }
 };
 
-
 interface AuthContextProviderProps {
   children: ReactNode;
 }
 
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
-  const [state, dispatch] = useReducer(authReducer, { 
-    user: null 
+  const [state, dispatch] = useReducer(authReducer, {
+    user: null,
   });
 
   useEffect(() => {

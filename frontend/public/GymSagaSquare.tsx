@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const GymSagaSquare: React.FC = () => (
   <svg
@@ -12,7 +12,7 @@ const GymSagaSquare: React.FC = () => (
 
     <mask
       id="mask0_13_279"
-      style={{ maskType: 'alpha' }}
+      style={{ maskType: "alpha" }}
       maskUnits="userSpaceOnUse"
       x="19.80"
       y="21.48"
@@ -37,7 +37,7 @@ const GymSagaSquare: React.FC = () => (
 
     <mask
       id="mask1_13_279"
-      style={{ maskType: 'alpha' }}
+      style={{ maskType: "alpha" }}
       maskUnits="userSpaceOnUse"
       x="19.80"
       y="12.40"

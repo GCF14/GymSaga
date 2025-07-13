@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import Map from '@/components/map/map.js';
-import './style.css';
+import Map from "@/components/map/map.js";
+import "./style.css";
 import NavigationBar from "@/components/navigation-bar";
 
 export default function MapPage() {
@@ -16,4 +16,3 @@ export default function MapPage() {
     </>
   );
 }
-

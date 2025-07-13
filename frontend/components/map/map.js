@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
-import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import React, { useEffect, useRef, useState } from "react";
+import mapboxgl from "mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
@@ -17,53 +17,58 @@ const MapboxExample = () => {
   useEffect(() => {
     mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
 
-    if ('geolocation' in navigator) {
+    if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { longitude, latitude } = position.coords;
           setUserLongitude(longitude);
           setUserLatitude(latitude);
           console.log(userLongitude);
-          console.log(userLatitude)
+          console.log(userLatitude);
           setGeolocationEnabled(true);
           initializeMapWithUserLocation(latitude, longitude, 15.87);
         },
         (error) => {
-          console.error('Geolocation error:', error.message);
+          console.error("Geolocation error:", error.message);
           initializeDefaultMap();
         },
         { enableHighAccuracy: true }
       );
     } else {
-      console.error('Geolocation is not supported by this browser.');
+      console.error("Geolocation is not supported by this browser.");
       initializeDefaultMap();
     }
   }, []); // Run only on component mount
 
-  const initializeMapWithUserLocation = (latitude, longitude, zoom = 15.87, isDefaultMap) => {
+  const initializeMapWithUserLocation = (
+    latitude,
+    longitude,
+    zoom = 15.87,
+    isDefaultMap
+  ) => {
     if (isDefaultMap) {
       // Add a delay if it's the default map
       setTimeout(() => {
         if (mapInstanceRef.current) {
           mapInstanceRef.current.remove();
         }
-  
+
         const mapInstance = new mapboxgl.Map({
           container: mapContainerRef.current,
-          style: 'mapbox://styles/mapbox/streets-v9',
+          style: "mapbox://styles/mapbox/streets-v9",
           center: [longitude, latitude],
           zoom,
         });
-  
+
         mapInstanceRef.current = mapInstance;
         setIsDefaultMap(false);
-  
+
         userMarkerRef.current = new mapboxgl.Marker()
           .setLngLat([longitude, latitude])
           .addTo(mapInstance);
-  
+
         mapInstance.addControl(new mapboxgl.NavigationControl());
-        mapInstance.on('style.load', () => {
+        mapInstance.on("style.load", () => {
           mapInstance.setFog({});
         });
       }, 6000); // Delay in milliseconds (1 second per 1000)
@@ -72,28 +77,27 @@ const MapboxExample = () => {
       if (mapInstanceRef.current) {
         mapInstanceRef.current.remove();
       }
-  
+
       const mapInstance = new mapboxgl.Map({
         container: mapContainerRef.current,
-        style: 'mapbox://styles/mapbox/streets-v9',
+        style: "mapbox://styles/mapbox/streets-v9",
         center: [longitude, latitude],
         zoom,
       });
-  
+
       mapInstanceRef.current = mapInstance;
       setIsDefaultMap(false);
-  
+
       userMarkerRef.current = new mapboxgl.Marker()
         .setLngLat([longitude, latitude])
         .addTo(mapInstance);
-  
+
       mapInstance.addControl(new mapboxgl.NavigationControl());
-      mapInstance.on('style.load', () => {
+      mapInstance.on("style.load", () => {
         mapInstance.setFog({});
       });
     }
   };
-  
 
   const initializeDefaultMap = () => {
     if (mapInstanceRef.current) {
@@ -102,8 +106,8 @@ const MapboxExample = () => {
 
     const mapInstance = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style: 'mapbox://styles/mapbox/streets-v9',
-      projection: 'globe',
+      style: "mapbox://styles/mapbox/streets-v9",
+      projection: "globe",
       zoom: 1,
       center: [30, 15],
     });
@@ -118,16 +122,16 @@ const MapboxExample = () => {
 
     mapInstance.addControl(geoLocate);
     mapInstance.addControl(new mapboxgl.NavigationControl());
-    mapInstance.on('style.load', () => {
+    mapInstance.on("style.load", () => {
       mapInstance.setFog({});
     });
 
-    geoLocate.on('geolocate', (event) => {
+    geoLocate.on("geolocate", (event) => {
       const { longitude, latitude } = event.coords;
       setUserLongitude(longitude);
       setUserLatitude(latitude);
       setGeolocationEnabled(true);
-    
+
       if (isDefaultMap) {
         mapInstanceRef.current.flyTo({
           center: [longitude, latitude],
@@ -153,8 +157,7 @@ const MapboxExample = () => {
       if (spinEnabled && !userInteracting && zoom < maxSpinZoom) {
         let distancePerSecond = 360 / secondsPerRevolution;
         if (zoom > slowSpinZoom) {
-          const zoomDif =
-            (maxSpinZoom - zoom) / (maxSpinZoom - slowSpinZoom);
+          const zoomDif = (maxSpinZoom - zoom) / (maxSpinZoom - slowSpinZoom);
           distancePerSecond *= zoomDif;
         }
         const center = mapInstance.getCenter();
@@ -163,14 +166,14 @@ const MapboxExample = () => {
       }
     }
 
-    mapInstance.on('mousedown', () => {
+    mapInstance.on("mousedown", () => {
       userInteracting = true;
     });
-    mapInstance.on('dragstart', () => {
+    mapInstance.on("dragstart", () => {
       userInteracting = true;
     });
 
-    mapInstance.on('moveend', () => {
+    mapInstance.on("moveend", () => {
       spinGlobe();
     });
 
@@ -179,13 +182,13 @@ const MapboxExample = () => {
 
   const handleFindGymButtonClick = async () => {
     if (isDefaultMap) {
-      alert('Please enable geolocation to discover nearby gyms.');
+      alert("Please enable geolocation to discover nearby gyms.");
       return;
     }
 
     const radius = 1.5; // km
     const bbox = calculateBoundingBox(userLongitude, userLatitude, radius);
-    const url = `https://api.mapbox.com/search/searchbox/v1/category/fitness_center?access_token=${MAPBOX_ACCESS_TOKEN}&bbox=${bbox.join(',')}&language=en&limit=24`;
+    const url = `https://api.mapbox.com/search/searchbox/v1/category/fitness_center?access_token=${MAPBOX_ACCESS_TOKEN}&bbox=${bbox.join(",")}&language=en&limit=24`;
 
     try {
       const gymResponse = await fetch(url);
@@ -195,22 +198,24 @@ const MapboxExample = () => {
       setMarkers([]);
 
       const markerPromises = gymData.features.map((element) => {
-        const marker = new mapboxgl.Marker({ color: '#ff0000' })
+        const marker = new mapboxgl.Marker({ color: "#ff0000" })
           .setLngLat(element.geometry.coordinates)
           .addTo(mapInstanceRef.current);
 
         const popupHTML = generatePopupHTML(element);
-        const popup = new mapboxgl.Popup({ closeOnClick: true, maxWidth: '300px' })
-          .setHTML(popupHTML);
+        const popup = new mapboxgl.Popup({
+          closeOnClick: true,
+          maxWidth: "300px",
+        }).setHTML(popupHTML);
         marker.setPopup(popup);
         setMarkers((prevMarkers) => [...prevMarkers, marker]);
-       });
+      });
 
       await Promise.all(markerPromises);
 
-      console.log('Gyms within 1.5 km radius:', gymData.features);
+      console.log("Gyms within 1.5 km radius:", gymData.features);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
@@ -224,12 +229,21 @@ const MapboxExample = () => {
     const lonRad = toRad(longitude);
     const radiusRad = radius / R;
 
-    const minLatitude = Math.asin(Math.sin(latRad) * Math.cos(radiusRad) -
-        Math.cos(latRad) * Math.sin(radiusRad) * Math.cos(toRad(0))) * (180 / Math.PI);
-    const maxLatitude = Math.asin(Math.sin(latRad) * Math.cos(radiusRad) +
-        Math.cos(latRad) * Math.sin(radiusRad) * Math.cos(toRad(0))) * (180 / Math.PI);
+    const minLatitude =
+      Math.asin(
+        Math.sin(latRad) * Math.cos(radiusRad) -
+          Math.cos(latRad) * Math.sin(radiusRad) * Math.cos(toRad(0))
+      ) *
+      (180 / Math.PI);
+    const maxLatitude =
+      Math.asin(
+        Math.sin(latRad) * Math.cos(radiusRad) +
+          Math.cos(latRad) * Math.sin(radiusRad) * Math.cos(toRad(0))
+      ) *
+      (180 / Math.PI);
 
-    const dLongitude = Math.asin(Math.sin(radiusRad) * Math.sin(toRad(90))) * (180 / Math.PI);
+    const dLongitude =
+      Math.asin(Math.sin(radiusRad) * Math.sin(toRad(90))) * (180 / Math.PI);
 
     const minLongitude = longitude - dLongitude;
     const maxLongitude = longitude + dLongitude;
@@ -238,51 +252,66 @@ const MapboxExample = () => {
   }
 
   function generatePopupHTML(element) {
-      let openingHoursHTML = '';
+    let openingHoursHTML = "";
 
-     
-      if (element.properties.metadata?.open_hours && element.properties.metadata.open_hours !== 'Not available') {
-          const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    if (
+      element.properties.metadata?.open_hours &&
+      element.properties.metadata.open_hours !== "Not available"
+    ) {
+      const days = [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ];
 
-         
-          if (Array.isArray(element.properties.metadata.open_hours.periods)) {
-              openingHoursHTML = element.properties.metadata.open_hours.periods.map((period) => {
-                  
-                  if (period.open && period.open.time && period.close && period.close.time) {
-                      const day = days[period.open.day] ?? 'Unknown';
-                      const openTime = `${period.open.time.slice(0, 2)}:${period.open.time.slice(2)}`;
-                      const closeTime = `${period.close.time.slice(0, 2)}:${period.close.time.slice(2)}`;
-                      return `<p>${day}: ${openTime} - ${closeTime}</p>`;
-                  }
-                  return '<p>Not available</p>';
-              }).join('');
-          } else {
-              openingHoursHTML = '<p>Not available</p>';
-          }
+      if (Array.isArray(element.properties.metadata.open_hours.periods)) {
+        openingHoursHTML = element.properties.metadata.open_hours.periods
+          .map((period) => {
+            if (
+              period.open &&
+              period.open.time &&
+              period.close &&
+              period.close.time
+            ) {
+              const day = days[period.open.day] ?? "Unknown";
+              const openTime = `${period.open.time.slice(0, 2)}:${period.open.time.slice(2)}`;
+              const closeTime = `${period.close.time.slice(0, 2)}:${period.close.time.slice(2)}`;
+              return `<p>${day}: ${openTime} - ${closeTime}</p>`;
+            }
+            return "<p>Not available</p>";
+          })
+          .join("");
       } else {
-          openingHoursHTML = '<p>Not available</p>';
+        openingHoursHTML = "<p>Not available</p>";
       }
+    } else {
+      openingHoursHTML = "<p>Not available</p>";
+    }
 
-      return `
+    return `
         <h1 style="margin-bottom: 20px;">Gym Information</h1>
         <p>Name: ${element.properties.name}</p>
         <p>Full Address: ${element.properties.full_address}</p>
-        <p>Phone Number: ${element.properties.metadata?.phone ?? 'Not available'}</p>
+        <p>Phone Number: ${element.properties.metadata?.phone ?? "Not available"}</p>
         <p>Opening Hours:</p>
         ${openingHoursHTML}
-        <p>Website: ${element.properties.metadata?.website ?? 'Not available'}</p>
+        <p>Website: ${element.properties.metadata?.website ?? "Not available"}</p>
       `;
   }
 
   useEffect(() => {
-    const findGymButton = document.getElementById('findGymButton');
+    const findGymButton = document.getElementById("findGymButton");
     if (findGymButton) {
-      findGymButton.addEventListener('click', handleFindGymButtonClick);
+      findGymButton.addEventListener("click", handleFindGymButtonClick);
     }
 
     return () => {
       if (findGymButton) {
-        findGymButton.removeEventListener('click', handleFindGymButtonClick);
+        findGymButton.removeEventListener("click", handleFindGymButtonClick);
       }
     };
   }, [handleFindGymButtonClick]);
@@ -291,7 +320,7 @@ const MapboxExample = () => {
     <div>
       <button id="findGymButton">Find Gyms</button>
       <div
-        style={{ width: '100%', height: '100vh' }}
+        style={{ width: "100%", height: "100vh" }}
         ref={mapContainerRef}
         className="map-container"
       />

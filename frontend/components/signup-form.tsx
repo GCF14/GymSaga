@@ -1,20 +1,20 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useState } from "react"
-import { LoginForm } from "./login-form"
-import { useSignup } from "@/hooks/useSignup"
-import { toast } from "sonner"
-import { useEffect } from "react"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
+import { LoginForm } from "./login-form";
+import { useSignup } from "@/hooks/useSignup";
+import { toast } from "sonner";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function SignupForm() {
@@ -29,7 +29,7 @@ export default function SignupForm() {
 
   useEffect(() => {
     if (error) {
-      toast.error("Error: " + error, {
+      toast.error(`Error: ${error}`, {
         action: {
           label: "Close",
           onClick: () => toast.dismiss(),
@@ -44,17 +44,23 @@ export default function SignupForm() {
           borderColor: "#ffffff",
           color: "#ffffff",
           borderWidth: "1px",
-          borderStyle: "solid", 
-        }
+          borderStyle: "solid",
+        },
       });
     }
   }, [error]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const success = await signup(email, password, userName, firstName, lastName);
+    const success = await signup(
+      email,
+      password,
+      userName,
+      firstName,
+      lastName
+    );
 
-    if (success) { 
+    if (success) {
       router.push("/");
     }
   };
@@ -63,14 +69,15 @@ export default function SignupForm() {
     setIsLogin(true);
   };
 
-  return (
-    isLogin ? <LoginForm /> :
+  return isLogin ? (
+    <LoginForm />
+  ) : (
     <div className="flex flex-col gap-6">
       <Card>
         <CardHeader>
           <CardTitle className="text-xl 2xl:text-2xl">Sign Up</CardTitle>
           <CardDescription>
-          Enter your information to create an account
+            Enter your information to create an account
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -79,19 +86,22 @@ export default function SignupForm() {
               <div className="grid grid-cols-2 gap-1">
                 <Label htmlFor="first-name">First name</Label>
                 <Label htmlFor="last-name">Last name</Label>
-                <Input 
-                  id="first-name" 
-                  type="text" 
-                  placeholder="Matthew" 
+                <Input
+                  id="first-name"
+                  type="text"
+                  placeholder="Matthew"
                   onChange={(e) => setFirstName(e.target.value)}
                   value={firstName}
-                  required />
-                <Input id="last-name" 
-                  type="text" 
-                  placeholder="Smith" 
+                  required
+                />
+                <Input
+                  id="last-name"
+                  type="text"
+                  placeholder="Smith"
                   onChange={(e) => setLastName(e.target.value)}
                   value={lastName}
-                  required />
+                  required
+                />
               </div>
               <div className="grid gap-1">
                 <Label htmlFor="username">Username</Label>
@@ -119,11 +129,12 @@ export default function SignupForm() {
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
                 </div>
-                <Input id="password" 
-                  type="password" 
+                <Input
+                  id="password"
+                  type="password"
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}
-                  required 
+                  required
                 />
               </div>
               <Button type="submit" className="w-full" disabled={isLoading}>
@@ -132,13 +143,16 @@ export default function SignupForm() {
             </div>
             <div className="mt-4 text-center text-sm">
               Already have an account?{" "}
-              <button className="underline underline-offset-4" onClick={handleLoginClick}>
-                    Log in
+              <button
+                className="underline underline-offset-4"
+                onClick={handleLoginClick}
+              >
+                Log in
               </button>
             </div>
           </form>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

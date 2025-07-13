@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
-import { AppSidebar } from "@/components/app-sidebar"
-import { SidebarProvider } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/app-sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 export function SidebarOverlay() {
   return (
@@ -12,5 +12,5 @@ export function SidebarOverlay() {
         </SidebarProvider>
       </div>
     </div>
-  )
+  );
 }

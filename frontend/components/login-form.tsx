@@ -1,32 +1,32 @@
 "use client";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useState } from "react"
-import SignupForm from "./signup-form"
-import { useLogin } from "@/hooks/useLogin"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
+import SignupForm from "./signup-form";
+import { useLogin } from "@/hooks/useLogin";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react"
-import { toast } from "sonner"
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 export function LoginForm() {
   const [isSignup, setIsSingup] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, error, isLoading } = useLogin()
+  const { login, error, isLoading } = useLogin();
   const router = useRouter();
 
   useEffect(() => {
     if (error) {
-      toast.error("Error: " + error, {
+      toast.error(`Error: ${error}`, {
         action: {
           label: "Close",
           onClick: () => toast.dismiss(),
@@ -41,30 +41,29 @@ export function LoginForm() {
           borderColor: "#ffffff",
           color: "#ffffff",
           borderWidth: "1px",
-          borderStyle: "solid", 
-        }
+          borderStyle: "solid",
+        },
       });
     }
   }, [error]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
 
     const success = await login(email, password);
 
     if (success) {
       router.push("/");
     }
- 
-
-  }
+  };
 
   const handleSignupClick = () => {
     setIsSingup(true);
   };
 
-  return (
-    isSignup ? <SignupForm /> :
+  return isSignup ? (
+    <SignupForm />
+  ) : (
     <div className="flex flex-col gap-6">
       <Card>
         <CardHeader>
@@ -97,28 +96,33 @@ export function LoginForm() {
                     Forgot your password?
                   </a>
                 </div>
-                <Input 
-                  id="password" 
-                  type="password" 
+                <Input
+                  id="password"
+                  type="password"
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}
-                  required 
+                  required
                 />
               </div>
-              <Button type="submit" className="w-full" disabled={isLoading}>Login</Button>
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                Login
+              </Button>
               <Button variant="outline" className="w-full">
                 Login with Google
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
-                Don&apos;t have an account?{" "}
-                <button className="underline underline-offset-4" onClick={handleSignupClick}>
-                    Sign up
-                </button>
-            </div>              
+              Don&apos;t have an account?{" "}
+              <button
+                className="underline underline-offset-4"
+                onClick={handleSignupClick}
+              >
+                Sign up
+              </button>
+            </div>
           </form>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

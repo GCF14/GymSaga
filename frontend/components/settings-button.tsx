@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,31 +15,29 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { useLogout } from "@/hooks/useLogout"
-import { useTheme } from "next-themes"
-import { useEffect, useState } from 'react'
+} from "@/components/ui/dropdown-menu";
+import { useLogout } from "@/hooks/useLogout";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export default function SettingsButton() {
-  const { logout } = useLogout()
-  const { setTheme } = useTheme()
+  const { logout } = useLogout();
+  const { setTheme } = useTheme();
   const [username, setUsername] = useState<string | null>(null);
 
   useEffect(() => {
-      setUsername(localStorage.getItem("username"))
-  }, [])
+    setUsername(localStorage.getItem("username"));
+  }, []);
 
   const handleLogout = () => {
-    logout()
-  }
+    logout();
+  };
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" className="p-0 size-8 cursor-pointer">
-          <span className="material-symbols-rounded">
-            settings
-          </span>
+          <span className="material-symbols-rounded">settings</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
@@ -59,13 +57,22 @@ export default function SettingsButton() {
           <DropdownMenuSubTrigger>Mode Toggle</DropdownMenuSubTrigger>
           <DropdownMenuPortal>
             <DropdownMenuSubContent>
-              <DropdownMenuItem onClick={() => setTheme("light")} className="cursor-pointer">
+              <DropdownMenuItem
+                onClick={() => setTheme("light")}
+                className="cursor-pointer"
+              >
                 Light Mode
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("dark")} className="cursor-pointer">
+              <DropdownMenuItem
+                onClick={() => setTheme("dark")}
+                className="cursor-pointer"
+              >
                 Dark Mode
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("system")} className="cursor-pointer">
+              <DropdownMenuItem
+                onClick={() => setTheme("system")}
+                className="cursor-pointer"
+              >
                 System
               </DropdownMenuItem>
             </DropdownMenuSubContent>
@@ -73,10 +80,10 @@ export default function SettingsButton() {
         </DropdownMenuSub>
         <DropdownMenuSeparator />
         <Link href="/login">
-            <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
+          <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
             Logout
-            </DropdownMenuItem>
-        </Link> 
+          </DropdownMenuItem>
+        </Link>
       </DropdownMenuContent>
     </DropdownMenu>
   );

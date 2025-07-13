@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const GymSaga: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg
@@ -11,7 +11,7 @@ const GymSaga: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   >
     <mask
       id="mask0_65_2"
-      style={{ maskType: 'alpha' }} // JSX style uses camelCase property names
+      style={{ maskType: "alpha" }} // JSX style uses camelCase property names
       maskUnits="userSpaceOnUse"
       x="126"
       y="140"
@@ -35,20 +35,14 @@ const GymSaga: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     </g>
     <mask
       id="mask1_65_2"
-      style={{ maskType: 'alpha' }}
+      style={{ maskType: "alpha" }}
       maskUnits="userSpaceOnUse"
       x="126"
       y="63"
       width="130"
       height="52"
     >
-      <rect
-        x="126.445"
-        y="63"
-        width="129.555"
-        height="51.8218"
-        fill="black"
-      />
+      <rect x="126.445" y="63" width="129.555" height="51.8218" fill="black" />
     </mask>
     <g mask="url(#mask1_65_2)">
       <path
