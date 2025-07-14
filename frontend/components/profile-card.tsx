@@ -35,7 +35,7 @@ import Image from "next/image";
 interface ProfileCardProps {
   className?: string;
   isOwner: boolean;
-  username: string; // Add username prop
+  username: string;
 }
 
 const ProfileCard: React.FC<ProfileCardProps> = ({

@@ -1,5 +1,3 @@
-import { History, Bookmark, TrendingUp, Hash, CirclePlus } from "lucide-react";
-
 import {
   Sidebar,
   SidebarContent,
@@ -13,33 +11,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 
-const items = [
-  {
-    title: "Feed",
-    url: "/feed",
-    icon: CirclePlus,
-  },
-  {
-    title: "Trending",
-    url: "/trending",
-    icon: TrendingUp,
-  },
-  {
-    title: "Tags",
-    url: "/tags",
-    icon: Hash,
-  },
-  {
-    title: "History",
-    url: "/history",
-    icon: History,
-  },
-  {
-    title: "Bookmarks",
-    url: "/bookmarks",
-    icon: Bookmark,
-  },
-];
+import { sidebarRoutes } from "@/constants/routes";
 
 export function AppSidebar() {
   const { state } = useSidebar();
@@ -70,7 +42,7 @@ export function AppSidebar() {
           </div>
           <SidebarGroupContent>
             <SidebarMenu className="space-y-2">
-              {items.map((item) => (
+              {sidebarRoutes.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     asChild

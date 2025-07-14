@@ -1,15 +1,8 @@
-import type { Metadata } from "next";
-import NavigationBar from "@/components/navigation-bar";
-
-export const metadata: Metadata = {
-  title: "GymSaga Social Link",
-  description: "GymSaga Social Link Page",
-};
-
-export default function Profile() {
+export default function SocialLink() {
   return (
     <div className="w-full h-full items-center flex flex-col bg-background p-8 scrollbar-hide">
-      <NavigationBar />
+      <h1 className="text-2xl font-bold mb-4">Social Link</h1>
+      <p className="text-lg">This is the Social Link page.</p>
     </div>
   );
 }

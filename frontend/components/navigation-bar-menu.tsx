@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { navbarRoutes, routeBuilders } from "@/constants/routes";
 
 export default function NavbarMenu() {
   const [username, setUsername] = useState<string | null>(null);
@@ -20,29 +21,21 @@ export default function NavbarMenu() {
   return (
     <NavigationMenu>
       <NavigationMenuList>
+        {navbarRoutes.map((route) => (
+          <NavigationMenuItem key={route.title}>
+            <Link href={route.link} legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                {route.title}
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+        ))}
         <NavigationMenuItem>
-          <Link href="/" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Home
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link href="/map" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Map
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link href="/social-link" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Social Link
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link href={`/${username}`} legacyBehavior passHref>
+          <Link
+            href={username ? routeBuilders.PROFILE(username) : "#"}
+            legacyBehavior
+            passHref
+          >
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Profile
             </NavigationMenuLink>
