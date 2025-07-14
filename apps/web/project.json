@@ -1,0 +1,28 @@
+{
+  "name": "web",
+  "projectType": "application",
+  "root": "apps/web",
+  "sourceRoot": "apps/web",
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "options": {
+        "outputPath": "dist/apps/web"
+      }
+    },
+    "serve": {
+        "executor": "@nx/next:server",
+        "options": {
+        "buildTarget": "web:build",
+        "dev": true,
+        "port": 3000
+        }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["apps/web/**/*.{js,jsx,ts,tsx}"]
+      }
+    }
+  }
+}

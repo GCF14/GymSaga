@@ -1,24 +1,38 @@
 {
+  "name": "gymsaga-monorepo",
+  "version": "1.0.0",
   "scripts": {
     "lint": "eslint . --ext .js,.ts,.tsx --fix",
     "format": "prettier --write .",
     "prepare": "husky",
-    "lint:frontend": "npm --prefix frontend run lint:fix"
+    "lint:frontend": "npm --prefix apps/web run lint:fix",
+    "web": "nx serve web",
+    "api"    : "nx serve backend",      
+    "dev"    : "concurrently \"nx serve backend\" \"nx serve web\""
   },
   "dependencies": {
     "date-fns": "^4.1.0",
-    "mapbox-gl": "^3.9.1"
+    "mapbox-gl": "^3.9.1",
+    "next": "~15.2.4",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
   },
   "devDependencies": {
+    "@nx/eslint": "21.2.3",
+    "@nx/next": "^21.2.3",
     "eslint": "^9.31.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.5.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
+    "nx": "21.2.3",
     "prettier": "^3.6.2"
   },
   "lint-staged": {
-    "frontend/**/*.{js,jsx,ts,tsx}": [
+    "apps/web/**/*.{js,jsx,ts,tsx}": [
+      "prettier --write"
+    ],
+    "apps/backend/**/*.{js,ts}": [
       "prettier --write"
     ]
   }
