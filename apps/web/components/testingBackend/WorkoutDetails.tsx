@@ -1,7 +1,8 @@
-import { Workout } from "@/types/workout";
-import { useWorkoutsContext } from "@/hooks/useWorkoutsContext";
-import { formatDistanceToNow } from "date-fns/formatDistanceToNow";
-import { useAuthContext } from "@/hooks/useAuthContext";
+import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
+
+import { useAuthContext } from '@/hooks/useAuthContext';
+import { useWorkoutsContext } from '@/hooks/useWorkoutsContext';
+import { Workout } from '@/types/workout';
 
 const port = process.env.NEXT_PUBLIC_PORT;
 
@@ -14,18 +15,15 @@ const WorkoutDetails = ({ workout }: { workout: Workout }) => {
       return;
     }
 
-    const response = await fetch(
-      `http://localhost:${port}/api/workouts/${workout._id}`,
-      {
-        method: "DELETE",
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`http://localhost:${port}/api/workouts/${workout._id}`, {
+      method: 'DELETE',
+      credentials: 'include',
+    });
 
     const json = await response.json();
 
     if (response.ok) {
-      dispatch({ type: "DELETE_WORKOUT", payload: json });
+      dispatch({ type: 'DELETE_WORKOUT', payload: json });
     }
   };
 
@@ -40,9 +38,7 @@ const WorkoutDetails = ({ workout }: { workout: Workout }) => {
         <strong>Reps: </strong>
         {workout.reps}
       </p>
-      <p>
-        {formatDistanceToNow(new Date(workout.createdAt), { addSuffix: true })}
-      </p>
+      <p>{formatDistanceToNow(new Date(workout.createdAt), { addSuffix: true })}</p>
       <span className="material-symbols-outlined" onClick={() => handleClick()}>
         delete
       </span>

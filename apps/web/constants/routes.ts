@@ -1,41 +1,41 @@
-import { History, Bookmark, TrendingUp, Hash, CirclePlus } from "lucide-react";
+import { History, Bookmark, TrendingUp, Hash, CirclePlus } from 'lucide-react';
 
 export const routes = {
-  HOME: "/",
-  MAP: "/map",
-  SOCIAL_LINK: "/social-link",
-  LOGIN: "/login",
-  FEED: "/feed",
-  HISTORY: "/history",
-  TAGS: "/tags",
-  TRENDING: "/trending",
-  BOOKMARKS: "/bookmarks",
-  SETTINGS: "/settings",
+  HOME: '/',
+  MAP: '/map',
+  SOCIAL_LINK: '/social-link',
+  LOGIN: '/login',
+  FEED: '/feed',
+  HISTORY: '/history',
+  TAGS: '/tags',
+  TRENDING: '/trending',
+  BOOKMARKS: '/bookmarks',
+  SETTINGS: '/settings',
 } as const;
 
 export const sidebarRoutes = [
   {
-    title: "Feed",
+    title: 'Feed',
     url: routes.FEED,
     icon: CirclePlus,
   },
   {
-    title: "Trending",
+    title: 'Trending',
     url: routes.TRENDING,
     icon: TrendingUp,
   },
   {
-    title: "Tags",
+    title: 'Tags',
     url: routes.TAGS,
     icon: Hash,
   },
   {
-    title: "History",
+    title: 'History',
     url: routes.HISTORY,
     icon: History,
   },
   {
-    title: "Bookmarks",
+    title: 'Bookmarks',
     url: routes.BOOKMARKS,
     icon: Bookmark,
   },
@@ -43,15 +43,15 @@ export const sidebarRoutes = [
 
 export const navbarRoutes = [
   {
-    title: "Home",
+    title: 'Home',
     link: routes.HOME,
   },
   {
-    title: "Map",
+    title: 'Map',
     link: routes.MAP,
   },
   {
-    title: "Social Link",
+    title: 'Social Link',
     link: routes.SOCIAL_LINK,
   },
 ] as const;

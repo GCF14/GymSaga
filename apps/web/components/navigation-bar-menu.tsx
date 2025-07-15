@@ -1,4 +1,7 @@
-"use client";
+'use client';
+
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 import {
   NavigationMenu,
@@ -6,16 +9,14 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { navbarRoutes, routeBuilders } from "@/constants/routes";
+} from '@/components/ui/navigation-menu';
+import { navbarRoutes, routeBuilders } from '@/constants/routes';
 
 export default function NavbarMenu() {
   const [username, setUsername] = useState<string | null>(null);
 
   useEffect(() => {
-    setUsername(localStorage.getItem("username"));
+    setUsername(localStorage.getItem('username'));
   }, []);
 
   return (
@@ -23,7 +24,7 @@ export default function NavbarMenu() {
       <NavigationMenuList>
         {navbarRoutes.map((route) => (
           <NavigationMenuItem key={route.title}>
-            <Link href={route.link} legacyBehavior passHref>
+            <Link legacyBehavior passHref href={route.link}>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 {route.title}
               </NavigationMenuLink>
@@ -31,11 +32,7 @@ export default function NavbarMenu() {
           </NavigationMenuItem>
         ))}
         <NavigationMenuItem>
-          <Link
-            href={username ? routeBuilders.PROFILE(username) : "#"}
-            legacyBehavior
-            passHref
-          >
+          <Link legacyBehavior passHref href={username ? routeBuilders.PROFILE(username) : '#'}>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Profile
             </NavigationMenuLink>

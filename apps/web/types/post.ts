@@ -8,7 +8,7 @@ export interface Post {
   _id: string;
   username: string;
   content: {
-    type: "text" | "image" | "video";
+    type: 'text' | 'image' | 'video';
     data?: string;
     file?: {
       data: Buffer;
@@ -29,7 +29,7 @@ export interface Post {
 export interface PostCardProps {
   username: string;
   content: {
-    type: "text" | "image" | "video";
+    type: 'text' | 'image' | 'video';
     data?: string;
     file?: {
       data: Buffer;

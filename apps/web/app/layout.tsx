@@ -1,34 +1,35 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
-import { WorkoutsContextProvider } from "@/context/WorkoutsContext";
-import { AuthContextProvider } from "@/context/AuthContext";
-import { Toaster } from "@/components/ui/sonner";
-import { ConditionalLayout } from "@/components/conditional-layout";
+import type { Metadata } from 'next';
+import localFont from 'next/font/local';
+
+import './globals.css';
+import { ConditionalLayout } from '@/components/conditional-layout';
+import { ThemeProvider } from '@/components/theme-provider';
+import { Toaster } from '@/components/ui/sonner';
+import { AuthContextProvider } from '@/context/AuthContext';
+import { WorkoutsContextProvider } from '@/context/WorkoutsContext';
 
 // Using local fonts as originally intended
 const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  display: "swap",
-  weight: "100 900",
+  src: './fonts/GeistVF.woff',
+  variable: '--font-geist-sans',
+  display: 'swap',
+  weight: '100 900',
 });
 
 const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  display: "swap",
-  weight: "100 900",
+  src: './fonts/GeistMonoVF.woff',
+  variable: '--font-geist-mono',
+  display: 'swap',
+  weight: '100 900',
 });
 
 export const metadata: Metadata = {
-  title: "GymSaga",
-  description: "GymSaga",
+  title: 'GymSaga',
+  description: 'GymSaga',
   // Static approach for icons
   icons: [
-    { url: "/GymSagaDark.svg", media: "(prefers-color-scheme: light)" },
-    { url: "/GymSagaLight.svg", media: "(prefers-color-scheme: dark)" },
+    { url: '/GymSagaDark.svg', media: '(prefers-color-scheme: light)' },
+    { url: '/GymSagaLight.svg', media: '(prefers-color-scheme: dark)' },
   ],
 };
 
@@ -38,16 +39,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html suppressHydrationWarning lang="en">
       <head>
         {/* Put stylesheets in the head rather than body */}
+        <link href="https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css" rel="stylesheet" />
         <link
-          rel="stylesheet"
-          href="https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css"
-        />
-        <link
-          rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+          rel="stylesheet"
         />
         <style
           dangerouslySetInnerHTML={{
@@ -100,18 +98,16 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider
+          disableTransitionOnChange
+          enableSystem
           attribute="class"
           defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
         >
           <AuthContextProvider>
             <WorkoutsContextProvider>
-              <div className="flex flex-col min-h-screen max-w-full overflow-x-hidden">
+              <div className="flex min-h-screen max-w-full flex-col overflow-x-hidden">
                 <ConditionalLayout>{children}</ConditionalLayout>
               </div>
               <Toaster />

@@ -1,34 +1,31 @@
-"use client";
+'use client';
 
-import React, { forwardRef, useRef } from "react";
+import Image from 'next/image';
+import React, { forwardRef, useRef } from 'react';
 
-import { cn } from "@/lib/utils";
-import { AnimatedBeam } from "@/components/magicui/animated-beam";
-import ShadcnIcons from "@/public/shadcn";
-import GymSaga from "@/public/GymSaga";
-import Image from "next/image";
-import Nodejs from "@/public/Nodejs";
-import MongoDB from "@/public/MongoDB";
-import Express from "@/public/express";
+import { AnimatedBeam } from '@/components/magicui/animated-beam';
+import { cn } from '@/lib/utils';
+import GymSaga from '@/public/GymSaga';
+import MongoDB from '@/public/MongoDB';
+import Nodejs from '@/public/Nodejs';
+import Express from '@/public/express';
+import ShadcnIcons from '@/public/shadcn';
 
-const Circle = forwardRef<
-  HTMLDivElement,
-  { className?: string; children?: React.ReactNode }
->(({ className, children }, ref) => {
-  return (
+const Circle = forwardRef<HTMLDivElement, { className?: string; children?: React.ReactNode }>(
+  ({ className, children }, ref) => (
     <div
       ref={ref}
       className={cn(
-        "z-10 flex size-12 items-center justify-center rounded-full border-2 bg-white p-3 shadow-xs",
-        className
+        'z-10 flex size-12 items-center justify-center rounded-full border-2 bg-white p-3 shadow-xs',
+        className,
       )}
     >
       {children}
     </div>
-  );
-});
+  ),
+);
 
-Circle.displayName = "Circle";
+Circle.displayName = 'Circle';
 
 export function AnimatedIconBeam() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -42,44 +39,35 @@ export function AnimatedIconBeam() {
 
   return (
     <div
-      className="relative flex p-8 w-full items-center justify-center overflow-hidden bg-background"
       ref={containerRef}
+      className="bg-background relative flex w-full items-center justify-center overflow-hidden p-8"
     >
       <div className="flex size-full max-h-[200px] w-4/5 flex-col items-stretch justify-between gap-10">
         <div className="flex flex-row items-center justify-between">
           <div className="flex flex-row items-center justify-between">
-            <span className="mr-2 text-xl hidden font-bold lg:inline-block">
-              MagicUI
-            </span>
+            <span className="mr-2 hidden text-xl font-bold lg:inline-block">MagicUI</span>
             <Circle ref={div1Ref}>
-              <Image src="/MagicUI.png" width="24" height="24" alt="MagicUI" />
+              <Image alt="MagicUI" height="24" src="/MagicUI.png" width="24" />
             </Circle>
           </div>
           <div className="flex flex-row items-center justify-between">
             <Circle ref={div5Ref}>
               <ShadcnIcons.logo />
             </Circle>
-            <span className="ml-2 text-xl hidden font-bold lg:inline-block">
-              shadcn/ui
-            </span>
+            <span className="ml-2 hidden text-xl font-bold lg:inline-block">shadcn/ui</span>
           </div>
         </div>
         <div className="flex flex-row items-center justify-between">
           <div className="flex flex-row items-center justify-between">
-            <span className="mr-2 text-xl hidden font-bold lg:inline-block">
-              Next.js
-            </span>
+            <span className="mr-2 hidden text-xl font-bold lg:inline-block">Next.js</span>
             <Circle ref={div2Ref}>
               <svg
                 height="22"
                 role="img"
-                style={{ width: "auto", overflow: "visible" }}
+                style={{ width: 'auto', overflow: 'visible' }}
                 viewBox="0 0 74 74"
               >
-                <path
-                  d="M37.5896 0.25L74.5396 64.25H0.639648L37.5896 0.25Z"
-                  fill="black"
-                ></path>
+                <path d="M37.5896 0.25L74.5396 64.25H0.639648L37.5896 0.25Z" fill="black"></path>
               </svg>
             </Circle>
           </div>
@@ -90,71 +78,56 @@ export function AnimatedIconBeam() {
             <Circle ref={div6Ref}>
               <Nodejs />
             </Circle>
-            <span className="ml-2 text-xl hidden font-bold lg:inline-block">
-              Node.js
-            </span>
+            <span className="ml-2 hidden text-xl font-bold lg:inline-block">Node.js</span>
           </div>
         </div>
         <div className="flex flex-row items-center justify-between">
           <div className="flex flex-row items-center justify-between">
-            <span className="mr-2 text-xl hidden font-bold lg:inline-block">
-              MongoDB
-            </span>
+            <span className="mr-2 hidden text-xl font-bold lg:inline-block">MongoDB</span>
             <Circle ref={div3Ref}>
-              <MongoDB className="w-8 h-8" />
+              <MongoDB className="h-8 w-8" />
             </Circle>
           </div>
           <div className="flex flex-row items-center justify-between">
             <Circle ref={div7Ref}>
-              <Express className="w-8 h-8" />
+              <Express className="h-8 w-8" />
             </Circle>
-            <span className="ml-2 text-xl hidden font-bold lg:inline-block">
-              Express.js
-            </span>
+            <span className="ml-2 hidden text-xl font-bold lg:inline-block">Express.js</span>
           </div>
         </div>
       </div>
 
       <AnimatedBeam
         containerRef={containerRef}
+        curvature={-75}
+        endYOffset={-10}
         fromRef={div1Ref}
         toRef={div4Ref}
-        curvature={-75}
-        endYOffset={-10}
       />
+      <AnimatedBeam containerRef={containerRef} fromRef={div2Ref} toRef={div4Ref} />
       <AnimatedBeam
         containerRef={containerRef}
-        fromRef={div2Ref}
-        toRef={div4Ref}
-      />
-      <AnimatedBeam
-        containerRef={containerRef}
+        curvature={75}
+        endYOffset={10}
         fromRef={div3Ref}
         toRef={div4Ref}
-        curvature={75}
-        endYOffset={10}
       />
       <AnimatedBeam
+        reverse
         containerRef={containerRef}
-        fromRef={div5Ref}
-        toRef={div4Ref}
         curvature={-75}
         endYOffset={-10}
-        reverse
-      />
-      <AnimatedBeam
-        containerRef={containerRef}
-        fromRef={div6Ref}
+        fromRef={div5Ref}
         toRef={div4Ref}
-        reverse
       />
+      <AnimatedBeam reverse containerRef={containerRef} fromRef={div6Ref} toRef={div4Ref} />
       <AnimatedBeam
+        reverse
         containerRef={containerRef}
-        fromRef={div7Ref}
-        toRef={div4Ref}
         curvature={75}
         endYOffset={10}
-        reverse
+        fromRef={div7Ref}
+        toRef={div4Ref}
       />
     </div>
   );
@@ -163,10 +136,10 @@ export function AnimatedIconBeam() {
 const Icons = {
   notion: () => (
     <svg
-      width="100"
+      fill="none"
       height="100"
       viewBox="0 0 100 100"
-      fill="none"
+      width="100"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
@@ -174,30 +147,20 @@ const Icons = {
         fill="#ffffff"
       />
       <path
+        clipRule="evenodd"
         d="M61.35 0.227l-55.333 4.087C1.553 4.7 0 7.617 0 11.113v60.66c0 2.723 0.967 5.053 3.3 8.167l13.007 16.913c2.137 2.723 4.08 3.307 8.16 3.113l64.257 -3.89c5.433 -0.387 6.99 -2.917 6.99 -7.193V20.64c0 -2.21 -0.873 -2.847 -3.443 -4.733L74.167 3.143c-4.273 -3.107 -6.02 -3.5 -12.817 -2.917zM25.92 19.523c-5.247 0.353 -6.437 0.433 -9.417 -1.99L8.927 11.507c-0.77 -0.78 -0.383 -1.753 1.557 -1.947l53.193 -3.887c4.467 -0.39 6.793 1.167 8.54 2.527l9.123 6.61c0.39 0.197 1.36 1.36 0.193 1.36l-54.933 3.307 -0.68 0.047zM19.803 88.3V30.367c0 -2.53 0.777 -3.697 3.103 -3.893L86 22.78c2.14 -0.193 3.107 1.167 3.107 3.693v57.547c0 2.53 -0.39 4.67 -3.883 4.863l-60.377 3.5c-3.493 0.193 -5.043 -0.97 -5.043 -4.083zm59.6 -54.827c0.387 1.75 0 3.5 -1.75 3.7l-2.91 0.577v42.773c-2.527 1.36 -4.853 2.137 -6.797 2.137 -3.107 0 -3.883 -0.973 -6.21 -3.887l-19.03 -29.94v28.967l6.02 1.363s0 3.5 -4.857 3.5l-13.39 0.777c-0.39 -0.78 0 -2.723 1.357 -3.11l3.497 -0.97v-38.3L30.48 40.667c-0.39 -1.75 0.58 -4.277 3.3 -4.473l14.367 -0.967 19.8 30.327v-26.83l-5.047 -0.58c-0.39 -2.143 1.163 -3.7 3.103 -3.89l13.4 -0.78z"
         fill="#000000"
         fillRule="evenodd"
-        clipRule="evenodd"
       />
     </svg>
   ),
   openai: () => (
-    <svg
-      width="100"
-      height="100"
-      viewBox="0 0 24 24"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg height="100" viewBox="0 0 24 24" width="100" xmlns="http://www.w3.org/2000/svg">
       <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z" />
     </svg>
   ),
   googleDrive: () => (
-    <svg
-      width="100"
-      height="100"
-      viewBox="0 0 87.3 78"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg height="100" viewBox="0 0 87.3 78" width="100" xmlns="http://www.w3.org/2000/svg">
       <path
         d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z"
         fill="#0066da"
@@ -225,31 +188,26 @@ const Icons = {
     </svg>
   ),
   whatsapp: () => (
-    <svg
-      width="100"
-      height="100"
-      viewBox="0 0 175.216 175.552"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg height="100" viewBox="0 0 175.216 175.552" width="100" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient
+          gradientUnits="userSpaceOnUse"
           id="b"
           x1="85.915"
           x2="86.535"
           y1="32.567"
           y2="137.092"
-          gradientUnits="userSpaceOnUse"
         >
           <stop offset="0" stopColor="#57d163" />
           <stop offset="1" stopColor="#23b33a" />
         </linearGradient>
         <filter
+          colorInterpolationFilters="sRGB"
+          height="1.114"
           id="a"
           width="1.115"
-          height="1.114"
           x="-.057"
           y="-.057"
-          colorInterpolationFilters="sRGB"
         >
           <feGaussianBlur stdDeviation="3.531" />
         </filter>
@@ -279,12 +237,7 @@ const Icons = {
     </svg>
   ),
   googleDocs: () => (
-    <svg
-      width="47px"
-      height="65px"
-      viewBox="0 0 47 65"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg height="65px" viewBox="0 0 47 65" width="47px" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <path
           d="M29.375,0 L4.40625,0 C1.9828125,0 0,1.99431818 0,4.43181818 L0,60.5681818 C0,63.0056818 1.9828125,65 4.40625,65 L42.59375,65 C45.0171875,65 47,63.0056818 47,60.5681818 L47,17.7272727 L29.375,0 Z"
@@ -295,14 +248,14 @@ const Icons = {
           id="path-3"
         />
         <linearGradient
-          x1="50.0053945%"
-          y1="8.58610612%"
-          x2="50.0053945%"
-          y2="100.013939%"
           id="linearGradient-5"
+          x1="50.0053945%"
+          x2="50.0053945%"
+          y1="8.58610612%"
+          y2="100.013939%"
         >
-          <stop stopColor="#1A237E" stopOpacity="0.2" offset="0%" />
-          <stop stopColor="#1A237E" stopOpacity="0.02" offset="100%" />
+          <stop offset="0%" stopColor="#1A237E" stopOpacity="0.2" />
+          <stop offset="100%" stopColor="#1A237E" stopOpacity="0.02" />
         </linearGradient>
         <path
           d="M29.375,0 L4.40625,0 C1.9828125,0 0,1.99431818 0,4.43181818 L0,60.5681818 C0,63.0056818 1.9828125,65 4.40625,65 L42.59375,65 C45.0171875,65 47,63.0056818 47,60.5681818 L47,17.7272727 L29.375,0 Z"
@@ -329,67 +282,61 @@ const Icons = {
           cy="2.71744318%"
           fx="3.16804688%"
           fy="2.71744318%"
-          r="161.248516%"
           gradientTransform="translate(0.031680,0.027174),scale(1.000000,0.723077),translate(-0.031680,-0.027174)"
           id="radialGradient-16"
+          r="161.248516%"
         >
-          <stop stopColor="#FFFFFF" stopOpacity="0.1" offset="0%" />
-          <stop stopColor="#FFFFFF" stopOpacity="0" offset="100%" />
+          <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.1" />
+          <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
         </radialGradient>
       </defs>
-      <g
-        id="Page-1"
-        stroke="none"
-        strokeWidth="1"
-        fill="none"
-        fillRule="evenodd"
-      >
+      <g fill="none" fillRule="evenodd" id="Page-1" stroke="none" strokeWidth="1">
         <g transform="translate(-451.000000, -463.000000)">
           <g id="Hero" transform="translate(0.000000, 63.000000)">
             <g id="Personal" transform="translate(277.000000, 309.000000)">
               <g id="Docs-icon" transform="translate(174.000000, 91.000000)">
                 <g id="Group">
                   <g id="Clipped">
-                    <mask id="mask-2" fill="white">
+                    <mask fill="white" id="mask-2">
                       <use xlinkHref="#path-1" />
                     </mask>
                     <g id="SVGID_1_" />
                     <path
                       d="M29.375,0 L4.40625,0 C1.9828125,0 0,1.99431818 0,4.43181818 L0,60.5681818 C0,63.0056818 1.9828125,65 4.40625,65 L42.59375,65 C45.0171875,65 47,63.0056818 47,60.5681818 L47,17.7272727 L36.71875,10.3409091 L29.375,0 Z"
-                      id="Path"
                       fill="#4285F4"
                       fillRule="nonzero"
+                      id="Path"
                       mask="url(#mask-2)"
                     />
                   </g>
                   <g id="Clipped">
-                    <mask id="mask-4" fill="white">
+                    <mask fill="white" id="mask-4">
                       <use xlinkHref="#path-3" />
                     </mask>
                     <g id="SVGID_1_" />
                     <polygon
-                      id="Path"
                       fill="url(#linearGradient-5)"
                       fillRule="nonzero"
+                      id="Path"
                       mask="url(#mask-4)"
                       points="30.6638281 16.4309659 47 32.8582386 47 17.7272727"
                     ></polygon>
                   </g>
                   <g id="Clipped">
-                    <mask id="mask-7" fill="white">
+                    <mask fill="white" id="mask-7">
                       <use xlinkHref="#path-6" />
                     </mask>
                     <g id="SVGID_1_" />
                     <path
                       d="M11.75,47.2727273 L35.25,47.2727273 L35.25,44.3181818 L11.75,44.3181818 L11.75,47.2727273 Z M11.75,53.1818182 L29.375,53.1818182 L29.375,50.2272727 L11.75,50.2272727 L11.75,53.1818182 Z M11.75,32.5 L11.75,35.4545455 L35.25,35.4545455 L35.25,32.5 L11.75,32.5 Z M11.75,41.3636364 L35.25,41.3636364 L35.25,38.4090909 L11.75,38.4090909 L11.75,41.3636364 Z"
-                      id="Shape"
                       fill="#F1F1F1"
                       fillRule="nonzero"
+                      id="Shape"
                       mask="url(#mask-7)"
                     />
                   </g>
                   <g id="Clipped">
-                    <mask id="mask-9" fill="white">
+                    <mask fill="white" id="mask-9">
                       <use xlinkHref="#path-8" />
                     </mask>
                     <g id="SVGID_1_" />
@@ -397,61 +344,61 @@ const Icons = {
                       <g transform="translate(26.437500, -2.954545)">
                         <path
                           d="M2.9375,2.95454545 L2.9375,16.25 C2.9375,18.6985795 4.90929688,20.6818182 7.34375,20.6818182 L20.5625,20.6818182 L2.9375,2.95454545 Z"
-                          id="Path"
                           fill="#A1C2FA"
                           fillRule="nonzero"
+                          id="Path"
                         />
                       </g>
                     </g>
                   </g>
                   <g id="Clipped">
-                    <mask id="mask-11" fill="white">
+                    <mask fill="white" id="mask-11">
                       <use xlinkHref="#path-10" />
                     </mask>
                     <g id="SVGID_1_" />
                     <path
                       d="M4.40625,0 C1.9828125,0 0,1.99431818 0,4.43181818 L0,4.80113636 C0,2.36363636 1.9828125,0.369318182 4.40625,0.369318182 L29.375,0.369318182 L29.375,0 L4.40625,0 Z"
-                      id="Path"
-                      fillOpacity="0.2"
                       fill="#FFFFFF"
+                      fillOpacity="0.2"
                       fillRule="nonzero"
+                      id="Path"
                       mask="url(#mask-11)"
                     />
                   </g>
                   <g id="Clipped">
-                    <mask id="mask-13" fill="white">
+                    <mask fill="white" id="mask-13">
                       <use xlinkHref="#path-12" />
                     </mask>
                     <g id="SVGID_1_" />
                     <path
                       d="M42.59375,64.6306818 L4.40625,64.6306818 C1.9828125,64.6306818 0,62.6363636 0,60.1988636 L0,60.5681818 C0,63.0056818 1.9828125,65 4.40625,65 L42.59375,65 C45.0171875,65 47,63.0056818 47,60.5681818 L47,60.1988636 C47,62.6363636 45.0171875,64.6306818 42.59375,64.6306818 Z"
-                      id="Path"
-                      fillOpacity="0.2"
                       fill="#1A237E"
+                      fillOpacity="0.2"
                       fillRule="nonzero"
+                      id="Path"
                       mask="url(#mask-13)"
                     />
                   </g>
                   <g id="Clipped">
-                    <mask id="mask-15" fill="white">
+                    <mask fill="white" id="mask-15">
                       <use xlinkHref="#path-14" />
                     </mask>
                     <g id="SVGID_1_" />
                     <path
                       d="M33.78125,17.7272727 C31.3467969,17.7272727 29.375,15.7440341 29.375,13.2954545 L29.375,13.6647727 C29.375,16.1133523 31.3467969,18.0965909 33.78125,18.0965909 L47,18.0965909 L47,17.7272727 L33.78125,17.7272727 Z"
-                      id="Path"
-                      fillOpacity="0.1"
                       fill="#1A237E"
+                      fillOpacity="0.1"
                       fillRule="nonzero"
+                      id="Path"
                       mask="url(#mask-15)"
                     />
                   </g>
                 </g>
                 <path
                   d="M29.375,0 L4.40625,0 C1.9828125,0 0,1.99431818 0,4.43181818 L0,60.5681818 C0,63.0056818 1.9828125,65 4.40625,65 L42.59375,65 C45.0171875,65 47,63.0056818 47,60.5681818 L47,17.7272727 L29.375,0 Z"
-                  id="Path"
                   fill="url(#radialGradient-16)"
                   fillRule="nonzero"
+                  id="Path"
                 />
               </g>
             </g>
@@ -462,10 +409,10 @@ const Icons = {
   ),
   zapier: () => (
     <svg
-      width="105"
+      fill="none"
       height="28"
       viewBox="0 0 244 66"
-      fill="none"
+      width="105"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
@@ -476,10 +423,7 @@ const Icons = {
         d="M100.487 14.8297C96.4797 14.8297 93.2136 15.434 90.6892 16.6429C88.3376 17.6963 86.3568 19.4321 85.0036 21.6249C83.7091 23.8321 82.8962 26.2883 82.6184 28.832L93.1602 30.3135C93.5415 28.0674 94.3042 26.4754 95.4482 25.5373C96.7486 24.5562 98.3511 24.0605 99.9783 24.136C102.118 24.136 103.67 24.7079 104.634 25.8519C105.59 26.9959 106.076 28.5803 106.076 30.6681V31.7091H95.9401C90.7807 31.7091 87.0742 32.8531 84.8206 35.1411C82.5669 37.429 81.442 40.4492 81.4458 44.2014C81.4458 48.0452 82.5707 50.9052 84.8206 52.7813C87.0704 54.6574 89.8999 55.5897 93.3089 55.5783C97.5379 55.5783 100.791 54.1235 103.067 51.214C104.412 49.426 105.372 47.3793 105.887 45.2024H106.27L107.723 54.7546H117.275V30.5651C117.275 25.5659 115.958 21.6936 113.323 18.948C110.688 16.2024 106.409 14.8297 100.487 14.8297ZM103.828 44.6475C102.312 45.9116 100.327 46.5408 97.8562 46.5408C95.8199 46.5408 94.4052 46.1843 93.6121 45.4712C93.2256 45.1338 92.9182 44.7155 92.7116 44.246C92.505 43.7764 92.4043 43.2671 92.4166 42.7543C92.3941 42.2706 92.4702 41.7874 92.6403 41.3341C92.8104 40.8808 93.071 40.4668 93.4062 40.1174C93.7687 39.7774 94.1964 39.5145 94.6633 39.3444C95.1303 39.1743 95.6269 39.1006 96.1231 39.1278H106.093V39.7856C106.113 40.7154 105.919 41.6374 105.527 42.4804C105.134 43.3234 104.553 44.0649 103.828 44.6475Z"
         fill="#201515"
       />
-      <path
-        d="M175.035 15.7391H163.75V54.7833H175.035V15.7391Z"
-        fill="#201515"
-      />
+      <path d="M175.035 15.7391H163.75V54.7833H175.035V15.7391Z" fill="#201515" />
       <path
         d="M241.666 15.7391C238.478 15.7391 235.965 16.864 234.127 19.1139C232.808 20.7307 231.805 23.1197 231.119 26.2809H230.787L229.311 15.7391H219.673V54.7775H230.959V34.7578C230.959 32.2335 231.55 30.2982 232.732 28.9521C233.914 27.606 236.095 26.933 239.275 26.933H243.559V15.7391H241.666Z"
         fill="#201515"
@@ -500,19 +444,14 @@ const Icons = {
     </svg>
   ),
   messenger: () => (
-    <svg
-      width="100"
-      height="100"
-      viewBox="0 0 48 48"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg height="100" viewBox="0 0 48 48" width="100" xmlns="http://www.w3.org/2000/svg">
       <radialGradient
-        id="8O3wK6b5ASW2Wn6hRCB5xa_YFbzdUk7Q3F8_gr1"
         cx="11.087"
         cy="7.022"
-        r="47.612"
         gradientTransform="matrix(1 0 0 -1 0 50)"
         gradientUnits="userSpaceOnUse"
+        id="8O3wK6b5ASW2Wn6hRCB5xa_YFbzdUk7Q3F8_gr1"
+        r="47.612"
       >
         <stop offset="0" stopColor="#1292ff"></stop>
         <stop offset=".079" stopColor="#2982ff"></stop>
@@ -523,8 +462,8 @@ const Icons = {
         <stop offset=".946" stopColor="#ff6257"></stop>
       </radialGradient>
       <path
-        fill="url(#8O3wK6b5ASW2Wn6hRCB5xa_YFbzdUk7Q3F8_gr1)"
         d="M44,23.5C44,34.27,35.05,43,24,43c-1.651,0-3.25-0.194-4.784-0.564	c-0.465-0.112-0.951-0.069-1.379,0.145L13.46,44.77C12.33,45.335,11,44.513,11,43.249v-4.025c0-0.575-0.257-1.111-0.681-1.499	C6.425,34.165,4,29.11,4,23.5C4,12.73,12.95,4,24,4S44,12.73,44,23.5z"
+        fill="url(#8O3wK6b5ASW2Wn6hRCB5xa_YFbzdUk7Q3F8_gr1)"
       />
       <path
         d="M34.992,17.292c-0.428,0-0.843,0.142-1.2,0.411l-5.694,4.215	c-0.133,0.1-0.28,0.15-0.435,0.15c-0.15,0-0.291-0.047-0.41-0.136l-3.972-2.99c-0.808-0.601-1.76-0.918-2.757-0.918	c-1.576,0-3.025,0.791-3.876,2.116l-1.211,1.891l-4.12,6.695c-0.392,0.614-0.422,1.372-0.071,2.014	c0.358,0.654,1.034,1.06,1.764,1.06c0.428,0,0.843-0.142,1.2-0.411l5.694-4.215c0.133-0.1,0.28-0.15,0.435-0.15	c0.15,0,0.291,0.047,0.41,0.136l3.972,2.99c0.809,0.602,1.76,0.918,2.757,0.918c1.576,0,3.025-0.791,3.876-2.116l1.211-1.891	l4.12-6.695c0.392-0.614,0.422-1.372,0.071-2.014C36.398,17.698,35.722,17.292,34.992,17.292L34.992,17.292z"
@@ -535,8 +474,8 @@ const Icons = {
         opacity=".07"
       />
       <path
-        fill="#ffffff"
         d="M34.394,18.501l-5.7,4.22c-0.61,0.46-1.44,0.46-2.04,0.01L22.68,19.74	c-1.68-1.25-4.06-0.82-5.19,0.94l-1.21,1.89l-4.11,6.68c-0.6,0.94,0.55,2.01,1.44,1.34l5.7-4.22c0.61-0.46,1.44-0.46,2.04-0.01	l3.974,2.991c1.68,1.25,4.06,0.82,5.19-0.94l1.21-1.89l4.11-6.68C36.434,18.901,35.284,17.831,34.394,18.501z"
+        fill="#ffffff"
       />
     </svg>
   ),

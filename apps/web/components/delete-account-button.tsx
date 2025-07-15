@@ -1,3 +1,5 @@
+import { useRouter } from 'next/navigation';
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -8,12 +10,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { useDeleteAccount } from "@/hooks/useDeleteAccount";
-import { useAuthContext } from "@/hooks/useAuthContext";
-import { useRouter } from "next/navigation";
-import { Input } from "@/components/ui/input";
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { useAuthContext } from '@/hooks/useAuthContext';
+import { useDeleteAccount } from '@/hooks/useDeleteAccount';
 
 export default function DeleteAccountButton() {
   const { deleteAccount, isLoading, error } = useDeleteAccount();
@@ -25,14 +26,14 @@ export default function DeleteAccountButton() {
 
     if (success) {
       localStorage.clear();
-      router.push("/login");
+      router.push('/login');
     }
   };
 
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive" className="mt-4">
+        <Button className="mt-4" variant="destructive">
           Delete my account
         </Button>
       </AlertDialogTrigger>
@@ -40,18 +41,17 @@ export default function DeleteAccountButton() {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers. Enter your password
-            to confirm.
+            This action cannot be undone. This will permanently delete your account and remove your
+            data from our servers. Enter your password to confirm.
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <Input type="password" placeholder="Password" />
+        <Input placeholder="Password" type="password" />
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
-            className="bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90"
-            onClick={handleContinueClick}
+            className="bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-xs"
             disabled={isLoading}
+            onClick={handleContinueClick}
           >
             Continue
           </AlertDialogAction>

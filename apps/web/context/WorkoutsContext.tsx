@@ -1,6 +1,7 @@
-"use client";
-import { createContext, useReducer, ReactNode, Dispatch } from "react";
-import { WorkoutsAction, WorkoutsState } from "@/types/workout"; // Ensure to import from the correct path
+'use client';
+import { createContext, useReducer, ReactNode, Dispatch } from 'react';
+
+import { WorkoutsAction, WorkoutsState } from '@/types/workout'; // Ensure to import from the correct path
 
 // Define the initial state of the workouts context
 const initialState: WorkoutsState = {
@@ -8,22 +9,17 @@ const initialState: WorkoutsState = {
 };
 
 // Reducer function
-const workoutsReducer = (
-  state: WorkoutsState,
-  action: WorkoutsAction
-): WorkoutsState => {
+const workoutsReducer = (state: WorkoutsState, action: WorkoutsAction): WorkoutsState => {
   switch (action.type) {
-    case "SET_WORKOUTS":
+    case 'SET_WORKOUTS':
       return {
         workouts: action.payload, // payload is expected to be of type Workout[]
       };
-    case "CREATE_WORKOUT":
+    case 'CREATE_WORKOUT':
       return {
-        workouts: state.workouts
-          ? [action.payload, ...state.workouts]
-          : [action.payload], // Handle case where workouts might be null
+        workouts: state.workouts ? [action.payload, ...state.workouts] : [action.payload], // Handle case where workouts might be null
       };
-    case "DELETE_WORKOUT":
+    case 'DELETE_WORKOUT':
       return {
         workouts: state.workouts
           ? state.workouts.filter((w) => w._id !== action.payload._id)
@@ -40,22 +36,16 @@ export interface WorkoutsContextValue extends WorkoutsState {
 }
 
 // Create the context with the correct type
-export const WorkoutsContext = createContext<WorkoutsContextValue | undefined>(
-  undefined
-);
+export const WorkoutsContext = createContext<WorkoutsContextValue | undefined>(undefined);
 
 interface WorkoutsContextProviderProps {
   children: ReactNode;
 }
 
-export const WorkoutsContextProvider = ({
-  children,
-}: WorkoutsContextProviderProps) => {
+export const WorkoutsContextProvider = ({ children }: WorkoutsContextProviderProps) => {
   const [state, dispatch] = useReducer(workoutsReducer, initialState);
 
   return (
-    <WorkoutsContext.Provider value={{ ...state, dispatch }}>
-      {children}
-    </WorkoutsContext.Provider>
+    <WorkoutsContext.Provider value={{ ...state, dispatch }}>{children}</WorkoutsContext.Provider>
   );
 };

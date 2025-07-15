@@ -1,6 +1,7 @@
-import EditMealDialog from "@/components/edit-meal-dialog";
-import EditWorkoutDialog from "./edit-workout-dialog";
-import EditProfileDialog from "./edit-profile-dialog";
+import EditProfileDialog from './edit-profile-dialog';
+import EditWorkoutDialog from './edit-workout-dialog';
+
+import EditMealDialog from '@/components/edit-meal-dialog';
 
 interface EditButtonProps {
   type: string;
@@ -10,11 +11,11 @@ interface EditButtonProps {
 export default function EditButton({ type, className }: EditButtonProps) {
   return (
     <div className={`flex flex-row gap-4 ${className}`}>
-      {type === "meal" ? (
+      {type === 'meal' ? (
         <EditMealDialog />
-      ) : type === "workout" ? (
+      ) : type === 'workout' ? (
         <EditWorkoutDialog />
-      ) : type === "profile" ? (
+      ) : type === 'profile' ? (
         <EditProfileDialog />
       ) : null}
     </div>

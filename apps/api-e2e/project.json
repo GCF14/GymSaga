@@ -11,7 +11,13 @@
         "jestConfig": "apps/api-e2e/jest.config.ts",
         "passWithNoTests": true
       },
-      "dependsOn": ["api:build", "api:serve"]
+      "dependsOn": ["api:build", "api:serve"],
+      "lint": {
+        "executor": "@nx/eslint:lint",
+        "options": {
+          "lintFilePatterns": ["apps/web/**/*.ts", "apps/web/**/*.tsx"]
+        }
+      }
     }
   }
 }

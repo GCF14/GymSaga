@@ -1,17 +1,15 @@
-import React, { useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { FilePreviewDialog } from "@/components/file-preview-dialog";
-import { toast } from "sonner";
+import React, { useRef, useState } from 'react';
+import { toast } from 'sonner';
+
+import { FilePreviewDialog } from '@/components/file-preview-dialog';
+import { Button } from '@/components/ui/button';
 
 interface AttachmentButtonProps {
   onFilesChange: (file: File[]) => void;
   maxFiles: number;
 }
 
-export default function AttachmentButton({
-  onFilesChange,
-  maxFiles,
-}: AttachmentButtonProps) {
+export default function AttachmentButton({ onFilesChange, maxFiles }: AttachmentButtonProps) {
   const [files, setFiles] = useState<File[]>([]);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -20,27 +18,25 @@ export default function AttachmentButton({
     if (event.target.files) {
       const newFiles = Array.from(event.target.files);
       if (maxFiles && files.length + newFiles.length > maxFiles) {
-        toast.error(
-          `Error: You can upload up to ${maxFiles} file${maxFiles > 1 ? "s" : ""}.`,
-          {
-            action: {
-              label: "Close",
-              onClick: () => toast.dismiss(),
-            },
-            style: {
-              color: "#ffffff",
-              borderColor: "#7f1d1d",
-              backgroundColor: "#7f1d1d",
-            },
-            actionButtonStyle: {
-              backgroundColor: "#7f1d1d",
-              borderColor: "#ffffff",
-              color: "#ffffff",
-              borderWidth: "1px",
-              borderStyle: "solid",
-            },
-          }
-        );
+        toast.error(`Error: You can upload up to ${maxFiles} file${maxFiles > 1 ? 's' : ''}.`, {
+          action: {
+            label: 'Close',
+            onClick: () => toast.dismiss(),
+          },
+          style: {
+            color: '#ffffff',
+            borderColor: '#7f1d1d',
+            backgroundColor: '#7f1d1d',
+          },
+          actionButtonStyle: {
+            backgroundColor: '#7f1d1d',
+            borderColor: '#ffffff',
+            color: '#ffffff',
+            borderWidth: '1px',
+            borderStyle: 'solid',
+          },
+        });
+
         return;
       }
       setFiles((prevFiles) => [...prevFiles, ...newFiles]);
@@ -61,19 +57,19 @@ export default function AttachmentButton({
   };
 
   const getFileIcon = (file: File) => {
-    const fileType = file.type.split("/")[0];
-    const fileSubtype = file.type.split("/")[1];
+    const fileType = file.type.split('/')[0];
+    const fileSubtype = file.type.split('/')[1];
 
-    if (fileType === "image" && fileSubtype === "gif") {
+    if (fileType === 'image' && fileSubtype === 'gif') {
       return <span className="material-symbols-rounded">gif_box</span>;
     }
 
     switch (fileType) {
-      case "image":
+      case 'image':
         return <span className="material-symbols-rounded">image</span>;
-      case "video":
+      case 'video':
         return <span className="material-symbols-rounded">movie</span>;
-      case "audio":
+      case 'audio':
         return <span className="material-symbols-rounded">music_note</span>;
       default:
         return <span className="material-symbols-rounded">description</span>;
@@ -81,47 +77,35 @@ export default function AttachmentButton({
   };
 
   return (
-    <div className="flex flex-row gap-2 items-start">
-      <Button
-        onClick={triggerFileInput}
-        variant="outline"
-        size="icon"
-        className="hover-button"
-      >
+    <div className="flex flex-row items-start gap-2">
+      <Button className="hover-button" size="icon" variant="outline" onClick={triggerFileInput}>
         <span className="material-symbols-rounded">attach_file</span>
       </Button>
       <input
-        type="file"
         ref={fileInputRef}
-        onChange={handleFileChange}
         multiple
-        className="hidden"
         aria-label="File upload"
+        className="hidden"
+        type="file"
+        onChange={handleFileChange}
       />
       {files.map((file, index) => (
-        <div key={index} className="relative group">
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => setSelectedFile(file)}
-          >
+        <div key={index} className="group relative">
+          <Button size="icon" variant="outline" onClick={() => setSelectedFile(file)}>
             {getFileIcon(file)}
           </Button>
           <Button
-            variant="destructive"
-            size="icon"
-            className="h-3 w-3 absolute -top-1 -right-1 rounded-full hidden group-hover:flex items-center justify-center"
-            onClick={() => handleRemoveFile(file)}
             aria-label={`Remove ${file.name}`}
+            className="absolute -top-1 -right-1 hidden h-3 w-3 items-center justify-center rounded-full group-hover:flex"
+            size="icon"
+            variant="destructive"
+            onClick={() => handleRemoveFile(file)}
           >
             <span className="material-symbols-rounded thin">cancel</span>
           </Button>
         </div>
       ))}
-      <FilePreviewDialog
-        file={selectedFile}
-        onClose={() => setSelectedFile(null)}
-      />
+      <FilePreviewDialog file={selectedFile} onClose={() => setSelectedFile(null)} />
     </div>
   );
 }

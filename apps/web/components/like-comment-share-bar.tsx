@@ -1,7 +1,8 @@
-import { Toggle } from "@/components/ui/toggle";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
+import { toast } from 'sonner';
+
+import { Button } from '@/components/ui/button';
+import { Toggle } from '@/components/ui/toggle';
 
 interface LikeCommentShareBarProps {
   postId: string;
@@ -27,7 +28,9 @@ export default function LikeCommentShareBar({
   const isLiked = Array.isArray(likedBy) && likedBy.includes(currentUsername);
 
   const handleLike = async () => {
-    if (isLoading) return;
+    if (isLoading) {
+      return;
+    }
 
     const wasLiked = isLiked;
     const newLikeCount = wasLiked ? likeCount - 1 : likeCount + 1;
@@ -40,31 +43,28 @@ export default function LikeCommentShareBar({
     setIsLoading(true);
 
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/posts/${postId}/like`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify({
-            username: currentUsername,
-            action: wasLiked ? "unlike" : "like",
-          }),
-        }
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/posts/${postId}/like`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          username: currentUsername,
+          action: wasLiked ? 'unlike' : 'like',
+        }),
+      });
 
       if (!response.ok) {
         setLikeCount(likeCount);
         setLikedBy(likedBy);
-        toast.error("Failed to update like");
+        toast.error('Failed to update like');
       }
     } catch (error) {
       setLikeCount(likeCount);
       setLikedBy(likedBy);
-      console.error("Error updating like:", error);
-      toast.error("Failed to update like");
+      console.error('Error updating like:', error);
+      toast.error('Failed to update like');
     } finally {
       setIsLoading(false);
     }
@@ -76,50 +76,45 @@ export default function LikeCommentShareBar({
   }, [initialLikeCount, initialLikedBy]);
 
   return (
-    <div className={`flex items-start gap-2 mb-4 ${className}`}>
-      <div className="flex flex-col items-center min-h-[48px]">
-        <Toggle onClick={handleLike} className="mb-1">
+    <div className={`mb-4 flex items-start gap-2 ${className}`}>
+      <div className="flex min-h-[48px] flex-col items-center">
+        <Toggle className="mb-1" onClick={handleLike}>
           <span
-            className={`material-symbols-rounded ${isLiked ? "material-symbols-rounded filled" : ""}`}
+            className={`material-symbols-rounded ${isLiked ? 'material-symbols-rounded filled' : ''}`}
           >
             favorite
           </span>
         </Toggle>
-        <span className="text-xs text-gray-500 h-4 flex items-center">
-          {likeCount > 0 ? likeCount : ""}
+        <span className="flex h-4 items-center text-xs text-gray-500">
+          {likeCount > 0 ? likeCount : ''}
         </span>
       </div>
 
-      <div className="flex flex-col items-center min-h-[48px]">
-        <Button
-          variant="ghost"
-          className="hover-button px-2 mb-1"
-          onClick={onCommentClick}
-        >
+      <div className="flex min-h-[48px] flex-col items-center">
+        <Button className="hover-button mb-1 px-2" variant="ghost" onClick={onCommentClick}>
           <span className="material-symbols-rounded">mode_comment</span>
         </Button>
         <div className="h-4"></div>
       </div>
 
-      <div className="flex flex-col items-center min-h-[48px]">
+      <div className="flex min-h-[48px] flex-col items-center">
         <Button
+          className="hover-button mb-1 px-2"
           variant="ghost"
-          className="hover-button px-2 mb-1"
           onClick={() => {
             navigator.clipboard
               .writeText(window.location.href)
               .then(() => {
-                toast("Link Copied! 🎉", {
-                  description:
-                    "Share it with your friends and let them join the fun!",
+                toast('Link Copied! 🎉', {
+                  description: 'Share it with your friends and let them join the fun!',
                   action: {
-                    label: "Close",
+                    label: 'Close',
                     onClick: () => toast.dismiss(),
                   },
                 });
               })
               .catch((err) => {
-                console.error("Failed to copy: ", err);
+                console.error('Failed to copy: ', err);
               });
           }}
         >

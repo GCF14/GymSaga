@@ -1,4 +1,6 @@
-"use client";
+'use client';
+
+import { useEffect } from 'react';
 
 import {
   Table,
@@ -9,11 +11,10 @@ import {
   TableHeader,
   TableRow,
   TableFooter,
-} from "@/components/ui/table";
-import { useEffect } from "react";
-import { useWorkoutsContext } from "@/hooks/useWorkoutsContext";
-import { Workout } from "@/types/workout";
-import { useAuthContext } from "@/hooks/useAuthContext";
+} from '@/components/ui/table';
+import { useAuthContext } from '@/hooks/useAuthContext';
+import { useWorkoutsContext } from '@/hooks/useWorkoutsContext';
+import { Workout } from '@/types/workout';
 
 export default function WorkoutTable() {
   const { workouts, dispatch } = useWorkoutsContext();
@@ -21,16 +22,13 @@ export default function WorkoutTable() {
 
   useEffect(() => {
     const fetchWorkouts = async () => {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/workouts`,
-        {
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/workouts`, {
+        credentials: 'include',
+      });
       const json = await response.json();
 
       if (response.ok) {
-        dispatch({ type: "SET_WORKOUTS", payload: json });
+        dispatch({ type: 'SET_WORKOUTS', payload: json });
       }
     };
 

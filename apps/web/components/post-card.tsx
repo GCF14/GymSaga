@@ -1,6 +1,14 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
+import React from 'react';
+
+import CommentCard from '@/components/comments-card';
+import MoreMenu from '@/components/dropdown-menu';
+import LikeCommentShareBar from '@/components/like-comment-share-bar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Card,
   CardContent,
@@ -8,27 +16,16 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+} from '@/components/ui/card';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
-import React from "react";
-import CommentCard from "@/components/comments-card";
-import MoreMenu from "@/components/dropdown-menu";
-import LikeCommentShareBar from "@/components/like-comment-share-bar";
-import Link from "next/link";
-import Image from "next/image";
-import { PostCardProps } from "@/types/post";
+} from '@/components/ui/dialog';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+import { PostCardProps } from '@/types/post';
 
 export default function PostCard({
   username,
@@ -44,11 +41,7 @@ export default function PostCard({
   const [showCommentCard, setShowCommentCard] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const displayUsername = username
-    ? username.startsWith("@")
-      ? username.slice(1)
-      : username
-    : "";
+  const displayUsername = username ? (username.startsWith('@') ? username.slice(1) : username) : '';
 
   const handleComment = () => {
     setShowCommentCard(true);
@@ -62,43 +55,34 @@ export default function PostCard({
     setIsDialogOpen(true);
   };
 
-  const renderContent = (item: PostCardProps["content"][0], index: number) => {
-    if (item.type === "text" && item.data) {
+  const renderContent = (item: PostCardProps['content'][0], index: number) => {
+    if (item.type === 'text' && item.data) {
       return (
-        <p key={`${postId || ""}-${index}`} className="mb-4">
+        <p key={`${postId || ''}-${index}`} className="mb-4">
           {item.data}
         </p>
       );
-    } else if (item.type === "image" && item.data) {
+    } else if (item.type === 'image' && item.data) {
       return (
-        <div
-          key={`${postId || ""}-${index}`}
-          className="mt-2 mb-4 flex justify-center"
-        >
+        <div key={`${postId || ''}-${index}`} className="mt-2 mb-4 flex justify-center">
           <Image
-            src={item.data}
-            alt={`Posted by ${displayUsername || "user"}`}
-            width={500}
+            alt={`Posted by ${displayUsername || 'user'}`}
+            className="max-h-96 w-auto rounded-lg object-contain"
             height={300}
-            unoptimized={item.data.startsWith("http")}
-            className="rounded-lg max-h-96 w-auto object-contain"
+            src={item.data}
+            unoptimized={item.data.startsWith('http')}
+            width={500}
           />
         </div>
       );
-    } else if (item.type === "video" && item.data) {
+    } else if (item.type === 'video' && item.data) {
       return (
-        <div
-          key={`${postId || ""}-${index}`}
-          className="mt-2 mb-4 flex justify-center"
-        >
-          <video
-            src={item.data}
-            controls
-            className="rounded-lg max-h-96 w-auto"
-          />
+        <div key={`${postId || ''}-${index}`} className="mt-2 mb-4 flex justify-center">
+          <video controls className="max-h-96 w-auto rounded-lg" src={item.data} />
         </div>
       );
     }
+
     return null;
   };
 
@@ -107,45 +91,31 @@ export default function PostCard({
       <Card className="w-full">
         <CardHeader>
           <div className="flex justify-between">
-            <div className="flex items-center h-full w-full">
-              <Avatar className="w-10 h-10 mr-4">
-                <AvatarImage
-                  src={profilePicture}
-                  alt={`${displayUsername}'s avatar`}
-                />
+            <div className="flex h-full w-full items-center">
+              <Avatar className="mr-4 h-10 w-10">
+                <AvatarImage alt={`${displayUsername}'s avatar`} src={profilePicture} />
                 <AvatarFallback>
-                  {displayUsername
-                    ? displayUsername.charAt(0).toUpperCase()
-                    : "U"}
+                  {displayUsername ? displayUsername.charAt(0).toUpperCase() : 'U'}
                 </AvatarFallback>
               </Avatar>
               <CardTitle>
                 <HoverCard>
                   <HoverCardTrigger asChild className="hover-underline">
-                    <Link href={`/${encodeURIComponent(displayUsername)}`}>
-                      {displayUsername}
-                    </Link>
+                    <Link href={`/${encodeURIComponent(displayUsername)}`}>{displayUsername}</Link>
                   </HoverCardTrigger>
                   <HoverCardContent className="w-80">
                     <div className="flex justify-between space-x-4">
                       <Avatar>
-                        <AvatarImage
-                          src={profilePicture}
-                          alt={`${displayUsername}'s avatar`}
-                        />
+                        <AvatarImage alt={`${displayUsername}'s avatar`} src={profilePicture} />
                         <AvatarFallback>
-                          {displayUsername
-                            ? displayUsername.charAt(0).toUpperCase()
-                            : "U"}
+                          {displayUsername ? displayUsername.charAt(0).toUpperCase() : 'U'}
                         </AvatarFallback>
                       </Avatar>
                       <div className="space-y-1">
                         <h4 className="text-sm font-semibold">{username}</h4>
-                        <p className="text-sm">{bio || "No bio available"}</p>
+                        <p className="text-sm">{bio || 'No bio available'}</p>
                         <div className="flex items-center pt-2">
-                          <span className="text-xs text-muted-foreground">
-                            {date}
-                          </span>
+                          <span className="text-muted-foreground text-xs">{date}</span>
                         </div>
                       </div>
                     </div>
@@ -158,7 +128,7 @@ export default function PostCard({
           <CardDescription>{date}</CardDescription>
         </CardHeader>
         <div
-          className="cursor-pointer hover:bg-accent/5 transition-colors"
+          className="hover:bg-accent/5 cursor-pointer transition-colors"
           onClick={handleCardClick}
         >
           <CardContent>
@@ -169,10 +139,10 @@ export default function PostCard({
         </div>
         <CardFooter>
           <LikeCommentShareBar
-            postId={postId || ""}
+            currentUsername={currentUser?.username || ''}
             initialLikeCount={numOfLikes || 0}
             initialLikedBy={likedBy || []}
-            currentUsername={currentUser?.username || ""}
+            postId={postId || ''}
             onCommentClick={handleComment}
           />
         </CardFooter>

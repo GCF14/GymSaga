@@ -1,5 +1,8 @@
-"use client";
+'use client';
 
+import { BlurFade } from '@/components/magicui/blur-fade';
+import { BoxReveal } from '@/components/magicui/box-reveal';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -7,10 +10,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { BlurFade } from "@/components/magicui/blur-fade";
-import { BoxReveal } from "@/components/magicui/box-reveal";
+} from '@/components/ui/card';
 
 interface SettingsSidebarProps {
   className?: string;
@@ -20,7 +20,7 @@ export default function SettingsSidebar({ className }: SettingsSidebarProps) {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      element.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -34,20 +34,20 @@ export default function SettingsSidebar({ className }: SettingsSidebarProps) {
           <BoxReveal boxColor="hsl(var(--primary))" duration={0.5}>
             <CardDescription>Manage your preferences here!</CardDescription>
           </BoxReveal>
-          <CardContent className="p-0 pt-4 w-full">
+          <CardContent className="w-full p-0 pt-4">
             <div className="flex flex-col gap-2">
               <Button
+                className="w-full justify-start"
                 variant="ghost"
-                onClick={() => scrollToSection("account")}
-                className="justify-start w-full"
+                onClick={() => scrollToSection('account')}
               >
                 <span className="material-symbols-rounded">person</span>
                 Account
               </Button>
               <Button
+                className="w-full justify-start"
                 variant="ghost"
-                onClick={() => scrollToSection("credits")}
-                className="justify-start w-full"
+                onClick={() => scrollToSection('credits')}
               >
                 <span className="material-symbols-rounded">info</span>
                 About

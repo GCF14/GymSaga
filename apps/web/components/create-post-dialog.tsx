@@ -1,9 +1,11 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
-import { Textarea } from "@/components/ui/textarea";
+import React, { useState } from 'react';
+import { toast } from 'sonner';
+
+import AttachmentButton from '@/components/attachment-button';
+import { RainbowButton } from '@/components/magicui/rainbow-button';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogClose,
@@ -13,50 +15,49 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { RainbowButton } from "@/components/magicui/rainbow-button";
-import AttachmentButton from "@/components/attachment-button";
+} from '@/components/ui/dialog';
+import { Textarea } from '@/components/ui/textarea';
 
 export default function CreatePostDialog() {
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
 
   const handlePostButton = async () => {
     setLoading(true);
 
     const formData = new FormData();
-    formData.append("username", localStorage.getItem("username") || "");
-    formData.append("numOfLikes", "0");
-    formData.append("likedBy", JSON.stringify([]));
+    formData.append('username', localStorage.getItem('username') || '');
+    formData.append('numOfLikes', '0');
+    formData.append('likedBy', JSON.stringify([]));
     if (text) {
-      formData.append("text", text);
+      formData.append('text', text);
     }
     files.forEach((file) => {
-      formData.append("files", file);
+      formData.append('files', file);
     });
 
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/posts`, {
-        method: "POST",
+        method: 'POST',
         body: formData,
       });
 
       if (!res.ok) {
         const errorData = await res.json();
-        throw new Error(errorData.message || "Something went wrong.");
+        throw new Error(errorData.message || 'Something went wrong.');
       }
 
-      toast.success("Post created successfully!");
+      toast.success('Post created successfully!');
     } catch (err) {
       if (err instanceof Error) {
         toast.error(`Failed to create post: ${err.message}`);
       } else {
-        toast.error("An unknown error occurred.");
+        toast.error('An unknown error occurred.');
       }
     } finally {
       setLoading(false);
-      setText("");
+      setText('');
       setFiles([]);
     }
   };
@@ -64,17 +65,15 @@ export default function CreatePostDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <RainbowButton className="rounded-md h-8 w-20 transition hover:scale-105 duration-300">
+        <RainbowButton className="h-8 w-20 rounded-md transition duration-300 hover:scale-105">
           <span className="material-symbols-rounded">post_add</span>
-          <span className="text-sm ml-2">Post</span>
+          <span className="ml-2 text-sm">Post</span>
         </RainbowButton>
       </DialogTrigger>
       <DialogContent className="min-w-[750px]">
         <DialogHeader>
           <DialogTitle>Create Post</DialogTitle>
-          <DialogDescription>
-            Share your thoughts with others!
-          </DialogDescription>
+          <DialogDescription>Share your thoughts with others!</DialogDescription>
         </DialogHeader>
         <div className="flex items-center gap-2">
           <Textarea
@@ -85,14 +84,14 @@ export default function CreatePostDialog() {
           />
         </div>
         <DialogFooter>
-          <div className="w-full flex justify-between">
+          <div className="flex w-full justify-between">
             <AttachmentButton
-              onFilesChange={(selected) => setFiles(selected.slice(0, 3))}
               maxFiles={3}
+              onFilesChange={(selected) => setFiles(selected.slice(0, 3))}
             />
             <DialogClose asChild className="flex justify-end">
-              <Button onClick={handlePostButton} disabled={loading}>
-                {loading ? "Posting..." : "Post"}
+              <Button disabled={loading} onClick={handlePostButton}>
+                {loading ? 'Posting...' : 'Post'}
               </Button>
             </DialogClose>
           </div>

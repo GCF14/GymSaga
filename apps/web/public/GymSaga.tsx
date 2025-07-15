@@ -1,30 +1,30 @@
-import React from "react";
+import React from 'react';
 
 const GymSaga: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg
-    width="256"
+    fill="none"
     height="256"
     viewBox="0 0 256 256"
-    fill="none"
+    width="256"
     xmlns="http://www.w3.org/2000/svg"
     {...props} // This spreads any additional props (like width, height, className, etc.)
   >
     <mask
+      height="53"
       id="mask0_65_2"
-      style={{ maskType: "alpha" }} // JSX style uses camelCase property names
       maskUnits="userSpaceOnUse"
+      style={{ maskType: 'alpha' }} // JSX style uses camelCase property names
+      width="130"
       x="126"
       y="140"
-      width="130"
-      height="53"
     >
       <rect
-        x="256"
-        y="192.555"
-        width="129.555"
+        fill="black"
         height="51.8218"
         transform="rotate(180 256 192.555)"
-        fill="black"
+        width="129.555"
+        x="256"
+        y="192.555"
       />
     </mask>
     <g mask="url(#mask0_65_2)">
@@ -34,15 +34,15 @@ const GymSaga: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
       />
     </g>
     <mask
+      height="52"
       id="mask1_65_2"
-      style={{ maskType: "alpha" }}
       maskUnits="userSpaceOnUse"
+      style={{ maskType: 'alpha' }}
+      width="130"
       x="126"
       y="63"
-      width="130"
-      height="52"
     >
-      <rect x="126.445" y="63" width="129.555" height="51.8218" fill="black" />
+      <rect fill="black" height="51.8218" width="129.555" x="126.445" y="63" />
     </mask>
     <g mask="url(#mask1_65_2)">
       <path
@@ -55,10 +55,10 @@ const GymSaga: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
       fill="black"
     />
     <path
-      fillRule="evenodd" // In JSX, use camelCase for these attributes.
       clipRule="evenodd"
       d="M103.644 127.777H126.581H129.555C129.555 142.328 124.656 156.454 115.648 167.881C112.764 171.539 109.513 174.852 105.961 177.777C98.418 183.99 89.5182 188.456 79.8994 190.765C65.7512 194.162 50.8714 192.696 37.6577 186.604C24.4441 180.513 13.666 170.15 7.06039 157.186C4.39274 151.95 2.46831 146.413 1.30882 140.733H28.1337C28.6989 142.331 29.3705 143.898 30.1472 145.422C34.1106 153.201 40.5774 159.419 48.5056 163.074C56.4338 166.729 65.3617 167.608 73.8506 165.57C79.149 164.298 84.0839 161.935 88.3591 158.672C90.9334 156.707 93.2685 154.416 95.2998 151.839C100.705 144.983 103.644 136.507 103.644 127.777ZM28.1338 114.822C30.3993 108.414 34.3182 102.679 39.5357 98.2231C43.6792 94.6843 48.491 92.0804 53.6438 90.5397C56.7465 89.612 59.9729 89.0697 63.2515 88.9409C71.9697 88.5984 80.5495 91.1992 87.6099 96.3246L87.6225 96.3338L101.104 77.7773L102.853 75.3714C91.0812 66.819 76.7732 62.4787 62.2342 63.05C57.5798 63.2328 52.9884 63.9157 48.5338 65.0696C39.0736 67.5203 30.2299 72.0958 22.7079 78.5203C11.7261 87.8996 4.19598 100.678 1.30885 114.822H28.1338ZM9.01127e-05 127.669C-3.00445e-05 127.741 -3.00306e-05 127.813 9.01127e-05 127.885V127.669Z"
       fill="black"
+      fillRule="evenodd" // In JSX, use camelCase for these attributes.
     />
   </svg>
 );

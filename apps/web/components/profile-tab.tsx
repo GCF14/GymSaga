@@ -1,19 +1,15 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import React from "react";
-import PostCard from "@/components/post-card";
-import MealCarousel from "@/components/meal-carousel";
-import EditButton from "@/components/edit-button";
-import { BlurFade } from "./magicui/blur-fade";
-import WorkoutCarousel from "./workout-carousel";
-import { useState, useEffect } from "react";
-import { Post } from "@/types/post";
+import React from 'react';
+import { useState, useEffect } from 'react';
+
+import { BlurFade } from './magicui/blur-fade';
+import WorkoutCarousel from './workout-carousel';
+
+import EditButton from '@/components/edit-button';
+import MealCarousel from '@/components/meal-carousel';
+import PostCard from '@/components/post-card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Post } from '@/types/post';
 
 interface ProfileTabProps {
   className?: string;
@@ -21,11 +17,7 @@ interface ProfileTabProps {
   username: string;
 }
 
-export default function ProfileTab({
-  className,
-  isOwner,
-  username,
-}: ProfileTabProps) {
+export default function ProfileTab({ className, isOwner, username }: ProfileTabProps) {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -35,17 +27,14 @@ export default function ProfileTab({
     // Listen for profile updates to refresh data
     const handleProfileUpdate = (event: Event) => {
       const customEvent = event as CustomEvent;
-      console.log(
-        "Profile updated event received in ProfileTab",
-        customEvent.detail
-      );
+      console.log('Profile updated event received in ProfileTab', customEvent.detail);
       setRefreshKey(Date.now());
     };
 
-    window.addEventListener("profileUpdated", handleProfileUpdate);
+    window.addEventListener('profileUpdated', handleProfileUpdate);
 
     return () => {
-      window.removeEventListener("profileUpdated", handleProfileUpdate);
+      window.removeEventListener('profileUpdated', handleProfileUpdate);
     };
   }, []);
 
@@ -58,19 +47,21 @@ export default function ProfileTab({
         // Add cache-busting parameter
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/api/posts/user/${username}?t=${Date.now()}`,
-          { cache: "no-store" }
+          { cache: 'no-store' },
         );
 
-        if (!res.ok) throw new Error("Failed to fetch posts");
+        if (!res.ok) {
+          throw new Error('Failed to fetch posts');
+        }
 
         const data = await res.json();
         setPosts(data);
       } catch (error) {
         console.error(
-          "Error fetching posts:",
-          error instanceof Error ? error.message : "Unknown error"
+          'Error fetching posts:',
+          error instanceof Error ? error.message : 'Unknown error',
         );
-        setError("Could not load posts. Please try again later.");
+        setError('Could not load posts. Please try again later.');
       } finally {
         setLoading(false);
       }
@@ -80,11 +71,8 @@ export default function ProfileTab({
   }, [username, refreshKey]);
 
   return (
-    <Tabs
-      defaultValue="posts"
-      className={`flex flex-col h-[calc(100vh-8rem)] ${className}`}
-    >
-      <BlurFade direction="left" className="flex flex-col overflow-hidden">
+    <Tabs className={`flex h-[calc(100vh-8rem)] flex-col ${className}`} defaultValue="posts">
+      <BlurFade className="flex flex-col overflow-hidden" direction="left">
         <div className="flex justify-center">
           <TabsList className="grid w-1/2 grid-cols-3">
             <TabsTrigger value="meal-plan">Meal Plan</TabsTrigger>
@@ -93,11 +81,8 @@ export default function ProfileTab({
           </TabsList>
         </div>
         <div className="grow overflow-hidden p-2">
-          <TabsContent
-            value="meal-plan"
-            className="relative h-full animate-fade-right"
-          >
-            <Card className="h-full flex flex-col">
+          <TabsContent className="animate-fade-right relative h-full" value="meal-plan">
+            <Card className="flex h-full flex-col">
               <CardHeader className="flex flex-row justify-between">
                 <div>
                   <CardTitle>Meal Plan</CardTitle>
@@ -105,26 +90,21 @@ export default function ProfileTab({
                 </div>
                 {isOwner && <EditButton type="meal" />}
               </CardHeader>
-              <CardContent className="h-full w-full flex flex-1 overflow-hidden">
+              <CardContent className="flex h-full w-full flex-1 overflow-hidden">
                 <MealCarousel />
               </CardContent>
             </Card>
           </TabsContent>
-          <TabsContent
-            value="posts"
-            className="relative h-full animate-fade-right"
-          >
-            <Card className="h-full flex flex-col">
+          <TabsContent className="animate-fade-right relative h-full" value="posts">
+            <Card className="flex h-full flex-col">
               <CardHeader>
                 <CardTitle>My Posts</CardTitle>
-                <CardDescription>
-                  Look back on your previous posts!
-                </CardDescription>
+                <CardDescription>Look back on your previous posts!</CardDescription>
               </CardHeader>
-              <CardContent className="flex flex-col h-full overflow-y-auto gap-4">
+              <CardContent className="flex h-full flex-col gap-4 overflow-y-auto">
                 {loading && (
-                  <div className="flex justify-center items-center h-64">
-                    <div className="w-10 h-10 border-4 border-t-transparent border-blue-500 rounded-full animate-spin"></div>
+                  <div className="flex h-64 items-center justify-center">
+                    <div className="h-10 w-10 animate-spin rounded-full border-4 border-blue-500 border-t-transparent"></div>
                   </div>
                 )}
                 {error && <p className="text-red-500">{error}</p>}
@@ -133,22 +113,19 @@ export default function ProfileTab({
                   posts.map((post) => (
                     <PostCard
                       key={`${post._id}-${refreshKey}`}
-                      username={username}
                       bio={post.bio}
-                      profilePicture={post.profilePicture}
                       content={post.content}
                       date={post.date}
                       postId={post._id}
+                      profilePicture={post.profilePicture}
+                      username={username}
                     />
                   ))}
               </CardContent>
             </Card>
           </TabsContent>
-          <TabsContent
-            value="workout"
-            className="relative h-full animate-fade-right"
-          >
-            <Card className="h-full flex flex-col">
+          <TabsContent className="animate-fade-right relative h-full" value="workout">
+            <Card className="flex h-full flex-col">
               <CardHeader className="flex flex-row justify-between">
                 <div>
                   <CardTitle>Workout Routine</CardTitle>
@@ -156,7 +133,7 @@ export default function ProfileTab({
                 </div>
                 {isOwner && <EditButton type="workout" />}
               </CardHeader>
-              <CardContent className="h-full w-full flex flex-1 overflow-hidden">
+              <CardContent className="flex h-full w-full flex-1 overflow-hidden">
                 <WorkoutCarousel />
               </CardContent>
             </Card>

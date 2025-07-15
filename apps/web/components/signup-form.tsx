@@ -1,29 +1,25 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useState } from "react";
-import { LoginForm } from "./login-form";
-import { useSignup } from "@/hooks/useSignup";
-import { toast } from "sonner";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { toast } from 'sonner';
+
+import { LoginForm } from './login-form';
+
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useSignup } from '@/hooks/useSignup';
 
 export default function SignupForm() {
   const [isLogin, setIsLogin] = useState(false);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const { signup, error, isLoading } = useSignup();
   const router = useRouter();
 
@@ -31,20 +27,20 @@ export default function SignupForm() {
     if (error) {
       toast.error(`Error: ${error}`, {
         action: {
-          label: "Close",
+          label: 'Close',
           onClick: () => toast.dismiss(),
         },
         style: {
-          color: "#ffffff",
-          borderColor: "#7f1d1d",
-          backgroundColor: "#7f1d1d",
+          color: '#ffffff',
+          borderColor: '#7f1d1d',
+          backgroundColor: '#7f1d1d',
         },
         actionButtonStyle: {
-          backgroundColor: "#7f1d1d",
-          borderColor: "#ffffff",
-          color: "#ffffff",
-          borderWidth: "1px",
-          borderStyle: "solid",
+          backgroundColor: '#7f1d1d',
+          borderColor: '#ffffff',
+          color: '#ffffff',
+          borderWidth: '1px',
+          borderStyle: 'solid',
         },
       });
     }
@@ -52,16 +48,10 @@ export default function SignupForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const success = await signup(
-      email,
-      password,
-      userName,
-      firstName,
-      lastName
-    );
+    const success = await signup(email, password, userName, firstName, lastName);
 
     if (success) {
-      router.push("/");
+      router.push('/');
     }
   };
 
@@ -76,9 +66,7 @@ export default function SignupForm() {
       <Card>
         <CardHeader>
           <CardTitle className="text-xl 2xl:text-2xl">Sign Up</CardTitle>
-          <CardDescription>
-            Enter your information to create an account
-          </CardDescription>
+          <CardDescription>Enter your information to create an account</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
@@ -87,42 +75,42 @@ export default function SignupForm() {
                 <Label htmlFor="first-name">First name</Label>
                 <Label htmlFor="last-name">Last name</Label>
                 <Input
-                  id="first-name"
-                  type="text"
-                  placeholder="Matthew"
-                  onChange={(e) => setFirstName(e.target.value)}
-                  value={firstName}
                   required
+                  id="first-name"
+                  placeholder="Matthew"
+                  type="text"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
                 />
                 <Input
-                  id="last-name"
-                  type="text"
-                  placeholder="Smith"
-                  onChange={(e) => setLastName(e.target.value)}
-                  value={lastName}
                   required
+                  id="last-name"
+                  placeholder="Smith"
+                  type="text"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
                 />
               </div>
               <div className="grid gap-1">
                 <Label htmlFor="username">Username</Label>
                 <Input
-                  id="username"
-                  type="text"
-                  placeholder="MatthewSmith05"
-                  onChange={(e) => setUserName(e.target.value)}
-                  value={userName}
                   required
+                  id="username"
+                  placeholder="MatthewSmith05"
+                  type="text"
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
                 />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
-                  id="email"
-                  type="email"
-                  placeholder="m@example.com"
-                  onChange={(e) => setEmail(e.target.value)}
-                  value={email}
                   required
+                  id="email"
+                  placeholder="m@example.com"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div className="grid gap-2">
@@ -130,23 +118,20 @@ export default function SignupForm() {
                   <Label htmlFor="password">Password</Label>
                 </div>
                 <Input
+                  required
                   id="password"
                   type="password"
-                  onChange={(e) => setPassword(e.target.value)}
                   value={password}
-                  required
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button className="w-full" disabled={isLoading} type="submit">
                 Sign Up
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
-              Already have an account?{" "}
-              <button
-                className="underline underline-offset-4"
-                onClick={handleLoginClick}
-              >
+              Already have an account?{' '}
+              <button className="underline underline-offset-4" onClick={handleLoginClick}>
                 Log in
               </button>
             </div>

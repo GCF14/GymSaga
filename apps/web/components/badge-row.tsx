@@ -1,8 +1,8 @@
-import { Badge } from "@/components/ui/badge";
+import { Badge } from '@/components/ui/badge';
 
 export default function BadgeRow() {
   return (
-    <div className="flex flex-row gap-2 items-center justify-center">
+    <div className="flex flex-row items-center justify-center gap-2">
       <Badge>CEO</Badge>
       <Badge>Dev</Badge>
       <Badge>Designer</Badge>

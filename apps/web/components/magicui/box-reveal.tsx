@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import { motion, useAnimation, useInView } from "motion/react";
-import { useEffect, useRef, type JSX } from "react";
+import { motion, useAnimation, useInView } from 'motion/react';
+import { useEffect, useRef, type JSX } from 'react';
 
 interface BoxRevealProps {
   children: JSX.Element;
-  width?: "fit-content" | "100%";
+  width?: 'fit-content' | '100%';
   boxColor?: string;
   duration?: number;
 }
 
 export const BoxReveal = ({
   children,
-  width = "fit-content",
-  boxColor = "#5046e6",
+  width = 'fit-content',
+  boxColor = '#5046e6',
   duration,
 }: BoxRevealProps) => {
   const mainControls = useAnimation();
@@ -24,11 +24,11 @@ export const BoxReveal = ({
 
   useEffect(() => {
     if (isInView) {
-      slideControls.start("visible");
-      mainControls.start("visible");
+      slideControls.start('visible');
+      mainControls.start('visible');
     } else {
-      slideControls.start("hidden");
-      mainControls.start("hidden");
+      slideControls.start('hidden');
+      mainControls.start('hidden');
     }
   }, [isInView, mainControls, slideControls]);
 
@@ -36,40 +36,40 @@ export const BoxReveal = ({
     <div
       ref={ref}
       style={{
-        position: "relative",
+        position: 'relative',
         width,
-        height: "100%",
-        overflow: "hidden",
+        height: '100%',
+        overflow: 'hidden',
       }}
     >
       <motion.div
+        animate={mainControls}
+        initial="hidden"
+        transition={{ duration: duration ? duration : 0.5, delay: 0.25 }}
         variants={{
           hidden: { opacity: 0, y: 75 },
           visible: { opacity: 1, y: 0 },
         }}
-        initial="hidden"
-        animate={mainControls}
-        transition={{ duration: duration ? duration : 0.5, delay: 0.25 }}
       >
         {children}
       </motion.div>
 
       <motion.div
-        variants={{
-          hidden: { left: 0 },
-          visible: { left: "100%" },
-        }}
-        initial="hidden"
         animate={slideControls}
-        transition={{ duration: duration ? duration : 0.5, ease: "easeIn" }}
+        initial="hidden"
         style={{
-          position: "absolute",
+          position: 'absolute',
           top: 4,
           bottom: 4,
           left: 0,
           right: 0,
           zIndex: 20,
           background: boxColor,
+        }}
+        transition={{ duration: duration ? duration : 0.5, ease: 'easeIn' }}
+        variants={{
+          hidden: { left: 0 },
+          visible: { left: '100%' },
         }}
       />
     </div>

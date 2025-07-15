@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogClose,
@@ -7,23 +8,20 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/dialog';
 
 export default function EditMealDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button size="icon" variant="outline">
           <span className="material-symbols-rounded">edit</span>
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Edit Meal Plan</DialogTitle>
-          <DialogDescription>
-            Plan your meals and fuel your day!
-          </DialogDescription>
+          <DialogDescription>Plan your meals and fuel your day!</DialogDescription>
         </DialogHeader>
       </DialogContent>
     </Dialog>

@@ -39,6 +39,12 @@
       "options": {
         "passWithNoTests": true
       }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["apps/web/**/*.ts", "apps/web/**/*.tsx"]
+      }
     }
   }
 }

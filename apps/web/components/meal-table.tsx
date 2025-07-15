@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
   TableFooter,
-} from "@/components/ui/table";
+} from '@/components/ui/table';
 
 export default function MealTable() {
   return (

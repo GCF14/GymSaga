@@ -1,26 +1,22 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useState } from "react";
-import SignupForm from "./signup-form";
-import { useLogin } from "@/hooks/useLogin";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { toast } from "sonner";
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { toast } from 'sonner';
+
+import SignupForm from './signup-form';
+
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useLogin } from '@/hooks/useLogin';
 
 export function LoginForm() {
   const [isSignup, setIsSingup] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const { login, error, isLoading } = useLogin();
   const router = useRouter();
 
@@ -28,20 +24,20 @@ export function LoginForm() {
     if (error) {
       toast.error(`Error: ${error}`, {
         action: {
-          label: "Close",
+          label: 'Close',
           onClick: () => toast.dismiss(),
         },
         style: {
-          color: "#ffffff",
-          borderColor: "#7f1d1d",
-          backgroundColor: "#7f1d1d",
+          color: '#ffffff',
+          borderColor: '#7f1d1d',
+          backgroundColor: '#7f1d1d',
         },
         actionButtonStyle: {
-          backgroundColor: "#7f1d1d",
-          borderColor: "#ffffff",
-          color: "#ffffff",
-          borderWidth: "1px",
-          borderStyle: "solid",
+          backgroundColor: '#7f1d1d',
+          borderColor: '#ffffff',
+          color: '#ffffff',
+          borderWidth: '1px',
+          borderStyle: 'solid',
         },
       });
     }
@@ -53,7 +49,7 @@ export function LoginForm() {
     const success = await login(email, password);
 
     if (success) {
-      router.push("/");
+      router.push('/');
     }
   };
 
@@ -68,9 +64,7 @@ export function LoginForm() {
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
-          <CardDescription>
-            Enter your email below to login to your account
-          </CardDescription>
+          <CardDescription>Enter your email below to login to your account</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
@@ -78,45 +72,42 @@ export function LoginForm() {
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
-                  id="email"
-                  type="email"
-                  placeholder="m@example.com"
-                  onChange={(e) => setEmail(e.target.value)}
-                  value={email}
                   required
+                  id="email"
+                  placeholder="m@example.com"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
                   <a
-                    href="#"
                     className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                    href="#"
                   >
                     Forgot your password?
                   </a>
                 </div>
                 <Input
+                  required
                   id="password"
                   type="password"
-                  onChange={(e) => setPassword(e.target.value)}
                   value={password}
-                  required
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button className="w-full" disabled={isLoading} type="submit">
                 Login
               </Button>
-              <Button variant="outline" className="w-full">
+              <Button className="w-full" variant="outline">
                 Login with Google
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
-              Don&apos;t have an account?{" "}
-              <button
-                className="underline underline-offset-4"
-                onClick={handleSignupClick}
-              >
+              Don&apos;t have an account?{' '}
+              <button className="underline underline-offset-4" onClick={handleSignupClick}>
                 Sign up
               </button>
             </div>

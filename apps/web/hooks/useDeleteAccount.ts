@@ -1,5 +1,6 @@
-import { useAuthContext } from "@/hooks/useAuthContext";
-import { useState } from "react";
+import { useState } from 'react';
+
+import { useAuthContext } from '@/hooks/useAuthContext';
 
 export const useDeleteAccount = () => {
   const [error, setError] = useState<string | null>(null);
@@ -14,27 +15,28 @@ export const useDeleteAccount = () => {
 
     try {
       const response = await fetch(`http://localhost:${port}/api/users/${id}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
       });
 
       if (!response.ok) {
         const json = await response.json();
-        throw new Error(json.error || "Failed to delete account");
+        throw new Error(json.error || 'Failed to delete account');
       }
 
-      dispatch({ type: "LOGOUT" });
+      dispatch({ type: 'LOGOUT' });
 
       setIsLoading(false);
-      console.log("User deleted successfully");
+      console.log('User deleted successfully');
+
       return true;
     } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : "An unknown error occurred";
-      console.error("Delete error:", errorMessage);
+      const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred';
+      console.error('Delete error:', errorMessage);
       setError(errorMessage);
       setIsLoading(false);
+
       return false;
     }
   };

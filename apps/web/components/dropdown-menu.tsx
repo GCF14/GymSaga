@@ -1,3 +1,7 @@
+import { useState } from 'react';
+
+import EditPostDialog from '@/components/edit-post-dialog';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -5,18 +9,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import EditPostDialog from "@/components/edit-post-dialog";
-import { useState } from "react";
+} from '@/components/ui/dropdown-menu';
 
 export default function MoreMenu() {
   const handleDeletePost = () => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this post?"
-    );
+    const confirmDelete = window.confirm('Are you sure you want to delete this post?');
     if (confirmDelete) {
-      alert("Post deleted successfully!");
+      alert('Post deleted successfully!');
     }
   };
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -25,7 +24,7 @@ export default function MoreMenu() {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon" className="hover-button">
+          <Button className="hover-button" size="icon" variant="ghost">
             <span className="material-symbols-rounded">more_vert</span>
           </Button>
         </DropdownMenuTrigger>
