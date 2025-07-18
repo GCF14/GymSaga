@@ -5,9 +5,10 @@ import { WorkoutsModule } from './workouts/workouts.module';
 import { PostsModule } from './posts/posts.module';
 import { CommentsModule } from './comments/comments.module';
 import { UploadModule } from './upload/upload.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [WorkoutsModule, PostsModule, CommentsModule, UploadModule],
+  imports: [WorkoutsModule, PostsModule, CommentsModule, UploadModule, UsersModule],
   controllers: [AppController],
   providers: [AppService],
 })
