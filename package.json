@@ -8,7 +8,8 @@
     "prepare": "husky",
     "nx": "nx",
     "web": "nx serve web",
-    "api": "nx serve backend",
+    "backend": "nx serve backend",
+    "api": "nx serve api",
     "dev": "concurrently \"nx serve backend\" \"nx serve web\"",
     "lint:frontend": "npm --prefix apps/web run lint:fix"
   },
@@ -41,6 +42,8 @@
     "axios": "^1.8.4",
     "bcrypt": "^5.1.1",
     "canvas-confetti": "^1.9.3",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.2",
     "class-variance-authority": "^0.7.1",
     "cloudinary": "^1.41.3",
     "clsx": "^2.1.1",
