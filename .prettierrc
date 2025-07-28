@@ -1,13 +1,7 @@
 {
-  "arrowParens": "always",
-  "endOfLine": "auto",
-  "plugins": ["prettier-plugin-tailwindcss"],
-  "printWidth": 100,
+  "plugins": [
+    "prettier-plugin-tailwindcss"
+  ],
   "semi": true,
-  "singleQuote": true,
-  "tabWidth": 2,
-  "tailwindAttributes": ["className", "style"],
-  "tailwindFunctions": ["clsx", "tw", "twMerge"],
-  "trailingComma": "all",
-  "useTabs": false
+  "singleQuote": true
 }
