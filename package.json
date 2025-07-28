@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "format": "prettier --write .",
-    "lint": "eslint . --ext .js,.ts,.tsx",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "prepare": "husky",
     "nx": "nx",
     "web": "nx serve web",
@@ -109,6 +110,7 @@
     "eslint": "^9.31.0",
     "eslint-config-next": "15.2.0",
     "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.5.1",
     "eslint-plugin-react-perf": "^3.3.3",
     "eslint-plugin-sonarjs": "^3.0.4",
