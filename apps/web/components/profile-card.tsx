@@ -1,7 +1,8 @@
-import { Upload } from 'lucide-react';
-import Image from 'next/image';
 import React from 'react';
 import { useEffect, useState, useRef } from 'react';
+
+import { Upload } from 'lucide-react';
+import Image from 'next/image';
 
 import BadgeRow from '@/components/badge-row';
 import EditButton from '@/components/edit-button';
@@ -17,8 +18,18 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { useAuthContext } from '@/hooks/useAuthContext';
 
 interface ProfileCardProps {
@@ -27,7 +38,11 @@ interface ProfileCardProps {
   username: string;
 }
 
-const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner, username }) => {
+const ProfileCard: React.FC<ProfileCardProps> = ({
+  className,
+  isOwner,
+  username,
+}) => {
   const { user } = useAuthContext();
   const [bio, setBio] = useState('Loading...');
   const [openProfilePicture, setOpenProfilePicture] = useState(false);
@@ -59,10 +74,13 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner, username 
       const formData = new FormData();
       formData.append('image', selectedFile);
 
-      const uploadResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/upload`, {
-        method: 'POST',
-        body: formData,
-      });
+      const uploadResponse = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/upload`,
+        {
+          method: 'POST',
+          body: formData,
+        },
+      );
 
       if (!uploadResponse.ok) {
         throw new Error('Failed to upload image.');
@@ -178,7 +196,9 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner, username 
                     >
                       <AvatarImage alt="Avatar" src={profileImage} />
                       <AvatarFallback>
-                        <span className="material-symbols-rounded large">account_circle</span>
+                        <span className="material-symbols-rounded large">
+                          account_circle
+                        </span>
                       </AvatarFallback>
                     </Avatar>
                   </BoxReveal>
@@ -245,7 +265,9 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner, username 
                     style={{ objectFit: 'cover' }}
                     width={160}
                   />
-                  <p className="mt-2 text-sm text-gray-500">Click to change image</p>
+                  <p className="mt-2 text-sm text-gray-500">
+                    Click to change image
+                  </p>
                 </div>
               ) : (
                 <div className="text-center">
@@ -255,20 +277,28 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner, username 
               )}
             </div>
           </div>
-          {uploadError && <p className="mt-2 text-sm text-red-500">{uploadError}</p>}
+          {uploadError && (
+            <p className="mt-2 text-sm text-red-500">{uploadError}</p>
+          )}
 
           <div className="flex justify-end gap-2">
             <Button variant="outline" onClick={handleClose}>
               Cancel
             </Button>
-            <Button disabled={!selectedFile || isUploading} onClick={handleUpload}>
+            <Button
+              disabled={!selectedFile || isUploading}
+              onClick={handleUpload}
+            >
               {isUploading ? 'Uploading...' : 'Upload'}
             </Button>
           </div>
         </DialogContent>
       </Dialog>
 
-      <Dialog open={openProfilePictureModal} onOpenChange={setOpenProfilePictureModal}>
+      <Dialog
+        open={openProfilePictureModal}
+        onOpenChange={setOpenProfilePictureModal}
+      >
         <DialogContent className="h-auto max-w-2xl">
           <DialogHeader>
             <DialogTitle>Profile Picture</DialogTitle>
@@ -284,7 +314,10 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ className, isOwner, username 
             />
           </div>
           <div className="flex justify-end gap-2">
-            <Button variant="outline" onClick={() => setOpenProfilePictureModal(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setOpenProfilePictureModal(false)}
+            >
               Close
             </Button>
           </div>

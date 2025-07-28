@@ -1,5 +1,6 @@
-import Link from 'next/link';
 import React from 'react';
+
+import Link from 'next/link';
 
 import MoreMenu from '@/components/dropdown-menu';
 import LikeCommentShareBar from '@/components/like-comment-share-bar';
@@ -21,7 +22,9 @@ export default function NestedComments() {
           <Avatar className="mr-2 h-7 w-7">
             <AvatarImage alt="Avatar" src="/Logo.png" />
             <AvatarFallback>
-              <span className="material-symbols-rounded large">account_circle</span>
+              <span className="material-symbols-rounded large">
+                account_circle
+              </span>
             </AvatarFallback>
           </Avatar>
           OngPagong04

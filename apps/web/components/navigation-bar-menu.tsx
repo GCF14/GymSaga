@@ -1,7 +1,8 @@
 'use client';
 
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
+
+import Link from 'next/link';
 
 import {
   NavigationMenu,
@@ -32,7 +33,11 @@ export default function NavbarMenu() {
           </NavigationMenuItem>
         ))}
         <NavigationMenuItem>
-          <Link legacyBehavior passHref href={username ? routeBuilders.PROFILE(username) : '#'}>
+          <Link
+            legacyBehavior
+            passHref
+            href={username ? routeBuilders.PROFILE(username) : '#'}
+          >
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Profile
             </NavigationMenuLink>

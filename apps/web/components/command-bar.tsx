@@ -1,7 +1,8 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useEffect, useState, useCallback } from 'react';
+
+import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -82,7 +83,10 @@ export default function CommandBar() {
             </div>
           </CommandEmpty>
           <CommandGroup heading="Pages">
-            <CommandItem className="items-center" onSelect={() => handleSelect('/')}>
+            <CommandItem
+              className="items-center"
+              onSelect={() => handleSelect('/')}
+            >
               <span className="material-symbols-rounded">home</span>
               <span>Home</span>
             </CommandItem>

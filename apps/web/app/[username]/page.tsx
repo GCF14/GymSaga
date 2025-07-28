@@ -1,8 +1,9 @@
 'use client';
 
-import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState, useCallback } from 'react';
 import { useMemo } from 'react';
+
+import { useParams, useRouter } from 'next/navigation';
 
 import ProfileCard from '@/components/profile-card';
 import ProfileTab from '@/components/profile-tab';
@@ -22,7 +23,8 @@ export default function ProfilePage() {
 
   const checkOwnership = useCallback(() => {
     const storedUsername = localStorage.getItem('username') || '';
-    const isOwnerProfile = decodedUsername.toLowerCase() === storedUsername.toLowerCase();
+    const isOwnerProfile =
+      decodedUsername.toLowerCase() === storedUsername.toLowerCase();
     setIsOwner(isOwnerProfile);
   }, [decodedUsername]);
 

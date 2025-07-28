@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+
 import { toast } from 'sonner';
 
 import AttachmentButton from '@/components/attachment-button';
@@ -73,7 +74,9 @@ export default function CreatePostDialog() {
       <DialogContent className="min-w-[750px]">
         <DialogHeader>
           <DialogTitle>Create Post</DialogTitle>
-          <DialogDescription>Share your thoughts with others!</DialogDescription>
+          <DialogDescription>
+            Share your thoughts with others!
+          </DialogDescription>
         </DialogHeader>
         <div className="flex items-center gap-2">
           <Textarea

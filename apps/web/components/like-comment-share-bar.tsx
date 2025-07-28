@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+
 import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
@@ -43,17 +44,20 @@ export default function LikeCommentShareBar({
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/posts/${postId}/like`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/posts/${postId}/like`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify({
+            username: currentUsername,
+            action: wasLiked ? 'unlike' : 'like',
+          }),
         },
-        credentials: 'include',
-        body: JSON.stringify({
-          username: currentUsername,
-          action: wasLiked ? 'unlike' : 'like',
-        }),
-      });
+      );
 
       if (!response.ok) {
         setLikeCount(likeCount);
@@ -91,7 +95,11 @@ export default function LikeCommentShareBar({
       </div>
 
       <div className="flex min-h-[48px] flex-col items-center">
-        <Button className="hover-button mb-1 px-2" variant="ghost" onClick={onCommentClick}>
+        <Button
+          className="hover-button mb-1 px-2"
+          variant="ghost"
+          onClick={onCommentClick}
+        >
           <span className="material-symbols-rounded">mode_comment</span>
         </Button>
         <div className="h-4"></div>
@@ -106,7 +114,8 @@ export default function LikeCommentShareBar({
               .writeText(window.location.href)
               .then(() => {
                 toast('Link Copied! 🎉', {
-                  description: 'Share it with your friends and let them join the fun!',
+                  description:
+                    'Share it with your friends and let them join the fun!',
                   action: {
                     label: 'Close',
                     onClick: () => toast.dismiss(),

@@ -1,14 +1,21 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useEffect } from 'react';
+
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 import { LoginForm } from './login-form';
 
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useSignup } from '@/hooks/useSignup';
@@ -48,7 +55,13 @@ export default function SignupForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const success = await signup(email, password, userName, firstName, lastName);
+    const success = await signup(
+      email,
+      password,
+      userName,
+      firstName,
+      lastName,
+    );
 
     if (success) {
       router.push('/');
@@ -66,7 +79,9 @@ export default function SignupForm() {
       <Card>
         <CardHeader>
           <CardTitle className="text-xl 2xl:text-2xl">Sign Up</CardTitle>
-          <CardDescription>Enter your information to create an account</CardDescription>
+          <CardDescription>
+            Enter your information to create an account
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
@@ -131,7 +146,10 @@ export default function SignupForm() {
             </div>
             <div className="mt-4 text-center text-sm">
               Already have an account?{' '}
-              <button className="underline underline-offset-4" onClick={handleLoginClick}>
+              <button
+                className="underline underline-offset-4"
+                onClick={handleLoginClick}
+              >
                 Log in
               </button>
             </div>

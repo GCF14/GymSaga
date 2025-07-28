@@ -1,9 +1,10 @@
 'use client';
 
-import Image from 'next/image';
-import Link from 'next/link';
 import { useState } from 'react';
 import React from 'react';
+
+import Image from 'next/image';
+import Link from 'next/link';
 
 import CommentCard from '@/components/comments-card';
 import MoreMenu from '@/components/dropdown-menu';
@@ -24,7 +25,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@/components/ui/hover-card';
 import { PostCardProps } from '@/types/post';
 
 export default function PostCard({
@@ -41,7 +46,11 @@ export default function PostCard({
   const [showCommentCard, setShowCommentCard] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const displayUsername = username ? (username.startsWith('@') ? username.slice(1) : username) : '';
+  const displayUsername = username
+    ? username.startsWith('@')
+      ? username.slice(1)
+      : username
+    : '';
 
   const handleComment = () => {
     setShowCommentCard(true);
@@ -64,7 +73,10 @@ export default function PostCard({
       );
     } else if (item.type === 'image' && item.data) {
       return (
-        <div key={`${postId || ''}-${index}`} className="mt-2 mb-4 flex justify-center">
+        <div
+          key={`${postId || ''}-${index}`}
+          className="mt-2 mb-4 flex justify-center"
+        >
           <Image
             alt={`Posted by ${displayUsername || 'user'}`}
             className="max-h-96 w-auto rounded-lg object-contain"
@@ -77,8 +89,15 @@ export default function PostCard({
       );
     } else if (item.type === 'video' && item.data) {
       return (
-        <div key={`${postId || ''}-${index}`} className="mt-2 mb-4 flex justify-center">
-          <video controls className="max-h-96 w-auto rounded-lg" src={item.data} />
+        <div
+          key={`${postId || ''}-${index}`}
+          className="mt-2 mb-4 flex justify-center"
+        >
+          <video
+            controls
+            className="max-h-96 w-auto rounded-lg"
+            src={item.data}
+          />
         </div>
       );
     }
@@ -93,29 +112,43 @@ export default function PostCard({
           <div className="flex justify-between">
             <div className="flex h-full w-full items-center">
               <Avatar className="mr-4 h-10 w-10">
-                <AvatarImage alt={`${displayUsername}'s avatar`} src={profilePicture} />
+                <AvatarImage
+                  alt={`${displayUsername}'s avatar`}
+                  src={profilePicture}
+                />
                 <AvatarFallback>
-                  {displayUsername ? displayUsername.charAt(0).toUpperCase() : 'U'}
+                  {displayUsername
+                    ? displayUsername.charAt(0).toUpperCase()
+                    : 'U'}
                 </AvatarFallback>
               </Avatar>
               <CardTitle>
                 <HoverCard>
                   <HoverCardTrigger asChild className="hover-underline">
-                    <Link href={`/${encodeURIComponent(displayUsername)}`}>{displayUsername}</Link>
+                    <Link href={`/${encodeURIComponent(displayUsername)}`}>
+                      {displayUsername}
+                    </Link>
                   </HoverCardTrigger>
                   <HoverCardContent className="w-80">
                     <div className="flex justify-between space-x-4">
                       <Avatar>
-                        <AvatarImage alt={`${displayUsername}'s avatar`} src={profilePicture} />
+                        <AvatarImage
+                          alt={`${displayUsername}'s avatar`}
+                          src={profilePicture}
+                        />
                         <AvatarFallback>
-                          {displayUsername ? displayUsername.charAt(0).toUpperCase() : 'U'}
+                          {displayUsername
+                            ? displayUsername.charAt(0).toUpperCase()
+                            : 'U'}
                         </AvatarFallback>
                       </Avatar>
                       <div className="space-y-1">
                         <h4 className="text-sm font-semibold">{username}</h4>
                         <p className="text-sm">{bio || 'No bio available'}</p>
                         <div className="flex items-center pt-2">
-                          <span className="text-muted-foreground text-xs">{date}</span>
+                          <span className="text-muted-foreground text-xs">
+                            {date}
+                          </span>
                         </div>
                       </div>
                     </div>

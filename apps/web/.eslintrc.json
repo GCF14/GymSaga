@@ -16,10 +16,7 @@
     {
       "files": [ "*.ts", "*.tsx", "*.js", "*.jsx" ],
       "rules": {
-        "@next/next/no-html-link-for-pages": [
-          "error",
-          "apps/web/pages"
-        ],
+        "@next/next/no-html-link-for-pages": "off",
         "semi": [
           "error",
           "always"

@@ -1,7 +1,8 @@
 'use client';
 
-import axios from 'axios';
 import { useEffect, useState, useCallback } from 'react';
+
+import axios from 'axios';
 import { io } from 'socket.io-client';
 
 import { BlurFade } from '@/components/magicui/blur-fade';
@@ -68,7 +69,9 @@ export default function Home() {
       console.log('New post received:', data);
 
       setPosts((currentPosts) => {
-        const postExists = currentPosts.some((post) => post._id === data.post._id);
+        const postExists = currentPosts.some(
+          (post) => post._id === data.post._id,
+        );
         if (postExists) {
           return currentPosts;
         }
@@ -90,7 +93,9 @@ export default function Home() {
       console.log('Post updated:', data);
 
       setPosts((currentPosts) =>
-        currentPosts.map((post) => (post._id === data.post._id ? { ...data.post } : post)),
+        currentPosts.map((post) =>
+          post._id === data.post._id ? { ...data.post } : post,
+        ),
       );
 
       console.log(`${data.message}`);
@@ -99,7 +104,9 @@ export default function Home() {
     newSocket.on('postDeleted', (data) => {
       console.log('Post deleted:', data);
 
-      setPosts((currentPosts) => currentPosts.filter((post) => post._id !== data.postId));
+      setPosts((currentPosts) =>
+        currentPosts.filter((post) => post._id !== data.postId),
+      );
 
       console.log(`${data.message}`);
     });
@@ -108,7 +115,9 @@ export default function Home() {
       console.log('Post like updated:', data);
 
       setPosts((currentPosts) =>
-        currentPosts.map((post) => (post._id === data.post._id ? { ...data.post } : post)),
+        currentPosts.map((post) =>
+          post._id === data.post._id ? { ...data.post } : post,
+        ),
       );
 
       console.log(`${data.message}`);
@@ -166,7 +175,9 @@ export default function Home() {
               <PostCard
                 bio={post.bio}
                 content={post.content}
-                currentUser={user.username ? { username: user.username } : undefined}
+                currentUser={
+                  user.username ? { username: user.username } : undefined
+                }
                 date={post.date}
                 likedBy={post.likedBy}
                 numOfLikes={post.numOfLikes}

@@ -1,7 +1,8 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 import { Textarea } from './ui/textarea';
@@ -51,14 +52,17 @@ export default function EditProfileDialog() {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/update/${userId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/users/update/${userId}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(bodyData),
+          cache: 'no-store',
         },
-        body: JSON.stringify(bodyData),
-        cache: 'no-store',
-      });
+      );
 
       const data = await res.json();
 
@@ -127,7 +131,9 @@ export default function EditProfileDialog() {
       <DialogContent className="min-w-[500px]">
         <DialogHeader>
           <DialogTitle>Edit Profile</DialogTitle>
-          <DialogDescription>Update your profile information here!</DialogDescription>
+          <DialogDescription>
+            Update your profile information here!
+          </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">

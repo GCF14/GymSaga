@@ -1,7 +1,8 @@
 'use client';
 
-import { motion, useAnimation, useInView } from 'motion/react';
 import { useEffect, useRef, type JSX } from 'react';
+
+import { motion, useAnimation, useInView } from 'motion/react';
 
 interface BoxRevealProps {
   children: JSX.Element;
@@ -57,6 +58,7 @@ export const BoxReveal = ({
       <motion.div
         animate={slideControls}
         initial="hidden"
+        transition={{ duration: duration ? duration : 0.5, ease: 'easeIn' }}
         style={{
           position: 'absolute',
           top: 4,
@@ -66,7 +68,6 @@ export const BoxReveal = ({
           zIndex: 20,
           background: boxColor,
         }}
-        transition={{ duration: duration ? duration : 0.5, ease: 'easeIn' }}
         variants={{
           hidden: { left: 0 },
           visible: { left: '100%' },

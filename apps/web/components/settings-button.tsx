@@ -1,8 +1,9 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -45,22 +46,35 @@ export default function SettingsButton() {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <Link href={`/${username}`}>
-          <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer">
+            Profile
+          </DropdownMenuItem>
         </Link>
         <Link href="/settings">
-          <DropdownMenuItem className="cursor-pointer">Settings</DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer">
+            Settings
+          </DropdownMenuItem>
         </Link>
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>Mode Toggle</DropdownMenuSubTrigger>
           <DropdownMenuPortal>
             <DropdownMenuSubContent>
-              <DropdownMenuItem className="cursor-pointer" onClick={() => setTheme('light')}>
+              <DropdownMenuItem
+                className="cursor-pointer"
+                onClick={() => setTheme('light')}
+              >
                 Light Mode
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer" onClick={() => setTheme('dark')}>
+              <DropdownMenuItem
+                className="cursor-pointer"
+                onClick={() => setTheme('dark')}
+              >
                 Dark Mode
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer" onClick={() => setTheme('system')}>
+              <DropdownMenuItem
+                className="cursor-pointer"
+                onClick={() => setTheme('system')}
+              >
                 System
               </DropdownMenuItem>
             </DropdownMenuSubContent>

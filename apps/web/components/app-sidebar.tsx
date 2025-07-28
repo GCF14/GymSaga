@@ -45,10 +45,10 @@ export function AppSidebar() {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     asChild
+                    tooltip={isCollapsed ? item.title : undefined}
                     className={`hover:bg-accent text-foreground hover:text-accent-foreground flex items-center gap-3 rounded-md p-4 transition-colors ${
                       isCollapsed ? 'justify-center' : ''
                     }`}
-                    tooltip={isCollapsed ? item.title : undefined}
                   >
                     <a href={item.url}>
                       <item.icon className="h-5 w-5 flex-shrink-0" />

@@ -1,14 +1,21 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useEffect } from 'react';
+
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 import SignupForm from './signup-form';
 
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useLogin } from '@/hooks/useLogin';
@@ -64,7 +71,9 @@ export function LoginForm() {
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
-          <CardDescription>Enter your email below to login to your account</CardDescription>
+          <CardDescription>
+            Enter your email below to login to your account
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
@@ -107,7 +116,10 @@ export function LoginForm() {
             </div>
             <div className="mt-4 text-center text-sm">
               Don&apos;t have an account?{' '}
-              <button className="underline underline-offset-4" onClick={handleSignupClick}>
+              <button
+                className="underline underline-offset-4"
+                onClick={handleSignupClick}
+              >
                 Sign up
               </button>
             </div>

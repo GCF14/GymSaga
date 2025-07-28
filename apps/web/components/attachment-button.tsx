@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+
 import { toast } from 'sonner';
 
 import { FilePreviewDialog } from '@/components/file-preview-dialog';
@@ -9,7 +10,10 @@ interface AttachmentButtonProps {
   maxFiles: number;
 }
 
-export default function AttachmentButton({ onFilesChange, maxFiles }: AttachmentButtonProps) {
+export default function AttachmentButton({
+  onFilesChange,
+  maxFiles,
+}: AttachmentButtonProps) {
   const [files, setFiles] = useState<File[]>([]);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -18,24 +22,27 @@ export default function AttachmentButton({ onFilesChange, maxFiles }: Attachment
     if (event.target.files) {
       const newFiles = Array.from(event.target.files);
       if (maxFiles && files.length + newFiles.length > maxFiles) {
-        toast.error(`Error: You can upload up to ${maxFiles} file${maxFiles > 1 ? 's' : ''}.`, {
-          action: {
-            label: 'Close',
-            onClick: () => toast.dismiss(),
+        toast.error(
+          `Error: You can upload up to ${maxFiles} file${maxFiles > 1 ? 's' : ''}.`,
+          {
+            action: {
+              label: 'Close',
+              onClick: () => toast.dismiss(),
+            },
+            style: {
+              color: '#ffffff',
+              borderColor: '#7f1d1d',
+              backgroundColor: '#7f1d1d',
+            },
+            actionButtonStyle: {
+              backgroundColor: '#7f1d1d',
+              borderColor: '#ffffff',
+              color: '#ffffff',
+              borderWidth: '1px',
+              borderStyle: 'solid',
+            },
           },
-          style: {
-            color: '#ffffff',
-            borderColor: '#7f1d1d',
-            backgroundColor: '#7f1d1d',
-          },
-          actionButtonStyle: {
-            backgroundColor: '#7f1d1d',
-            borderColor: '#ffffff',
-            color: '#ffffff',
-            borderWidth: '1px',
-            borderStyle: 'solid',
-          },
-        });
+        );
 
         return;
       }
@@ -78,7 +85,12 @@ export default function AttachmentButton({ onFilesChange, maxFiles }: Attachment
 
   return (
     <div className="flex flex-row items-start gap-2">
-      <Button className="hover-button" size="icon" variant="outline" onClick={triggerFileInput}>
+      <Button
+        className="hover-button"
+        size="icon"
+        variant="outline"
+        onClick={triggerFileInput}
+      >
         <span className="material-symbols-rounded">attach_file</span>
       </Button>
       <input
@@ -91,7 +103,11 @@ export default function AttachmentButton({ onFilesChange, maxFiles }: Attachment
       />
       {files.map((file, index) => (
         <div key={index} className="group relative">
-          <Button size="icon" variant="outline" onClick={() => setSelectedFile(file)}>
+          <Button
+            size="icon"
+            variant="outline"
+            onClick={() => setSelectedFile(file)}
+          >
             {getFileIcon(file)}
           </Button>
           <Button
@@ -105,7 +121,10 @@ export default function AttachmentButton({ onFilesChange, maxFiles }: Attachment
           </Button>
         </div>
       ))}
-      <FilePreviewDialog file={selectedFile} onClose={() => setSelectedFile(null)} />
+      <FilePreviewDialog
+        file={selectedFile}
+        onClose={() => setSelectedFile(null)}
+      />
     </div>
   );
 }

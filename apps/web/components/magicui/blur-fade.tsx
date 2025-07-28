@@ -1,7 +1,14 @@
 'use client';
 
-import { AnimatePresence, motion, useInView, UseInViewOptions, Variants } from 'motion/react';
 import { useRef } from 'react';
+
+import {
+  AnimatePresence,
+  motion,
+  useInView,
+  UseInViewOptions,
+  Variants,
+} from 'motion/react';
 
 type MarginType = UseInViewOptions['margin'];
 
@@ -59,12 +66,12 @@ export function BlurFade({
         className={className}
         exit="hidden"
         initial="hidden"
+        variants={combinedVariants}
         transition={{
           delay: 0.04 + delay,
           duration,
           ease: 'easeOut',
         }}
-        variants={combinedVariants}
       >
         {children}
       </motion.div>

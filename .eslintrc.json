@@ -55,7 +55,7 @@
             "selector": "default",
             "format": ["UPPER_CASE", "snake_case", "camelCase", "PascalCase"],
             "filter": {
-              "regex": "[-]",
+              "regex": "[-^.+\\[\\]()$*]",
               "match": false
             }
           }
@@ -67,7 +67,7 @@
             "argsIgnorePattern": "^_"
           }
         ],
-        "@typescript-eslint/semi": ["error"]
+        "semi": ["error", "always"]
       }
     },
     {

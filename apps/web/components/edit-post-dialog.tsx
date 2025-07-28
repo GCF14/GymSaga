@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+
 import { toast } from 'sonner';
 
 import AttachmentButton from '@/components/attachment-button';
@@ -23,7 +24,10 @@ interface EditPostDialogProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function EditPostDialog({ isOpen, setIsOpen }: EditPostDialogProps) {
+export default function EditPostDialog({
+  isOpen,
+  setIsOpen,
+}: EditPostDialogProps) {
   const [text, setText] = useState('');
   const [files, setFiles] = useState<File[]>([]);
   const [loading, setLoading] = useState(false);
@@ -38,7 +42,9 @@ export default function EditPostDialog({ isOpen, setIsOpen }: EditPostDialogProp
       <DialogContent className="min-w-[750px]">
         <DialogHeader>
           <DialogTitle>Edit Post</DialogTitle>
-          <DialogDescription>Share your thoughts with others!</DialogDescription>
+          <DialogDescription>
+            Share your thoughts with others!
+          </DialogDescription>
         </DialogHeader>
         <div className="flex items-center gap-2">
           <Textarea placeholder="Write something..." rows={10}></Textarea>
