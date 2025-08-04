@@ -5,8 +5,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
-import { Textarea } from './ui/textarea';
-
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -20,6 +18,8 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAuthContext } from '@/hooks/useAuthContext';
+
+import { Textarea } from './ui/textarea';
 
 export default function EditProfileDialog() {
   const { user } = useAuthContext();

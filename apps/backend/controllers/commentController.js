@@ -1,12 +1,13 @@
-const Comment = require("../models/commentModel");
-const mongoose = require("mongoose");
-const Post = require("../models/postModel");
+const mongoose = require('mongoose');
+
+const Comment = require('../models/commentModel');
+const Post = require('../models/postModel');
 
 async function addComment(req, res) {
   const { postId, username, text } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(postId)) {
-    return res.status(400).json({ error: "Invalid post ID" });
+    return res.status(400).json({ error: 'Invalid post ID' });
   }
 
   try {
@@ -23,13 +24,13 @@ async function editComment(req, res) {
   const { text } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(postId)) {
-    return res.status(400).json({ error: "Invalid post ID" });
+    return res.status(400).json({ error: 'Invalid post ID' });
   }
 
   const comment = await Comment.findByIdAndUpdate(id, { text }, { new: true });
 
   if (!comment) {
-    return res.status(404).json({ error: "No such comment" });
+    return res.status(404).json({ error: 'No such comment' });
   }
 
   res.status(200).json(comment);
@@ -39,13 +40,13 @@ async function deleteComment(req, res) {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ error: "Invalid comment ID" });
+    return res.status(400).json({ error: 'Invalid comment ID' });
   }
 
   const comment = await Comment.findByIdAndDelete(id);
 
   if (!comment) {
-    return res.status(404).json({ error: "No such comment" });
+    return res.status(404).json({ error: 'No such comment' });
   }
 
   await Post.updateOne({ comments: id }, { $pull: { comments: id } });

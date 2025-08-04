@@ -1,7 +1,6 @@
-const express = require("express");
-const router = express.Router();
-const upload = require("../middleware/multer");
+const express = require('express');
 
+const router = express.Router();
 const {
   createNewPost,
   getAllPosts,
@@ -10,20 +9,21 @@ const {
   updatePost,
   getPostsByUsername,
   likePost,
-} = require("../controllers/postController");
+} = require('../controllers/postController');
+const upload = require('../middleware/multer');
 
-router.get("/", getAllPosts);
+router.get('/', getAllPosts);
 
-router.get("/:id", getPost);
+router.get('/:id', getPost);
 
-router.post("/", upload.array("files"), createNewPost);
+router.post('/', upload.array('files'), createNewPost);
 
-router.delete("/:id", deletePost);
+router.delete('/:id', deletePost);
 
-router.patch("/:id", updatePost);
+router.patch('/:id', updatePost);
 
-router.get("/user/:username", getPostsByUsername);
+router.get('/user/:username', getPostsByUsername);
 
-router.patch("/:id/like", likePost);
+router.patch('/:id/like', likePost);
 
 module.exports = router;

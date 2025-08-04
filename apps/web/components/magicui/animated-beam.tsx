@@ -123,15 +123,15 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
 
   return (
     <svg
-      className={cn(
-        'pointer-events-none absolute top-0 left-0 transform-gpu stroke-2',
-        className,
-      )}
       fill="none"
       height={svgDimensions.height}
       viewBox={`0 0 ${svgDimensions.width} ${svgDimensions.height}`}
       width={svgDimensions.width}
       xmlns="http://www.w3.org/2000/svg"
+      className={cn(
+        'pointer-events-none absolute top-0 left-0 transform-gpu stroke-2',
+        className,
+      )}
     >
       <path
         d={pathD}

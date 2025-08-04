@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from 'react';
 
-import { AnimatedIconBeam } from './animated-icon-beam';
-
 import DeleteAccountButton from '@/components/delete-account-button';
 import { BlurFade } from '@/components/magicui/blur-fade';
 import { Button } from '@/components/ui/button';
@@ -17,6 +15,8 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
+
+import { AnimatedIconBeam } from './animated-icon-beam';
 
 interface SettingsCardProps {
   className?: string;
@@ -58,11 +58,21 @@ export default function SettingsCard({ className }: SettingsCardProps) {
               <div className="ml-8 flex flex-col gap-4">
                 <div className="flex flex-row items-center gap-2">
                   <span className="w-24 text-right">Email</span>
-                  <Input disabled className="w-96" placeholder={email ?? ''} type="username" />
+                  <Input
+                    disabled
+                    className="w-96"
+                    placeholder={email ?? ''}
+                    type="username"
+                  />
                 </div>
                 <div className="flex flex-row items-center gap-2">
                   <span className="w-24 text-right">Username</span>
-                  <Input disabled className="w-96" placeholder={username ?? ''} type="username" />
+                  <Input
+                    disabled
+                    className="w-96"
+                    placeholder={username ?? ''}
+                    type="username"
+                  />
                 </div>
                 <div className="flex flex-row items-center gap-2">
                   <span className="w-24 text-right">First Name</span>
@@ -75,10 +85,18 @@ export default function SettingsCard({ className }: SettingsCardProps) {
                 </div>
                 <div className="flex flex-row items-center gap-2">
                   <span className="w-24 text-right">Last Name</span>
-                  <Input disabled className="w-96" placeholder={lastName ?? ''} type="last name" />
+                  <Input
+                    disabled
+                    className="w-96"
+                    placeholder={lastName ?? ''}
+                    type="last name"
+                  />
                 </div>
               </div>
-              <Button className="mt-4 ml-auto w-20" onClick={() => alert('Not implemented')}>
+              <Button
+                className="mt-4 ml-auto w-20"
+                onClick={() => alert('Not implemented')}
+              >
                 Edit
               </Button>
             </div>

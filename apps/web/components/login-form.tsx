@@ -1,12 +1,9 @@
 'use client';
 
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-
-import SignupForm from './signup-form';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -19,6 +16,8 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useLogin } from '@/hooks/useLogin';
+
+import SignupForm from './signup-form';
 
 export function LoginForm() {
   const [isSignup, setIsSingup] = useState(false);

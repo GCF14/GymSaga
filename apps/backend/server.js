@@ -1,17 +1,19 @@
-require("dotenv").config();
+require('dotenv').config();
 
-const express = require("express");
-const http = require("http");
-const socketIo = require("socket.io");
-const path = require("path");
-const mongoose = require("mongoose");
-const workoutRoutes = require("./routes/workouts");
-const userRoutes = require("./routes/users");
-const postRoutes = require("./routes/posts");
-const commentRoutes = require("./routes/comments");
-const uploadRoutes = require("./routes/uploadRoutes");
-const cors = require("cors");
-const cookieParser = require("cookie-parser");
+const http = require('http');
+const path = require('path');
+
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
+const express = require('express');
+const mongoose = require('mongoose');
+const socketIo = require('socket.io');
+
+const commentRoutes = require('./routes/comments');
+const postRoutes = require('./routes/posts');
+const uploadRoutes = require('./routes/uploadRoutes');
+const userRoutes = require('./routes/users');
+const workoutRoutes = require('./routes/workouts');
 
 const app = express();
 const server = http.createServer(app);
@@ -19,12 +21,12 @@ const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
     origin: process.env.FRONTEND_URL,
-    methods: ["GET", "POST"],
+    methods: ['GET', 'POST'],
     credentials: true,
   },
 });
 
-app.set("io", io);
+app.set('io', io);
 
 // middlewear
 app.use(express.json());
@@ -42,38 +44,38 @@ app.use((req, res, next) => {
 });
 
 // Socket.IO connection handling
-io.on("connection", (socket) => {
-  console.log("User connected: ", socket.id);
+io.on('connection', (socket) => {
+  console.log('User connected: ', socket.id);
 
   // All users join general_feed room
-  socket.join("general_feed");
+  socket.join('general_feed');
   console.log(`User ${socket.id} joined general_feed room`);
 
   // Handle disconnection
-  socket.on("disconnect", () => {
-    console.log("User disconnected: ", socket.id);
+  socket.on('disconnect', () => {
+    console.log('User disconnected: ', socket.id);
   });
 });
 
 // API endpoints
-app.use("/api/workouts", workoutRoutes);
-app.use("/api/users", userRoutes);
-app.use("/api/posts", postRoutes);
-app.use("/api/comments", commentRoutes);
-app.use("/api", uploadRoutes);
+app.use('/api/workouts', workoutRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/posts', postRoutes);
+app.use('/api/comments', commentRoutes);
+app.use('/api', uploadRoutes);
 
 // Connect to db
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     server.listen(process.env.PORT, () => {
-      console.log("Connected to db and Server started");
+      console.log('Connected to db and Server started');
     });
   })
   .catch((error) => {
     console.log(error);
   });
 
-app.get("/api/mapbox-token", (req, res) => {
+app.get('/api/mapbox-token', (req, res) => {
   res.json({ token: process.env.MAPBOX_ACCESS_TOKEN });
 });

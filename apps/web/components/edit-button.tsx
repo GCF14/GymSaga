@@ -1,7 +1,7 @@
+import EditMealDialog from '@/components/edit-meal-dialog';
+
 import EditProfileDialog from './edit-profile-dialog';
 import EditWorkoutDialog from './edit-workout-dialog';
-
-import EditMealDialog from '@/components/edit-meal-dialog';
 
 interface EditButtonProps {
   type: string;

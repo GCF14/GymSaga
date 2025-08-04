@@ -175,15 +175,15 @@ export default function Home() {
               <PostCard
                 bio={post.bio}
                 content={post.content}
-                currentUser={
-                  user.username ? { username: user.username } : undefined
-                }
                 date={post.date}
                 likedBy={post.likedBy}
                 numOfLikes={post.numOfLikes}
                 postId={post._id}
                 profilePicture={post.profilePicture}
                 username={post.username}
+                currentUser={
+                  user.username ? { username: user.username } : undefined
+                }
               />
             </BlurFade>
           ))

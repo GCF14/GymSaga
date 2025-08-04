@@ -1,7 +1,5 @@
 import Link from 'next/link';
 
-import CreatePostDialog from './create-post-dialog';
-
 import { ModeToggle } from '@/components/mode-toggle';
 import SettingsButton from '@/components/settings-button';
 import { Button } from '@/components/ui/button';
@@ -14,6 +12,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
+
+import CreatePostDialog from './create-post-dialog';
 
 export default function SheetMenu() {
   const menuItems = [

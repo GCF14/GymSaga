@@ -1,8 +1,9 @@
-const Post = require("../models/postModel");
-const Comment = require("../models/commentModel");
-const mongoose = require("mongoose");
-const cloudinary = require("../utils/cloudinary");
-const User = require("../models/userModel");
+const mongoose = require('mongoose');
+
+const Comment = require('../models/commentModel');
+const Post = require('../models/postModel');
+const User = require('../models/userModel');
+const cloudinary = require('../utils/cloudinary');
 
 async function getAllPosts(req, res) {
   try {
@@ -20,8 +21,8 @@ async function getAllPosts(req, res) {
     const userMap = {};
     users.forEach((user) => {
       userMap[user.username] = {
-        profilePicture: user.profilePicture || "",
-        bio: user.bio || "",
+        profilePicture: user.profilePicture || '',
+        bio: user.bio || '',
       };
     });
 
@@ -32,20 +33,20 @@ async function getAllPosts(req, res) {
 
       return {
         ...postObject,
-        profilePicture: userDetails.profilePicture || "",
-        bio: userDetails.bio || "",
-        date: post.createdAt.toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
+        profilePicture: userDetails.profilePicture || '',
+        bio: userDetails.bio || '',
+        date: post.createdAt.toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
         }),
       };
     });
 
     res.status(200).json(enrichedPosts);
   } catch (error) {
-    console.error("Error fetching posts:", error);
-    res.status(500).json({ error: "Error fetching posts" });
+    console.error('Error fetching posts:', error);
+    res.status(500).json({ error: 'Error fetching posts' });
   }
 }
 
@@ -53,14 +54,14 @@ async function getPost(req, res) {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "Invalid post ID" });
+    return res.status(404).json({ error: 'Invalid post ID' });
   }
 
   try {
-    const post = await Post.findById(id).populate("comments");
+    const post = await Post.findById(id).populate('comments');
 
     if (!post) {
-      return res.status(404).json({ error: "No such post" });
+      return res.status(404).json({ error: 'No such post' });
     }
 
     // Always fetch fresh user data
@@ -69,8 +70,8 @@ async function getPost(req, res) {
     const enrichedPost = post.toObject();
     if (user) {
       // Use the latest user data
-      enrichedPost.profilePicture = user.profilePicture || "";
-      enrichedPost.bio = user.bio || "";
+      enrichedPost.profilePicture = user.profilePicture || '';
+      enrichedPost.bio = user.bio || '';
     }
 
     res.status(200).json(enrichedPost);
@@ -87,22 +88,22 @@ async function createNewPost(req, res) {
   if (!text && (!files || files.length === 0)) {
     return res
       .status(400)
-      .json({ error: "Please provide at least text, image, or video." });
+      .json({ error: 'Please provide at least text, image, or video.' });
   }
 
   if (!username || numOfLikes === undefined || !likedBy) {
-    return res.status(400).json({ error: "Missing required fields." });
+    return res.status(400).json({ error: 'Missing required fields.' });
   }
 
   try {
-    if (text && text.trim() !== "") {
-      content.push({ type: "text", data: text });
+    if (text && text.trim() !== '') {
+      content.push({ type: 'text', data: text });
     }
 
     if (files && files.length > 0) {
       for (const file of files) {
         const result = await cloudinary.uploader.upload(file.path, {
-          resource_type: "auto",
+          resource_type: 'auto',
         });
 
         content.push({
@@ -126,14 +127,14 @@ async function createNewPost(req, res) {
     const enrichedPost = post.toObject();
 
     if (user) {
-      enrichedPost.profilePicture = user.profilePicture || "";
-      enrichedPost.bio = user.bio || "";
+      enrichedPost.profilePicture = user.profilePicture || '';
+      enrichedPost.bio = user.bio || '';
     }
 
-    const io = req.app.get("io");
+    const io = req.app.get('io');
 
     if (io) {
-      io.to("general_feed").emit("newPost", {
+      io.to('general_feed').emit('newPost', {
         post: enrichedPost,
         message: `${username} has created a new post!`,
         timestamp: new Date(),
@@ -153,22 +154,22 @@ async function deletePost(req, res) {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ error: "No such post" });
+    return res.status(400).json({ error: 'No such post' });
   }
 
   const post = await Post.findOneAndDelete({ _id: id });
 
   if (!post) {
-    return res.status(400).json({ error: "No such post" });
+    return res.status(400).json({ error: 'No such post' });
   }
 
   // Emit post deletion to all users
-  const io = req.app.get("io");
+  const io = req.app.get('io');
   if (io) {
-    io.to("general_feed").emit("postDeleted", {
+    io.to('general_feed').emit('postDeleted', {
       postId: id,
       username: post.username,
-      message: "A post has been deleted",
+      message: 'A post has been deleted',
       timestamp: new Date(),
     });
 
@@ -182,7 +183,7 @@ async function updatePost(req, res) {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ error: "No such post" });
+    return res.status(400).json({ error: 'No such post' });
   }
 
   const post = await Post.findOneAndUpdate(
@@ -194,7 +195,7 @@ async function updatePost(req, res) {
   ); // Return the updated document
 
   if (!post) {
-    return res.status(400).json({ error: "No such post" });
+    return res.status(400).json({ error: 'No such post' });
   }
 
   // Fetch user data for the updated post
@@ -202,21 +203,21 @@ async function updatePost(req, res) {
   const enrichedPost = post.toObject();
 
   if (user) {
-    enrichedPost.profilePicture = user.profilePicture || "";
-    enrichedPost.bio = user.bio || "";
-    enrichedPost.date = post.createdAt.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
+    enrichedPost.profilePicture = user.profilePicture || '';
+    enrichedPost.bio = user.bio || '';
+    enrichedPost.date = post.createdAt.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
     });
   }
 
   // Emit post update to all users
-  const io = req.app.get("io");
+  const io = req.app.get('io');
   if (io) {
-    io.to("general_feed").emit("postUpdated", {
+    io.to('general_feed').emit('postUpdated', {
       post: enrichedPost,
-      message: "A post has been updated",
+      message: 'A post has been updated',
       timestamp: new Date(),
     });
 
@@ -232,11 +233,11 @@ const getPostsByUsername = async (req, res) => {
   try {
     // Case-insensitive username search
     const user = await User.findOne({
-      username: { $regex: `^${username}$`, $options: "i" },
+      username: { $regex: `^${username}$`, $options: 'i' },
     }).lean();
 
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ error: 'User not found' });
     }
 
     // Find posts by username
@@ -249,12 +250,12 @@ const getPostsByUsername = async (req, res) => {
       const postObject = post.toObject();
       return {
         ...postObject,
-        profilePicture: user.profilePicture || "",
-        bio: user.bio || "",
-        date: post.createdAt.toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
+        profilePicture: user.profilePicture || '',
+        bio: user.bio || '',
+        date: post.createdAt.toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
         }),
       };
     });
@@ -270,23 +271,23 @@ async function likePost(req, res) {
   const { username, action } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ error: "Invalid post ID" });
+    return res.status(400).json({ error: 'Invalid post ID' });
   }
 
-  if (!username || !action || !["like", "unlike"].includes(action)) {
-    return res.status(400).json({ error: "Invalid request data" });
+  if (!username || !action || !['like', 'unlike'].includes(action)) {
+    return res.status(400).json({ error: 'Invalid request data' });
   }
 
   try {
     const post = await Post.findById(id);
 
     if (!post) {
-      return res.status(404).json({ error: "Post not found" });
+      return res.status(404).json({ error: 'Post not found' });
     }
 
     let updatedPost;
 
-    if (action === "like") {
+    if (action === 'like') {
       if (!post.likedBy.includes(username)) {
         updatedPost = await Post.findByIdAndUpdate(
           id,
@@ -299,7 +300,7 @@ async function likePost(req, res) {
       } else {
         return res
           .status(400)
-          .json({ error: "Post already liked by this user" });
+          .json({ error: 'Post already liked by this user' });
       }
     } else {
       if (post.likedBy.includes(username)) {
@@ -312,7 +313,7 @@ async function likePost(req, res) {
           { new: true },
         );
       } else {
-        return res.status(400).json({ error: "Post not liked by this user" });
+        return res.status(400).json({ error: 'Post not liked by this user' });
       }
     }
 
@@ -320,18 +321,18 @@ async function likePost(req, res) {
     const enrichedPost = updatedPost.toObject();
 
     if (user) {
-      enrichedPost.profilePicture = user.profilePicture || "";
-      enrichedPost.bio = user.bio || "";
-      enrichedPost.date = updatedPost.createdAt.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
+      enrichedPost.profilePicture = user.profilePicture || '';
+      enrichedPost.bio = user.bio || '';
+      enrichedPost.date = updatedPost.createdAt.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
       });
     }
 
-    const io = req.app.get("io");
+    const io = req.app.get('io');
     if (io) {
-      io.to("general_feed").emit("postLikeUpdated", {
+      io.to('general_feed').emit('postLikeUpdated', {
         post: enrichedPost,
         action,
         username,
@@ -342,8 +343,8 @@ async function likePost(req, res) {
 
     res.status(200).json(enrichedPost);
   } catch (error) {
-    console.error("Error updating post like:", error);
-    res.status(500).json({ error: "Error updating post like" });
+    console.error('Error updating post like:', error);
+    res.status(500).json({ error: 'Error updating post like' });
   }
 }
 

@@ -1,5 +1,6 @@
-import mapboxgl from 'mapbox-gl';
 import React, { useEffect, useRef, useState } from 'react';
+
+import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
@@ -40,7 +41,12 @@ const MapboxExample = () => {
     }
   }, []); // Run only on component mount
 
-  const initializeMapWithUserLocation = (latitude, longitude, zoom = 15.87, isDefaultMap) => {
+  const initializeMapWithUserLocation = (
+    latitude,
+    longitude,
+    zoom = 15.87,
+    isDefaultMap,
+  ) => {
     if (isDefaultMap) {
       // Add a delay if it's the default map
       setTimeout(() => {
@@ -238,7 +244,8 @@ const MapboxExample = () => {
       ) *
       (180 / Math.PI);
 
-    const dLongitude = Math.asin(Math.sin(radiusRad) * Math.sin(toRad(90))) * (180 / Math.PI);
+    const dLongitude =
+      Math.asin(Math.sin(radiusRad) * Math.sin(toRad(90))) * (180 / Math.PI);
 
     const minLongitude = longitude - dLongitude;
     const maxLongitude = longitude + dLongitude;
@@ -253,12 +260,25 @@ const MapboxExample = () => {
       element.properties.metadata?.open_hours &&
       element.properties.metadata.open_hours !== 'Not available'
     ) {
-      const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+      const days = [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+        'Sunday',
+      ];
 
       if (Array.isArray(element.properties.metadata.open_hours.periods)) {
         openingHoursHTML = element.properties.metadata.open_hours.periods
           .map((period) => {
-            if (period.open && period.open.time && period.close && period.close.time) {
+            if (
+              period.open &&
+              period.open.time &&
+              period.close &&
+              period.close.time
+            ) {
               const day = days[period.open.day] ?? 'Unknown';
               const openTime = `${period.open.time.slice(0, 2)}:${period.open.time.slice(2)}`;
               const closeTime = `${period.close.time.slice(0, 2)}:${period.close.time.slice(2)}`;

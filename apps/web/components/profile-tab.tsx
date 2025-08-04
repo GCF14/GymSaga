@@ -1,15 +1,20 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-
-import { BlurFade } from './magicui/blur-fade';
-import WorkoutCarousel from './workout-carousel';
+import React, { useState, useEffect } from 'react';
 
 import EditButton from '@/components/edit-button';
 import MealCarousel from '@/components/meal-carousel';
 import PostCard from '@/components/post-card';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Post } from '@/types/post';
+
+import { BlurFade } from './magicui/blur-fade';
+import WorkoutCarousel from './workout-carousel';
 
 interface ProfileTabProps {
   className?: string;
@@ -17,7 +22,11 @@ interface ProfileTabProps {
   username: string;
 }
 
-export default function ProfileTab({ className, isOwner, username }: ProfileTabProps) {
+export default function ProfileTab({
+  className,
+  isOwner,
+  username,
+}: ProfileTabProps) {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -27,7 +36,10 @@ export default function ProfileTab({ className, isOwner, username }: ProfileTabP
     // Listen for profile updates to refresh data
     const handleProfileUpdate = (event: Event) => {
       const customEvent = event as CustomEvent;
-      console.log('Profile updated event received in ProfileTab', customEvent.detail);
+      console.log(
+        'Profile updated event received in ProfileTab',
+        customEvent.detail,
+      );
       setRefreshKey(Date.now());
     };
 
@@ -71,7 +83,10 @@ export default function ProfileTab({ className, isOwner, username }: ProfileTabP
   }, [username, refreshKey]);
 
   return (
-    <Tabs className={`flex h-[calc(100vh-8rem)] flex-col ${className}`} defaultValue="posts">
+    <Tabs
+      className={`flex h-[calc(100vh-8rem)] flex-col ${className}`}
+      defaultValue="posts"
+    >
       <BlurFade className="flex flex-col overflow-hidden" direction="left">
         <div className="flex justify-center">
           <TabsList className="grid w-1/2 grid-cols-3">
@@ -81,7 +96,10 @@ export default function ProfileTab({ className, isOwner, username }: ProfileTabP
           </TabsList>
         </div>
         <div className="grow overflow-hidden p-2">
-          <TabsContent className="animate-fade-right relative h-full" value="meal-plan">
+          <TabsContent
+            className="animate-fade-right relative h-full"
+            value="meal-plan"
+          >
             <Card className="flex h-full flex-col">
               <CardHeader className="flex flex-row justify-between">
                 <div>
@@ -95,11 +113,16 @@ export default function ProfileTab({ className, isOwner, username }: ProfileTabP
               </CardContent>
             </Card>
           </TabsContent>
-          <TabsContent className="animate-fade-right relative h-full" value="posts">
+          <TabsContent
+            className="animate-fade-right relative h-full"
+            value="posts"
+          >
             <Card className="flex h-full flex-col">
               <CardHeader>
                 <CardTitle>My Posts</CardTitle>
-                <CardDescription>Look back on your previous posts!</CardDescription>
+                <CardDescription>
+                  Look back on your previous posts!
+                </CardDescription>
               </CardHeader>
               <CardContent className="flex h-full flex-col gap-4 overflow-y-auto">
                 {loading && (
@@ -124,7 +147,10 @@ export default function ProfileTab({ className, isOwner, username }: ProfileTabP
               </CardContent>
             </Card>
           </TabsContent>
-          <TabsContent className="animate-fade-right relative h-full" value="workout">
+          <TabsContent
+            className="animate-fade-right relative h-full"
+            value="workout"
+          >
             <Card className="flex h-full flex-col">
               <CardHeader className="flex flex-row justify-between">
                 <div>

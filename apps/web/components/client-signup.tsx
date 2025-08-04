@@ -1,8 +1,8 @@
 'use client';
 
-import SignupForm from './signup-form';
-
 import GymSagaSquareSmall from '@/public/GymSagaSquareSmall';
+
+import SignupForm from './signup-form';
 
 export default function ClientSignup() {
   return (
@@ -15,8 +15,8 @@ export default function ClientSignup() {
         <SignupForm />
       </div>
       <div className="text-muted-foreground hover:[&_a]:text-primary text-center text-xs [&_a]:underline [&_a]:underline-offset-4">
-        By clicking continue, you agree to our <br /> <a href="#">Terms of Service</a> and{' '}
-        <a href="#">Privacy Policy</a>.
+        By clicking continue, you agree to our <br />{' '}
+        <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
       </div>
     </>
   );

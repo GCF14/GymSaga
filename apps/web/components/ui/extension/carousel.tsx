@@ -6,8 +6,8 @@ import React, {
   useContext,
   useEffect,
   useState,
+  createContext,
 } from 'react';
-import { createContext } from 'react';
 
 import { ChevronLeftIcon } from '@radix-ui/react-icons';
 import { EmblaOptionsType } from 'embla-carousel';
@@ -214,12 +214,12 @@ const Carousel = forwardRef<
         <div
           {...props}
           ref={ref}
+          dir={direction}
+          tabIndex={0}
           className={cn(
             'relative grid w-full gap-2 focus:outline-hidden',
             className,
           )}
-          dir={direction}
-          tabIndex={0}
           onKeyDownCapture={handleKeyDown}
         >
           {children}
