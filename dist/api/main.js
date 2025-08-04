@@ -678,6 +678,12 @@ exports.AuthService = AuthService = tslib_1.__decorate([
 
 module.exports = require("@nestjs/config");
 
+/***/ }),
+/* 34 */
+/***/ ((module) => {
+
+module.exports = require("@nestjs/swagger");
+
 /***/ })
 /******/ 	]);
 /************************************************************************/
@@ -716,11 +722,19 @@ const common_1 = __webpack_require__(1);
 const common_2 = __webpack_require__(1);
 const core_1 = __webpack_require__(2);
 const app_module_1 = __webpack_require__(3);
+const swagger_1 = __webpack_require__(34);
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     const globalPrefix = 'api';
     app.setGlobalPrefix(globalPrefix);
     const port = process.env.PORT;
+    const config = new swagger_1.DocumentBuilder()
+        .setTitle('API Documentation')
+        .setDescription('API documentation for the application')
+        .setVersion('1.0')
+        .build();
+    const document = swagger_1.SwaggerModule.createDocument(app, config);
+    swagger_1.SwaggerModule.setup('api-docs', app, document);
     await app.listen(port);
     common_2.Logger.log(`🚀 Application is running on: http://localhost:${port}/${globalPrefix}`);
     app.useGlobalPipes(new common_1.ValidationPipe({
