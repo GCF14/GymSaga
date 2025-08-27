@@ -17,7 +17,7 @@ import { useAuthContext } from '@/hooks/useAuthContext';
 import { useDeleteAccount } from '@/hooks/useDeleteAccount';
 
 export default function DeleteAccountButton() {
-  const { deleteAccount, isLoading, error } = useDeleteAccount();
+  const { deleteAccount, isLoading } = useDeleteAccount();
   const { user } = useAuthContext();
   const router = useRouter();
 
@@ -41,8 +41,9 @@ export default function DeleteAccountButton() {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your account and remove your
-            data from our servers. Enter your password to confirm.
+            This action cannot be undone. This will permanently delete your
+            account and remove your data from our servers. Enter your password
+            to confirm.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <Input placeholder="Password" type="password" />

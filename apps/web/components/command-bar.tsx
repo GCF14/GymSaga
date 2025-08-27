@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 import {
-  Command,
+  // Command,
   CommandDialog,
   CommandEmpty,
   CommandGroup,
@@ -14,7 +14,7 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-  CommandShortcut,
+  // CommandShortcut,
 } from '@/components/ui/command';
 import { Kbd } from '@/components/ui/kbd';
 import { useLogout } from '@/hooks/useLogout';

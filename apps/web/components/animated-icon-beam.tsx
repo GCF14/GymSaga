@@ -1,15 +1,15 @@
 'use client';
 
-import React, { forwardRef, useRef } from 'react';
+import { forwardRef, useRef } from 'react';
 
 import Image from 'next/image';
 
 import { AnimatedBeam } from '@/components/magicui/animated-beam';
 import { cn } from '@/lib/utils';
-import Express from '@/public/express';
+import { Express } from '@/public/express';
 import GymSaga from '@/public/GymSaga';
-import MongoDB from '@/public/MongoDB';
-import Nodejs from '@/public/Nodejs';
+import { MongoDB } from '@/public/MongoDB';
+import { Nodejs } from '@/public/Nodejs';
 import ShadcnIcons from '@/public/shadcn';
 
 const Circle = forwardRef<
@@ -159,6 +159,7 @@ export function AnimatedIconBeam() {
   );
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Icons = {
   notion: () => (
     <svg

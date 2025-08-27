@@ -13,7 +13,9 @@ import {
 
 export default function MoreMenu() {
   const handleDeletePost = () => {
-    const confirmDelete = window.confirm('Are you sure you want to delete this post?');
+    const confirmDelete = window.confirm(
+      'Are you sure you want to delete this post?',
+    );
     if (confirmDelete) {
       alert('Post deleted successfully!');
     }
@@ -39,7 +41,9 @@ export default function MoreMenu() {
           </DropdownMenuItem>
           <DropdownMenuItem onClick={handleDeletePost}>Delete</DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => {}}>Report</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => window.alert('Reported!')}>
+            Report
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 

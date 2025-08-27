@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { createContext, useReducer, ReactNode, useEffect } from 'react';
@@ -15,7 +16,10 @@ export const AuthContext = createContext<{
   dispatch: React.Dispatch<AuthAction>;
 } | null>(null);
 
-export const authReducer = (state: AuthState, action: AuthAction): AuthState => {
+export const authReducer = (
+  state: AuthState,
+  action: AuthAction,
+): AuthState => {
   switch (action.type) {
     case 'LOGIN':
       return { user: action.payload };
@@ -59,5 +63,9 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
   console.log('AuthContext state: ', state);
 
-  return <AuthContext.Provider value={{ ...state, dispatch }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ ...state, dispatch }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };

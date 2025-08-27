@@ -42,13 +42,18 @@ export default function RootLayout({
     <html suppressHydrationWarning lang="en">
       <head>
         {/* Put stylesheets in the head rather than body */}
-        <link href="https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css" rel="stylesheet" />
+        <link
+          href="https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css"
+          rel="stylesheet"
+        />
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
           rel="stylesheet"
         />
         <style
           dangerouslySetInnerHTML={{
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             __html: `
           .material-symbols-rounded {
             font-variation-settings:
@@ -98,7 +103,9 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         <ThemeProvider
           disableTransitionOnChange
           enableSystem
