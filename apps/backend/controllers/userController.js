@@ -86,7 +86,9 @@ const getUser = async (req, res) => {
     const user = await User.findById(decoded._id).select('username');
 
     res.json({ userId: decoded._id, username: user.username });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (err) {
+    console.error('Error in getUser:', err);
     res.status(401).json({ error: 'Invalid or expired token' });
   }
 };
@@ -143,6 +145,7 @@ const updateUser = async (req, res) => {
         username,
         firstName,
         lastName,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       }).filter(([_, v]) => v != null),
     );
 
@@ -223,6 +226,7 @@ const getUserbyId = async (req, res) => {
       });
     }
   } catch (error) {
+    console.error('Error in getUserbyId:', error);
     return res.status(500).json({ error: 'Server error' });
   }
 };

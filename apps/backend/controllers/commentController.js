@@ -26,7 +26,7 @@ async function editComment(req, res) {
   if (!mongoose.Types.ObjectId.isValid(postId)) {
     return res.status(400).json({ error: 'Invalid post ID' });
   }
-
+  const { id } = req.params;
   const comment = await Comment.findByIdAndUpdate(id, { text }, { new: true });
 
   if (!comment) {

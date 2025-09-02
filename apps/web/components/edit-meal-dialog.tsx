@@ -1,10 +1,10 @@
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
-  DialogClose,
+  // DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
+  // DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -21,7 +21,9 @@ export default function EditMealDialog() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Edit Meal Plan</DialogTitle>
-          <DialogDescription>Plan your meals and fuel your day!</DialogDescription>
+          <DialogDescription>
+            Plan your meals and fuel your day!
+          </DialogDescription>
         </DialogHeader>
       </DialogContent>
     </Dialog>

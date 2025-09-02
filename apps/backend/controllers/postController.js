@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Comment = require('../models/commentModel');
+// const Comment = require('../models/commentModel');
 const Post = require('../models/postModel');
 const User = require('../models/userModel');
 const cloudinary = require('../utils/cloudinary');

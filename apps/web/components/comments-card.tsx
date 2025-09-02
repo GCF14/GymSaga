@@ -28,6 +28,7 @@ interface CommentCardProps {
 export default function CommentCard({ onClose }: CommentCardProps) {
   const [isLiked, setIsLiked] = useState(false);
   const [isNestedCommentVisible, setIsNestedCommentVisible] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [files, setFiles] = useState<File[]>([]);
 
   const handleFilesChange = (newFiles: File[]) => {
@@ -80,7 +81,7 @@ export default function CommentCard({ onClose }: CommentCardProps) {
               </div>
               <MoreMenu />
             </div>
-            <p className="mb-2 ml-12">That's crazy, it actually works!</p>
+            <p className="mb-2 ml-12">That&apos;s crazy, it actually works!</p>
             <LikeCommentShareBar
               className="ml-10"
               onClick={() => {
